@@ -1,6 +1,5 @@
 import {ReactElement, ReactNode} from 'react';
 import {BrowserRouter} from 'react-router-dom';
-
 import {ChakraProvider} from './ChakraProvider/ChakraProvider';
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 import {StoreProvider} from './StoreProvider/ui/StoreProvider';

@@ -1,6 +1,5 @@
 import {ChakraProvider as Chakra} from '@chakra-ui/react';
 import {ReactElement, ReactNode} from 'react';
-
 import {getTheme} from '@/app/styles/theme';
 
 type Props = {

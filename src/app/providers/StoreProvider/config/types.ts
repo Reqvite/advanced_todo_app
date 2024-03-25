@@ -1,8 +1,6 @@
 import {type configureStore, type ThunkMiddleware, type Tuple, type UnknownAction} from '@reduxjs/toolkit';
 import {PersistPartial} from 'redux-persist/lib/persistReducer';
-
 import {reducer as todoReducer} from '@/slices/todo';
-
 import {store} from './store';
 
 type RootReducer = {

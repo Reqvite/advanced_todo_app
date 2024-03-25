@@ -1,5 +1,4 @@
 import persistStore from 'redux-persist/es/persistStore';
-
 import {Store} from './config';
 
 const store = new Store();

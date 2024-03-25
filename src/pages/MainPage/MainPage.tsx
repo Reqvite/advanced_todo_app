@@ -11,7 +11,7 @@ const MainPage = () => {
       <div></div>
       <h1>Vite + React</h1>
       <div>
-        <Button variant="primary" onClick={() => setCount((count) => count + 1)}>
+        <Button variant={'success'} onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </Button>
         <p>

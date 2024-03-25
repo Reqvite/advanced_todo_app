@@ -1,6 +1,5 @@
 import {extendTheme, Theme, ThemeConfig} from '@chakra-ui/react';
 import {mode} from '@chakra-ui/theme-tools';
-
 import {buttonTheme, checkboxTheme, formTheme, inputTheme, selectTheme} from './components';
 import {accentColor, accentColorTransparentDarker} from './const';
 

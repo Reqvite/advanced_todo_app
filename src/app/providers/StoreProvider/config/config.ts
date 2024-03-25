@@ -2,9 +2,7 @@ import {configureStore, ReducersMapObject} from '@reduxjs/toolkit';
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from 'redux-persist';
 import persistReducer from 'redux-persist/es/persistReducer';
 import storage from 'redux-persist/lib/storage';
-
 import {reducer as todoReducer} from '@/slices/todo';
-
 import {ExtraArguments, RootReducer, StoreInstance, StorePackage} from './types';
 
 const todoPersistConfig = {

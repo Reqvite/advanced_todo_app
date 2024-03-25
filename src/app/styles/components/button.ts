@@ -1,4 +1,4 @@
-import {accentColor, mainShadow} from '../const';
+import {accentColor, accentColorTransparent, mainShadow, successColor} from '../const';
 
 export const buttonTheme = {
   variants: {
@@ -13,26 +13,26 @@ export const buttonTheme = {
         border: `2px solid ${accentColor}`,
         color: accentColor,
         _disabled: {
-          backgroundColor: '2px solid var(--chakra-colors-accentColorTransparent)'
+          backgroundColor: `2px solid ${accentColorTransparent}`
         }
       },
       _focusVisible: {
         background: 'transparent',
-        border: '2px solid var(--chakra-colors-accentColor)',
+        border: `2px solid ${accentColor}`,
         color: accentColor,
         boxShadow: 'none'
       },
       cursor: 'pointer'
     },
     secondary: {
-      border: '2px solid var(--chakra-colors-accentColor)',
+      border: `2px solid ${accentColor}`,
       color: accentColor,
       _hover: {
         background: accentColor,
         borderColor: 'transparent',
         color: 'white',
         _disabled: {
-          backgroundColor: '2px solid var(--chakra-colors-accentColorTransparent)'
+          backgroundColor: `2px solid ${accentColorTransparent}`
         }
       },
       _focusVisible: {
@@ -49,11 +49,11 @@ export const buttonTheme = {
       }
     },
     success: {
-      border: '2px solid var(--chakra-colors-successColorLight)',
-      background: 'var(--chakra-colors-successColorLight)',
+      border: `2px solid ${successColor}`,
+      background: successColor,
       color: 'white',
       _hover: {
-        background: 'var(--chakra-colors-successColorLight)',
+        background: successColor,
         borderColor: 'transparent',
         color: 'white'
       },

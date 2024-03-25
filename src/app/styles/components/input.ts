@@ -18,7 +18,7 @@ export const inputTheme = {
         display: 'inline-block',
         my: '0.25rem',
         bg: 'transparent',
-        border: '2px solid var(--chakra-colors-accentColor)'
+        border: `2px solid ${accentColor}`
       }
     }
   }
