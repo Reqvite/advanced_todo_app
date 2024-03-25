@@ -1,65 +1,65 @@
-import { accentColor, mainShadow } from "../const";
+import {accentColor, mainShadow} from '../const';
 
 export const buttonTheme = {
   variants: {
     primary: {
-      color: "white",
-      border: "2px solid transparent",
-      display: "inline-flex",
+      color: 'white',
+      border: '2px solid transparent',
+      display: 'inline-flex',
       fontWeight: 600,
       bg: accentColor,
       _hover: {
-        background: "transparent",
+        background: 'transparent',
         border: `2px solid ${accentColor}`,
         color: accentColor,
         _disabled: {
-          backgroundColor: "2px solid var(--chakra-colors-accentColorTransparent)",
-        },
+          backgroundColor: '2px solid var(--chakra-colors-accentColorTransparent)'
+        }
       },
       _focusVisible: {
-        background: "transparent",
-        border: "2px solid var(--chakra-colors-accentColor)",
+        background: 'transparent',
+        border: '2px solid var(--chakra-colors-accentColor)',
         color: accentColor,
-        boxShadow: "none",
+        boxShadow: 'none'
       },
-      cursor: "pointer",
+      cursor: 'pointer'
     },
     secondary: {
-      border: "2px solid var(--chakra-colors-accentColor)",
+      border: '2px solid var(--chakra-colors-accentColor)',
       color: accentColor,
       _hover: {
         background: accentColor,
-        borderColor: "transparent",
-        color: "white",
+        borderColor: 'transparent',
+        color: 'white',
         _disabled: {
-          backgroundColor: "2px solid var(--chakra-colors-accentColorTransparent)",
-        },
+          backgroundColor: '2px solid var(--chakra-colors-accentColorTransparent)'
+        }
       },
       _focusVisible: {
-        boxShadow: mainShadow,
-      },
+        boxShadow: mainShadow
+      }
     },
     link: {
       _hover: {
         color: accentColor,
-        textDecoration: "none",
+        textDecoration: 'none'
       },
       _focusVisible: {
-        boxShadow: mainShadow,
-      },
+        boxShadow: mainShadow
+      }
     },
     success: {
-      border: "2px solid var(--chakra-colors-successColorLight)",
-      background: "var(--chakra-colors-successColorLight)",
-      color: "white",
+      border: '2px solid var(--chakra-colors-successColorLight)',
+      background: 'var(--chakra-colors-successColorLight)',
+      color: 'white',
       _hover: {
-        background: "var(--chakra-colors-successColorLight)",
-        borderColor: "transparent",
-        color: "white",
+        background: 'var(--chakra-colors-successColorLight)',
+        borderColor: 'transparent',
+        color: 'white'
       },
       _focusVisible: {
-        boxShadow: mainShadow,
-      },
-    },
-  },
+        boxShadow: mainShadow
+      }
+    }
+  }
 };

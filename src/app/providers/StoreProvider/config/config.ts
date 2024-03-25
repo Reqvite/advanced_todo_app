@@ -1,16 +1,16 @@
-import { configureStore, ReducersMapObject } from "@reduxjs/toolkit";
-import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from "redux-persist";
-import persistReducer from "redux-persist/es/persistReducer";
-import storage from "redux-persist/lib/storage";
+import {configureStore, ReducersMapObject} from '@reduxjs/toolkit';
+import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from 'redux-persist';
+import persistReducer from 'redux-persist/es/persistReducer';
+import storage from 'redux-persist/lib/storage';
 
-import { reducer as todoReducer } from "@/slices/todo";
+import {reducer as todoReducer} from '@/slices/todo';
 
-import { ExtraArguments, RootReducer, StoreInstance, StorePackage } from "./types";
+import {ExtraArguments, RootReducer, StoreInstance, StorePackage} from './types';
 
 const todoPersistConfig = {
-  key: "todo",
+  key: 'todo',
   storage,
-  blacklist: [],
+  blacklist: []
 };
 
 class Store implements StorePackage {
@@ -22,16 +22,16 @@ class Store implements StorePackage {
 
   public constructor() {
     const rootReducer: ReducersMapObject<RootReducer> = {
-      todo: persistReducer(todoPersistConfig, todoReducer),
+      todo: persistReducer(todoPersistConfig, todoReducer)
     };
     this.#instance = configureStore({
       reducer: rootReducer,
-      middleware: getDefaultMiddleware =>
+      middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
           serializableCheck: {
-            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-          },
-        }),
+            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+          }
+        })
     });
   }
 
@@ -42,4 +42,4 @@ class Store implements StorePackage {
   }
 }
 
-export { Store };
+export {Store};

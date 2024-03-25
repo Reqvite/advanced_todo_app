@@ -1,11 +1,9 @@
-import { checkboxAnatomy } from "@chakra-ui/anatomy";
-import { createMultiStyleConfigHelpers } from "@chakra-ui/react";
+import {checkboxAnatomy} from '@chakra-ui/anatomy';
+import {createMultiStyleConfigHelpers} from '@chakra-ui/react';
 
-import { accentColor } from "../const";
+import {accentColor} from '../const';
 
-const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpers(
-  checkboxAnatomy.keys,
-);
+const {definePartsStyle, defineMultiStyleConfig} = createMultiStyleConfigHelpers(checkboxAnatomy.keys);
 
 const baseStyle = definePartsStyle({
   control: {
@@ -19,8 +17,8 @@ const baseStyle = definePartsStyle({
 
       _hover: {
         bg: accentColor,
-        borderColor: accentColor,
-      },
+        borderColor: accentColor
+      }
       // _disabled: {
       //   borderColor: mode("gray.200", "transparent")(props),
       //   bg: mode("gray.200", "whiteAlpha.300")(props),
@@ -28,9 +26,9 @@ const baseStyle = definePartsStyle({
       // },
     },
     _focusVisible: {
-      boxShadow: "var(--chakra-shadows-mainShadow)",
-    },
-  },
+      boxShadow: 'var(--chakra-shadows-mainShadow)'
+    }
+  }
 });
 
-export const checkboxTheme = defineMultiStyleConfig({ baseStyle });
+export const checkboxTheme = defineMultiStyleConfig({baseStyle});

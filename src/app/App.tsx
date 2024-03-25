@@ -1,5 +1,5 @@
-import { Button } from "@chakra-ui/button";
-import { useState } from "react";
+import {Button} from '@chakra-ui/button';
+import {useState} from 'react';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -9,7 +9,7 @@ function App() {
       <div></div>
       <h1>Vite + React</h1>
       <div>
-        <Button variant="primary" onClick={() => setCount(count => count + 1)}>
+        <Button variant="primary" onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </Button>
         <p>

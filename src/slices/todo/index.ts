@@ -1,8 +1,8 @@
-import { actions } from "./todo.slice.js";
+import {actions} from './todo.slice.js';
 
 const allActions = {
-  ...actions,
+  ...actions
 };
 
-export { allActions as actions };
-export { reducer } from "./todo.slice.js";
+export {allActions as actions};
+export {reducer} from './todo.slice.js';

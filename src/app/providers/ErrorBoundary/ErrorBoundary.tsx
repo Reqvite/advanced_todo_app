@@ -1,6 +1,6 @@
-import React, { ErrorInfo, ReactNode, Suspense } from "react";
+import React, {ErrorInfo, ReactNode, Suspense} from 'react';
 
-import { ErrorPage } from "@/pages";
+import {ErrorPage} from '@/pages';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -13,11 +13,11 @@ interface ErrorBoundaryState {
 class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false };
+    this.state = {hasError: false};
   }
 
   static getDerivedStateFromError() {
-    return { hasError: true };
+    return {hasError: true};
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
@@ -25,8 +25,8 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
   }
 
   render() {
-    const { hasError } = this.state;
-    const { children } = this.props;
+    const {hasError} = this.state;
+    const {children} = this.props;
 
     if (hasError) {
       return (

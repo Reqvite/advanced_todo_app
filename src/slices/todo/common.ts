@@ -1,5 +1,5 @@
 const ActionType = {
-  ANY: "todo/any",
+  ANY: 'todo/any'
 } as const;
 
-export { ActionType };
+export {ActionType};

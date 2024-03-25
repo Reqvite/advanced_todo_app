@@ -1,14 +1,9 @@
-import {
-  type configureStore,
-  type ThunkMiddleware,
-  type Tuple,
-  type UnknownAction,
-} from "@reduxjs/toolkit";
-import { PersistPartial } from "redux-persist/lib/persistReducer";
+import {type configureStore, type ThunkMiddleware, type Tuple, type UnknownAction} from '@reduxjs/toolkit';
+import {PersistPartial} from 'redux-persist/lib/persistReducer';
 
-import { reducer as todoReducer } from "@/slices/todo";
+import {reducer as todoReducer} from '@/slices/todo';
 
-import { store } from "./store";
+import {store} from './store';
 
 type RootReducer = {
   todo: ReturnType<typeof todoReducer> & PersistPartial;
@@ -19,11 +14,7 @@ type ExtraArguments = {
 };
 
 type StoreInstance = ReturnType<
-  typeof configureStore<
-    RootReducer,
-    UnknownAction,
-    Tuple<[ThunkMiddleware<RootReducer, UnknownAction, ExtraArguments>]>
-  >
+  typeof configureStore<RootReducer, UnknownAction, Tuple<[ThunkMiddleware<RootReducer, UnknownAction, ExtraArguments>]>>
 >;
 
 type StorePackage = {
@@ -33,11 +24,4 @@ type StorePackage = {
 type StoreSchema = typeof store.instance.getState;
 type StoreInstanceDispatch = typeof store.instance.dispatch;
 
-export {
-  type ExtraArguments,
-  type RootReducer,
-  type StoreInstance,
-  type StoreInstanceDispatch,
-  type StorePackage,
-  type StoreSchema,
-};
+export {type ExtraArguments, type RootReducer, type StoreInstance, type StoreInstanceDispatch, type StorePackage, type StoreSchema};

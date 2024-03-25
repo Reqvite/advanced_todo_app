@@ -1,7 +1,7 @@
-import { Suspense, useCallback } from "react";
-import { Route, Routes } from "react-router-dom";
+import {Suspense, useCallback} from 'react';
+import {Route, Routes} from 'react-router-dom';
 
-import { AppRoutesProps, routeConfig } from "./routeConfig";
+import {AppRoutesProps, routeConfig} from './routeConfig';
 
 export const AppRouter = () => {
   const renderWithWrapper = useCallback((route: AppRoutesProps) => {

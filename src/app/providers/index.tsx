@@ -1,16 +1,16 @@
-import { ReactElement, ReactNode } from "react";
-import { BrowserRouter } from "react-router-dom";
+import {ReactElement, ReactNode} from 'react';
+import {BrowserRouter} from 'react-router-dom';
 
-import { ChakraProvider } from "./ChakraProvider/ChakraProvider";
-import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
-import { StoreProvider } from "./StoreProvider/ui/StoreProvider";
+import {ChakraProvider} from './ChakraProvider/ChakraProvider';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+import {StoreProvider} from './StoreProvider/ui/StoreProvider';
 
 type Props = {
   children: ReactNode;
 };
 
 export const Providers = (props: Props): ReactElement => {
-  const { children } = props;
+  const {children} = props;
   return (
     <StoreProvider>
       <ChakraProvider>
