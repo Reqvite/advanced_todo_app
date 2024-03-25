@@ -1,24 +1,7 @@
-import {Button} from '@chakra-ui/button';
-import {useState} from 'react';
+import {AppRouter} from '@/app/providers/AppRouter/AppRouter';
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <>
-      <div></div>
-      <h1>Vite + React</h1>
-      <div>
-        <Button variant="primary" onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </Button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p>Click on the Vite and React logos to learn more</p>
-    </>
-  );
+  return <AppRouter />;
 }
 
 export default App;
