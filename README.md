@@ -8,7 +8,7 @@ React,
 React-dom,
 Redux Toolkit,
 Axios,
-Formik,
+React hook from,
 Yup,
 Chakra-ui
 
@@ -41,7 +41,7 @@ It runs the TypeScript compiler (tsc) in type-checking mode. This command checks
 
 ### `npm run lint:ts`
 
-It uses ESLint to lint TypeScript files (*.ts and *.tsx) within the src directory.\
+It uses ESLint to lint TypeScript files (_.ts and _.tsx) within the src directory.\
 
 ### `npm run lint:ts:fix`
 
