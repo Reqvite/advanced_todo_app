@@ -15,6 +15,8 @@ type PaginationTable = {
 export const PaginationTable = (props: PaginationTable): ReactElement => {
   const {pageSize, setPageSize, pageIndex, setPageIndex, totalItemsCount, pageSizeOptions} = props;
 
+  const totalPages = Math.ceil(totalItemsCount / pageSize);
+
   const onChangePageSize = (e: ChangeEvent<HTMLSelectElement>) => {
     const newSize = parseInt(e.target.value);
     setPageSize(newSize);
@@ -30,7 +32,7 @@ export const PaginationTable = (props: PaginationTable): ReactElement => {
         </Select>
       </Flex>
       <Flex alignItems={'center'} gap={2}>
-        <Pagination currentPage={pageIndex} totalItemsCount={totalItemsCount} onPageChange={setPageIndex} />
+        <Pagination currentPage={pageIndex} totalPages={totalPages} onPageChange={setPageIndex} />
       </Flex>
     </Flex>
   );

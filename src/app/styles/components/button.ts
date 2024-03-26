@@ -8,12 +8,15 @@ export const buttonTheme = {
       display: 'inline-flex',
       fontWeight: 600,
       bg: accentColor,
+      cursor: 'pointer',
       _hover: {
         background: 'transparent',
         border: `2px solid ${accentColor}`,
         color: accentColor,
         _disabled: {
-          backgroundColor: `2px solid ${accentColorTransparent}`
+          bg: accentColorTransparent,
+          color: 'gray.400',
+          cursor: 'not-allowed'
         }
       },
       _focusVisible: {
@@ -22,7 +25,11 @@ export const buttonTheme = {
         color: accentColor,
         boxShadow: 'none'
       },
-      cursor: 'pointer'
+      _disabled: {
+        bg: accentColorTransparent,
+        color: 'gray.400',
+        cursor: 'not-allowed'
+      }
     },
     secondary: {
       border: `2px solid ${accentColor}`,
