@@ -1,31 +1,51 @@
-import {Flex, Table, TableContainer, Tag, Tbody, Td, Th, Thead, Tr} from '@chakra-ui/react';
+import {Table, TableContainer, Tbody, Td, Th, Thead, Tr} from '@chakra-ui/react';
 import {useState} from 'react';
-import {BlurBox, DeleteButton, EditButton} from '@/shared/ui';
+import {TodoI} from '@/shared/types/todo.ts';
+import {BlurBox} from '@/shared/ui';
 import {PaginationTable} from './PaginationTable';
-import {TodoTableHeading} from './TodoTableHeading';
+import {TodoItem} from './TodoItem.tsx';
+import {TodoTableHeader} from './TodoTableHeader.tsx';
 
-const mockData = [
-  {_id: '1', note: 'Some', priority: 'fast', expDate: 'today', tags: ['tag1', 'tag2']},
-  {_id: '2', note: 'Another', priority: 'slow', expDate: 'tomorrow', tags: ['tag3', 'tag4']},
-  {_id: '3', note: 'Example', priority: 'medium', expDate: 'next week', tags: ['tag2', 'tag5']},
-  {_id: '4', note: 'Test', priority: 'fast', expDate: 'today', tags: ['tag1', 'tag6']},
-  {_id: '5', note: 'Demo', priority: 'fast', expDate: 'today', tags: ['tag7', 'tag8']},
-  {_id: '6', note: 'Data', priority: 'slow', expDate: 'tomorrow', tags: ['tag2', 'tag9']},
-  {_id: '7', note: 'Information', priority: 'medium', expDate: 'next week', tags: ['tag10', 'tag11']},
-  {_id: '8', note: 'Task', priority: 'fast', expDate: 'today', tags: ['tag12', 'tag13']},
-  {_id: '9', note: 'Assignment', priority: 'fast', expDate: 'today', tags: ['tag14', 'tag15']},
-  {_id: '10', note: 'Project', priority: 'slow', expDate: 'tomorrow', tags: ['tag16', 'tag17']},
-  {_id: '11', note: 'Job', priority: 'medium', expDate: 'next week', tags: ['tag18', 'tag19']},
-  {_id: '12', note: 'Work', priority: 'fast', expDate: 'today', tags: ['tag20', 'tag21']},
-  {_id: '13', note: 'Assignment', priority: 'fast', expDate: 'today', tags: ['tag22', 'tag23']},
-  {_id: '14', note: 'Task', priority: 'slow', expDate: 'tomorrow', tags: ['tag24', 'tag25']},
-  {_id: '15', note: 'Test', priority: 'medium', expDate: 'next week', tags: ['tag26', 'tag27']},
-  {_id: '16', note: 'Demo', priority: 'fast', expDate: 'today', tags: ['tag28', 'tag29']},
-  {_id: '17', note: 'Data', priority: 'fast', expDate: 'today', tags: ['tag30', 'tag31']},
-  {_id: '18', note: 'Information', priority: 'slow', expDate: 'tomorrow', tags: ['tag32', 'tag33']},
-  {_id: '19', note: 'Example', priority: 'medium', expDate: 'next week', tags: ['tag34', 'tag35']},
-  {_id: '20', note: 'Task', priority: 'fast', expDate: 'today', tags: ['tag36', 'tag37']},
-  {_id: '21', note: 'Assignment', priority: 'fast', expDate: 'today', tags: ['tag38', 'tag39']}
+const mockData: TodoI[] = [
+  {
+    _id: '1',
+    note: 'Some SomeSomeSomeSomeSomeSo',
+    priority: 'urgent',
+    expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
+    tags: ['personal', 'work', 'shopping', 'study']
+  },
+  {
+    _id: '2',
+    note: 'Another',
+    priority: 'low',
+    expDate: new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+    tags: ['shopping', 'study']
+  },
+  {
+    _id: '3',
+    note: 'Example',
+    priority: 'medium',
+    expDate: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+    tags: ['work', 'shopping']
+  },
+  {_id: '4', note: 'Test', priority: 'urgent', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['personal', 'tag6']},
+  {_id: '5', note: 'Demo', priority: 'urgent', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['tag7', 'tag8']},
+  {_id: '6', note: 'Data', priority: 'low', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['work', 'tag9']},
+  {_id: '7', note: 'Information', priority: 'medium', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['tag10', 'tag11']},
+  {_id: '8', note: 'Task', priority: 'urgent', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['tag12', 'tag13']},
+  {_id: '9', note: 'Assignment', priority: 'urgent', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['tag14', 'tag15']},
+  {_id: '10', note: 'Project', priority: 'low', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['tag16', 'tag17']},
+  {_id: '11', note: 'Job', priority: 'medium', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['tag18', 'tag19']},
+  {_id: '12', note: 'Work', priority: 'urgent', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['tag20', 'tag21']},
+  {_id: '13', note: 'Assignment', priority: 'urgent', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['tag22', 'tag23']},
+  {_id: '14', note: 'Task', priority: 'low', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['tag24', 'tag25']},
+  {_id: '15', note: 'Test', priority: 'medium', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['tag26', 'tag27']},
+  {_id: '16', note: 'Demo', priority: 'urgent', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['tag28', 'tag29']},
+  {_id: '17', note: 'Data', priority: 'urgent', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['tag30', 'tag31']},
+  {_id: '18', note: 'Information', priority: 'low', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['tag32', 'tag33']},
+  {_id: '19', note: 'Example', priority: 'medium', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['tag34', 'tag35']},
+  {_id: '20', note: 'Task', priority: 'urgent', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['tag36', 'tag37']},
+  {_id: '21', note: 'Assignment', priority: 'urgent', expDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(), tags: ['tag38', 'tag39']}
 ];
 
 export const TodoTable = () => {
@@ -36,11 +56,12 @@ export const TodoTable = () => {
 
   return (
     <BlurBox>
-      <TodoTableHeading />
+      <TodoTableHeader />
       <TableContainer w={'100%'}>
         <Table size="sm">
           <Thead>
             <Tr>
+              <Th />
               <Th>
                 <span>Note</span>
               </Th>
@@ -53,9 +74,7 @@ export const TodoTable = () => {
               <Th>
                 <span>Expiration date</span>
               </Th>
-              <Th>
-                <span></span>
-              </Th>
+              <Th />
             </Tr>
           </Thead>
           <Tbody>
@@ -72,34 +91,7 @@ export const TodoTable = () => {
                 </Td>
               </Tr>
             ) : (
-              data
-                .map(({_id, note, priority, expDate, tags}) => {
-                  return (
-                    <Tr key={_id}>
-                      <Td width={'40%'}>{note}</Td>
-                      <Td>{priority}</Td>
-                      <Td>
-                        <Flex gap={2}>
-                          {tags.map((tag, idx) => (
-                            <Tag key={idx} variant="solid" colorScheme="teal">
-                              {tag}
-                            </Tag>
-                          ))}
-                        </Flex>
-                      </Td>
-                      <Td>{expDate}</Td>
-                      <Td>
-                        <Flex justifyContent={'flex-end'}>
-                          <Flex gap={2}>
-                            <DeleteButton />
-                            <EditButton id={_id} />
-                          </Flex>
-                        </Flex>
-                      </Td>
-                    </Tr>
-                  );
-                })
-                .slice(pageSize * pageIndex, pageSize * (pageIndex + 1))
+              data.map((todo) => <TodoItem key={todo._id} {...todo} />).slice(pageSize * pageIndex, pageSize * (pageIndex + 1))
             )}
           </Tbody>
         </Table>

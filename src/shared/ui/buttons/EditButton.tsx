@@ -12,7 +12,6 @@ type Props = ButtonProps & {
 export const EditButton = (props: Props) => {
   const {id, ...otherProps} = props;
 
-  console.log(getRouteUpdateTodo(id));
   return (
     <Button as={NavLink} variant={'secondary'} to={getRouteUpdateTodo(id)} {...otherProps}>
       <Icon boxSize={6} as={CiEdit} />

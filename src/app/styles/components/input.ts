@@ -7,7 +7,6 @@ export const inputTheme = {
         color: accentColor,
         width: '100%',
         display: 'inline-block',
-        my: '0.25rem',
         bg: 'transparent'
       }
     },
@@ -16,7 +15,6 @@ export const inputTheme = {
         color: accentColor,
         width: '100%',
         display: 'inline-block',
-        my: '0.25rem',
         bg: 'transparent',
         border: `2px solid ${accentColor}`
       }

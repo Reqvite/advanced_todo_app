@@ -1,6 +1,7 @@
 import {extendTheme, Theme, ThemeConfig} from '@chakra-ui/react';
 import {mode} from '@chakra-ui/theme-tools';
 import {buttonTheme, checkboxTheme, formTheme, inputTheme, selectTheme} from './components';
+import {switchTheme} from './components/switch';
 import {accentColor, accentColorTransparentDarker} from './const';
 
 type ColorModeType = 'light' | 'dark';
@@ -70,7 +71,8 @@ export const getTheme = (colorMode: ColorModeType): ThemeConfig => {
       Form: formTheme,
       Input: inputTheme,
       Checkbox: checkboxTheme,
-      Select: selectTheme
+      Select: selectTheme,
+      Switch: switchTheme
     }
   });
 };

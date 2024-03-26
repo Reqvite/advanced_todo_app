@@ -1,6 +1,6 @@
 import {Button, Flex, Icon} from '@chakra-ui/react';
 import {ReactElement} from 'react';
-import {IoAdd} from 'react-icons/io5';
+import {IoIosCreate} from 'react-icons/io';
 import {NavLink} from 'react-router-dom';
 import {getRouteCreateTodo} from '@/app/providers/AppRouter/routeConfig';
 import {BlurBox} from '@/shared/ui';
@@ -11,7 +11,7 @@ export const Navbar = (): ReactElement => {
       <Flex gap={5} justifyContent={'space-between'} alignItems={'center'}>
         <NavLink to={'/'}>Logo</NavLink>
         <Button as={NavLink} to={getRouteCreateTodo()} variant={'primary'}>
-          <Icon boxSize={8} as={IoAdd} /> Add new Todo
+          <Icon boxSize={5} as={IoIosCreate} /> Add new todo
         </Button>
       </Flex>
     </BlurBox>
