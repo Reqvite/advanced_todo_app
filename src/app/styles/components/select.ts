@@ -8,6 +8,14 @@ export const selectTheme = {
         bg: 'transparent',
         border: `2px solid ${accentColor}`
       }
+    },
+    clear: {
+      field: {
+        color: accentColor,
+        bg: 'transparent',
+        border: `none`,
+        padding: '0'
+      }
     }
   }
 };
