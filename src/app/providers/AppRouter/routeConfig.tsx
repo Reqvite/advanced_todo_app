@@ -1,5 +1,5 @@
 import {RouteProps} from 'react-router-dom';
-import {MainPage} from '@/pages';
+import {MainPageAsync} from '@/pages';
 
 export enum AppRoutes {
   MAIN = 'main',
@@ -15,11 +15,11 @@ export const getRouteMain = () => '/';
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
   [AppRoutes.MAIN]: {
     path: getRouteMain(),
-    element: <MainPage />,
+    element: <MainPageAsync />,
     needAuth: true
   },
   [AppRoutes.NOT_FOUND]: {
     path: '*',
-    element: <MainPage />
+    element: <MainPageAsync />
   }
 };

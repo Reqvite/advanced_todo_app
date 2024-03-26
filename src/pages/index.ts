@@ -1,4 +1,4 @@
-import {MainPageAsync} from './MainPage/MainPage.async';
+import {lazy} from 'react';
 
-export {MainPageAsync as MainPage};
+export const MainPageAsync = lazy(() => import('@/pages/MainPage/MainPage'));
 export {ErrorPage} from './ErrorPage/ErrorPage';
