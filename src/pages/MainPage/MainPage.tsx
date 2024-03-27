@@ -5,7 +5,6 @@ import {TaskItem} from '@/shared/ui';
 
 const today = new Date();
 
-// Get yesterday's date
 const yesterday = new Date(today);
 yesterday.setDate(yesterday.getDate() - 1);
 
@@ -15,14 +14,14 @@ const mockData: TaskI[] = [
     note: 'Task 1',
     priority: 4,
     tags: [1, 2],
-    expDate: yesterday.toISOString() // Set expDate to yesterday's date
+    expDate: yesterday.toISOString()
   },
   {
     _id: '2',
     note: 'Task 2',
     priority: 3,
     tags: [2, 3],
-    expDate: yesterday.toISOString() // Set expDate to yesterday's date
+    expDate: yesterday.toISOString()
   },
   {
     _id: '3',
