@@ -40,7 +40,7 @@ export const Table = <T,>(props: Props<T>): ReactElement => {
               <Th />
               {keys.map((key, idx) => (
                 <Th key={idx}>
-                  <Flex gap={1} alignItems={'center'} onClick={() => onChangeSort(key)}>
+                  <Flex cursor="pointer" gap={1} alignItems="center" onClick={() => onChangeSort(key)}>
                     {key}
                     {sortField === key ? sortDirection === SortDirection.Ascending ? <FaArrowUpLong /> : <FaLongArrowAltDown /> : ''}
                   </Flex>
