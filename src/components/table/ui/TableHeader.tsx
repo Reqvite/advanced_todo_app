@@ -8,6 +8,7 @@ type Props = {
 
 export const TableHeader = (props: Props): ReactElement => {
   const {heading} = props;
+
   return (
     <Stack direction={{base: 'column', md: 'row'}} justify="space-between" mb={5}>
       <Text textStyle="lg" fontWeight="medium">
