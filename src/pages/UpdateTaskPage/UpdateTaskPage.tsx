@@ -1,7 +1,7 @@
 import {Box} from '@chakra-ui/layout';
 
-const UpdateTodoPage = () => {
+const UpdateTaskPage = () => {
   return <Box>UpdateTODO</Box>;
 };
 
-export default UpdateTodoPage;
+export default UpdateTaskPage;

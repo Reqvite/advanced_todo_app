@@ -1,11 +1,11 @@
 import {RouteProps} from 'react-router-dom';
-import {CreateTodoPageAsync, MainPageAsync, UpdateTodoPageAsync} from '@/pages';
+import {CreateTaskPage, MainPage, UpdateTaskPage} from '@/pages';
 
 export enum AppRoutes {
   MAIN = 'main',
   NOT_FOUND = 'not-found',
-  CREATE = 'create-todo',
-  UPDATE = 'update-todo'
+  CREATE = 'create-task',
+  UPDATE = 'update-task'
 }
 
 export type AppRoutesProps = RouteProps & {
@@ -13,24 +13,24 @@ export type AppRoutesProps = RouteProps & {
 };
 
 export const getRouteMain = () => '/';
-export const getRouteCreateTodo = () => '/todos/new';
-export const getRouteUpdateTodo = (id: string) => `/todos/${id}`;
+export const getRouteCreateTask = () => '/tasks/new';
+export const getRouteUpdateTask = (id: string) => `/tasks/${id}`;
 
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
   [AppRoutes.MAIN]: {
     path: getRouteMain(),
-    element: <MainPageAsync />
+    element: <MainPage />
   },
   [AppRoutes.CREATE]: {
-    path: getRouteCreateTodo(),
-    element: <CreateTodoPageAsync />
+    path: getRouteCreateTask(),
+    element: <CreateTaskPage />
   },
   [AppRoutes.UPDATE]: {
-    path: getRouteUpdateTodo(':id'),
-    element: <UpdateTodoPageAsync />
+    path: getRouteUpdateTask(':id'),
+    element: <UpdateTaskPage />
   },
   [AppRoutes.NOT_FOUND]: {
     path: '*',
-    element: <MainPageAsync />
+    element: <MainPage />
   }
 };
