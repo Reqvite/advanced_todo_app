@@ -1,6 +1,7 @@
 import {extendTheme, Theme, ThemeConfig} from '@chakra-ui/react';
 import {mode} from '@chakra-ui/theme-tools';
 import {buttonTheme, checkboxTheme, formTheme, inputTheme, selectTheme} from './components';
+import {switchTheme} from './components/switch';
 import {accentColor, accentColorTransparentDarker} from './const';
 
 type ColorModeType = 'light' | 'dark';
@@ -16,7 +17,8 @@ export const getTheme = (colorMode: ColorModeType): ThemeConfig => {
         body: {
           fontFamily: 'body',
           color: mode('#3D4D54', '#ffffff')(props),
-          bg: mode('#ffffff', '#202023')(props)
+          bgGradient: mode('#ffffff', 'linear(to-br, #202023, #202023, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8), rgba(0, 0, 0))')(props),
+          minHeight: '100vh'
         }
       })
     },
@@ -69,7 +71,8 @@ export const getTheme = (colorMode: ColorModeType): ThemeConfig => {
       Form: formTheme,
       Input: inputTheme,
       Checkbox: checkboxTheme,
-      Select: selectTheme
+      Select: selectTheme,
+      Switch: switchTheme
     }
   });
 };

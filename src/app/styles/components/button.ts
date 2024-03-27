@@ -1,4 +1,4 @@
-import {accentColor, accentColorTransparent, mainShadow, successColor} from '../const';
+import {accentColor, accentColorTransparent, errorColorDark, errorColorLight, mainShadow, successColor} from '../const';
 
 export const buttonTheme = {
   variants: {
@@ -8,12 +8,15 @@ export const buttonTheme = {
       display: 'inline-flex',
       fontWeight: 600,
       bg: accentColor,
+      cursor: 'pointer',
       _hover: {
         background: 'transparent',
         border: `2px solid ${accentColor}`,
         color: accentColor,
         _disabled: {
-          backgroundColor: `2px solid ${accentColorTransparent}`
+          bg: accentColorTransparent,
+          color: 'gray.400',
+          cursor: 'not-allowed'
         }
       },
       _focusVisible: {
@@ -22,7 +25,11 @@ export const buttonTheme = {
         color: accentColor,
         boxShadow: 'none'
       },
-      cursor: 'pointer'
+      _disabled: {
+        bg: accentColorTransparent,
+        color: 'gray.400',
+        cursor: 'not-allowed'
+      }
     },
     secondary: {
       border: `2px solid ${accentColor}`,
@@ -54,6 +61,18 @@ export const buttonTheme = {
       color: 'white',
       _hover: {
         background: successColor,
+        borderColor: 'transparent',
+        color: 'white'
+      },
+      _focusVisible: {
+        boxShadow: mainShadow
+      }
+    },
+    error: {
+      border: `2px solid ${errorColorLight}`,
+      color: 'white',
+      _hover: {
+        background: errorColorDark,
         borderColor: 'transparent',
         color: 'white'
       },
