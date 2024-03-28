@@ -1,4 +1,4 @@
-import {Stack, Text} from '@chakra-ui/react';
+import {Heading, Stack} from '@chakra-ui/react';
 import {ReactElement} from 'react';
 
 type Props = {
@@ -10,9 +10,9 @@ export const FormHeader = (props: Props): ReactElement => {
 
   return (
     <Stack direction={{base: 'column', md: 'row'}} justify="space-between" mb={5}>
-      <Text textStyle="lg" fontWeight="medium">
+      <Heading as={'h2'} size="xl" fontWeight="medium">
         {heading}
-      </Text>
+      </Heading>
     </Stack>
   );
 };

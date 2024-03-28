@@ -1,4 +1,5 @@
 import {Box, FormControl, FormErrorMessage, FormHelperText, FormLabel, Input as ChakraInput, InputProps as ChakraInputProps} from '@chakra-ui/react';
+import {ReactElement} from 'react';
 import {UseFormRegisterReturn} from 'react-hook-form';
 
 type InputProps = ChakraInputProps & {
@@ -8,7 +9,7 @@ type InputProps = ChakraInputProps & {
   isRequired?: boolean;
   register?: UseFormRegisterReturn<string>;
 };
-export const Input = (props: InputProps) => {
+export const Input = (props: InputProps): ReactElement => {
   const {label, helperText, error, isRequired = false, register, ...otherProps} = props;
 
   return (

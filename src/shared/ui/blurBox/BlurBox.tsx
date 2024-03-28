@@ -10,7 +10,7 @@ export const BlurBox = (props: Props): ReactElement => {
   const boxBg = useColorModeValue('secondaryBgColorLightTransparent', 'secondaryBgColorDarkTransparent');
 
   return (
-    <Box padding={5} overflow="hidden" borderRadius="lg" bg={boxBg} css={{backdropFilter: 'blur(8px)'}} {...otherProps}>
+    <Box padding={5} borderRadius="lg" bg={boxBg} css={{backdropFilter: 'blur(8px)'}} {...otherProps}>
       {children}
     </Box>
   );

@@ -7,6 +7,10 @@ export const selectTheme = {
         color: accentColor,
         bg: 'transparent',
         border: `2px solid ${accentColor}`
+      },
+      '> option': {
+        background: 'black',
+        color: 'white'
       }
     },
     clear: {

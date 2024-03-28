@@ -1,12 +1,10 @@
+import {LabelOptions} from '@/shared/types/options';
+
 export enum FormInputVariants {
   Input = 'input',
   Select = 'select',
+  MultiSelect = 'multi-select',
   Datepicker = 'datepicker'
-}
-
-interface LabelOptions {
-  label: string;
-  value: number;
 }
 
 interface BaseFormOption {
@@ -27,5 +25,12 @@ export type FormOption<V extends FormInputVariants> = V extends FormInputVariant
     : V extends FormInputVariants.Datepicker
       ? BaseFormOption & {
           variant: FormInputVariants.Datepicker;
+          minDate?: string;
+          maxDate?: string;
         }
-      : never;
+      : V extends FormInputVariants.MultiSelect
+        ? BaseFormOption & {
+            variant: FormInputVariants.MultiSelect;
+            labelOptions: LabelOptions[];
+          }
+        : never;
