@@ -12,13 +12,14 @@ interface Props<T> {
   heading: string;
   items: T[];
   renderItem: (item: T) => ReactNode;
+  pageSizeOptions?: number[];
 }
 
 export const Table = <T,>(props: Props<T>): ReactElement => {
-  const {items, renderItem, heading} = props;
+  const {items, renderItem, heading, pageSizeOptions = [10, 20, 50]} = props;
   const keys = Object.keys(items[0] || {}).filter((key) => key !== '_id');
   const [pageIndex, setPageIndex] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(pageSizeOptions[0]);
   const [data, setData] = useState(items);
   const [loading] = useState(false);
   const [sortDirection, setSortDirection] = useState('');
@@ -73,7 +74,7 @@ export const Table = <T,>(props: Props<T>): ReactElement => {
           pageIndex={pageIndex}
           setPageIndex={setPageIndex}
           totalItemsCount={data.length}
-          pageSizeOptions={[10, 20, 50]}
+          pageSizeOptions={pageSizeOptions}
         />
       </TableContainer>
     </BlurBox>

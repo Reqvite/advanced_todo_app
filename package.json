@@ -32,6 +32,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@chakra-ui/cli": "^2.4.1",
     "@types/lodash.orderby": "^4.6.9",
     "@types/node": "^20.11.24",
     "@types/react": "^18.2.56",
