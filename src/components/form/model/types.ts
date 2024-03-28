@@ -9,23 +9,23 @@ interface LabelOptions {
   value: number;
 }
 
+interface BaseFormOption {
+  name: string;
+  id: string;
+  isRequired?: boolean;
+}
+
 export type FormOption<V extends FormInputVariants> = V extends FormInputVariants.Input
-  ? {
+  ? BaseFormOption & {
       variant: FormInputVariants.Input;
-      name: string;
-      id: string;
     }
   : V extends FormInputVariants.Select
-    ? {
+    ? BaseFormOption & {
         variant: FormInputVariants.Select;
-        name: string;
-        id: string;
         labelOptions: LabelOptions[];
       }
     : V extends FormInputVariants.Datepicker
-      ? {
+      ? BaseFormOption & {
           variant: FormInputVariants.Datepicker;
-          name: string;
-          id: string;
         }
       : never;
