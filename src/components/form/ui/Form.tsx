@@ -20,7 +20,6 @@ export const Form = (props: Props) => {
     handleSubmit,
     formState: {errors}
   } = useForm({resolver: formValidationSchema});
-
   const onSubmit = (data: any) => {
     console.log(data);
   };

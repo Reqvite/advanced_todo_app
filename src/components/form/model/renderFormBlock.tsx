@@ -48,11 +48,18 @@ export const renderFormBlock = ({option, register, errors}: Props) => {
           {options}
         </Select>
       );
-    // case FormInputVariants.Datepicker:
-    //   return (
-    //     <Select isRequired={option.isRequired} label={option.name} key={option.id} variant="primary" register={register(option.id)}>
-    //       {options}
-    //     </Select>
-    //   );
+    case FormInputVariants.Datepicker:
+      return (
+        <Input
+          variant="primary"
+          error={Object.keys(errors).includes(option.id) ? errors[option.id].message : ''}
+          isRequired={option.isRequired}
+          key={option.id}
+          label={option.name}
+          placeholder={option.name}
+          type="datetime-local"
+          register={register(option.id)}
+        />
+      );
   }
 };
