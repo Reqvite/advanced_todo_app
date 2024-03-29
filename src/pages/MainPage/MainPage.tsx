@@ -1,4 +1,5 @@
 import {Box} from '@chakra-ui/layout';
+import {ReactElement} from 'react';
 import {Table} from '@/components/table';
 import {TaskI} from '@/shared/types/task';
 import {TaskItem} from '@/shared/ui';
@@ -158,7 +159,7 @@ const mockData: TaskI[] = [
   }
 ];
 
-const MainPage = () => {
+const MainPage = (): ReactElement => {
   return (
     <Box>
       <Table<TaskI> items={mockData} renderItem={TaskItem} heading="Tasks" />

@@ -10,6 +10,7 @@ type Props = {
 export const Paginator = ({currentPage, totalPages, onPageChange}: Props): ReactElement => {
   const isFirstPage = currentPage === 0;
   const isLastPage = currentPage === totalPages - 1;
+  const displayedPage = currentPage + 1;
 
   const handlePreviousClick = (): void => {
     if (!isFirstPage) {
@@ -22,8 +23,6 @@ export const Paginator = ({currentPage, totalPages, onPageChange}: Props): React
       onPageChange((prevPage) => prevPage + 1);
     }
   };
-
-  const displayedPage = currentPage + 1;
 
   return (
     <Flex alignItems="center" gap={4} mt={4}>

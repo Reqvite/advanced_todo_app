@@ -12,17 +12,19 @@ interface Props<T> {
   heading: string;
   items: T[];
   renderItem: (item: T) => ReactNode;
+  pageSizeOptions?: number[];
 }
 
-export const Table = <T,>(props: Props<T>): ReactElement => {
-  const {items, renderItem, heading} = props;
+const DEFAULT_PAGINATION = [10, 20, 50];
+
+export const Table = <T,>({items, renderItem, heading, pageSizeOptions = DEFAULT_PAGINATION}: Props<T>): ReactElement => {
   const keys = Object.keys(items[0] || {}).filter((key) => key !== '_id');
-  const [pageIndex, setPageIndex] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-  const [data, setData] = useState(items);
-  const [loading] = useState(false);
-  const [sortDirection, setSortDirection] = useState('');
-  const [sortField, setSortField] = useState('');
+  const [pageIndex, setPageIndex] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(pageSizeOptions[0]);
+  const [data, setData] = useState<T[]>(items);
+  const [loading] = useState<boolean>(false);
+  const [sortDirection, setSortDirection] = useState<string>('');
+  const [sortField, setSortField] = useState<string>('');
   const onChangeSort = (key: string) => {
     const {sortedData, direction} = sortData(key, data);
     setSortField(key);
@@ -38,8 +40,8 @@ export const Table = <T,>(props: Props<T>): ReactElement => {
           <Thead>
             <Tr>
               <Th />
-              {keys.map((key, idx) => (
-                <Th key={idx}>
+              {keys.map((key) => (
+                <Th key={key}>
                   <Flex cursor="pointer" gap={1} alignItems="center" onClick={() => onChangeSort(key)}>
                     {key}
                     {sortField === key ? sortDirection === SortDirection.Ascending ? <FaArrowUpLong /> : <FaLongArrowAltDown /> : ''}
@@ -73,7 +75,7 @@ export const Table = <T,>(props: Props<T>): ReactElement => {
           pageIndex={pageIndex}
           setPageIndex={setPageIndex}
           totalItemsCount={data.length}
-          pageSizeOptions={[10, 20, 50]}
+          pageSizeOptions={pageSizeOptions}
         />
       </TableContainer>
     </BlurBox>

@@ -12,8 +12,7 @@ type Props = {
   pageSizeOptions: number[];
 };
 
-export const TablePagination = (props: Props): ReactElement => {
-  const {pageSize, setPageSize, pageIndex, setPageIndex, totalItemsCount, pageSizeOptions} = props;
+export const TablePagination = ({pageSize, setPageSize, pageIndex, setPageIndex, totalItemsCount, pageSizeOptions}: Props): ReactElement => {
   const totalPages = Math.ceil(totalItemsCount / pageSize);
   const onChangePageSize = (e: ChangeEvent<HTMLSelectElement>) => {
     const newSize = parseInt(e.target.value);
@@ -25,8 +24,8 @@ export const TablePagination = (props: Props): ReactElement => {
       <Flex alignItems="center" gap={2}>
         <Text>Items per page:</Text>
         <Select variant="clear" value={pageSize} onChange={onChangePageSize} width="47px">
-          {pageSizeOptions.map((size, idx) => (
-            <option key={idx}>{size}</option>
+          {pageSizeOptions.map((size) => (
+            <option key={size}>{size}</option>
           ))}
         </Select>
       </Flex>

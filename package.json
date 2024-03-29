@@ -18,8 +18,10 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
+    "@hookform/resolvers": "^3.3.4",
     "@reduxjs/toolkit": "^2.2.1",
     "axios": "^1.6.8",
+    "chakra-react-select": "^4.7.6",
     "framer-motion": "^11.0.8",
     "lodash.orderby": "^4.6.0",
     "react": "^18.2.0",
@@ -32,6 +34,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@chakra-ui/cli": "^2.4.1",
     "@types/lodash.orderby": "^4.6.9",
     "@types/node": "^20.11.24",
     "@types/react": "^18.2.56",

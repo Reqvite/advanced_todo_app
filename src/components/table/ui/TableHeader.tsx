@@ -6,9 +6,7 @@ type Props = {
   heading: string;
 };
 
-export const TableHeader = (props: Props): ReactElement => {
-  const {heading} = props;
-
+export const TableHeader = ({heading}: Props): ReactElement => {
   return (
     <Stack direction={{base: 'column', md: 'row'}} justify="space-between" mb={5}>
       <Text textStyle="lg" fontWeight="medium">
