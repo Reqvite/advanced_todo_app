@@ -6,9 +6,7 @@ import {MdDelete} from 'react-icons/md';
 
 type Props = ButtonProps;
 
-export const DeleteButton = (props: Props): ReactElement => {
-  const {...otherProps} = props;
-
+export const DeleteButton = ({...otherProps}: Props): ReactElement => {
   return (
     <Button variant={'error'} {...otherProps}>
       <Icon boxSize={5} as={MdDelete} />

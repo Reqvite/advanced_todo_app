@@ -5,8 +5,7 @@ import {formatDate, priorityOptions, tagOptions} from '@/shared/lib/helpers';
 import {TaskI} from '@/shared/types/task';
 import {DeleteButton, EditButton} from '@/shared/ui';
 
-export const TaskItem = (props: TaskI): ReactElement => {
-  const {_id, note, priority, expDate, tags} = props;
+export const TaskItem = ({_id, note, priority, expDate, tags}: TaskI): ReactElement => {
   const isDisabled = new Date(expDate).getTime() < new Date(TODAYS_DATE).getTime();
   const priorityValue = priorityOptions.find((option) => option.value === priority)?.label;
 

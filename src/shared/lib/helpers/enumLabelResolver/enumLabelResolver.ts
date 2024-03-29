@@ -1,4 +1,5 @@
 import {Priority, Tag} from '@/shared/types/task';
+
 const enumLabelResolver = {
   priority: {
     [Priority.LOW]: 'Low',
@@ -18,7 +19,6 @@ const priorityOptions = Object.entries(enumLabelResolver.priority).map(([value, 
   label,
   value: +value
 }));
-
 const tagOptions = Object.entries(enumLabelResolver.tag).map(([value, label]) => ({
   label,
   value: +value

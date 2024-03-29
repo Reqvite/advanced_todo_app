@@ -13,9 +13,7 @@ type SelectProps = SelectFieldProps & {
   placeholder?: string;
 };
 
-export const Select = React.forwardRef<HTMLSelectElement, SelectProps>((props, ref) => {
-  const {label, helperText, error, isRequired = false, ...otherProps} = props;
-
+export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(({label, helperText, error, isRequired = false, ...otherProps}, ref) => {
   return (
     <FormControl isRequired={isRequired} isInvalid={Boolean(error)}>
       <FormLabel>{label}</FormLabel>

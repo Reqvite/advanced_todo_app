@@ -13,18 +13,18 @@ type MultiSelectProps = SelectFieldProps & {
   placeholder?: string;
 };
 
-export const MultiSelect = React.forwardRef<HTMLSelectElement, MultiSelectProps>((props, ref) => {
-  const {label, helperText, error, isRequired = false, ...otherProps} = props;
-
-  return (
-    <FormControl isRequired={isRequired} isInvalid={Boolean(error)}>
-      <FormLabel>{label}</FormLabel>
-      {/* @ts-expect-error /// */}
-      <ChakraReactSelect isMulti closeMenuOnSelect={false} {...otherProps} ref={ref} />
-      {helperText && <FormHelperText>{helperText}</FormHelperText>}
-      <Box height="5px" marginTop={2}>
-        <FormErrorMessage margin={0}>{error}</FormErrorMessage>
-      </Box>
-    </FormControl>
-  );
-});
+export const MultiSelect = React.forwardRef<HTMLSelectElement, MultiSelectProps>(
+  ({label, helperText, error, isRequired = false, ...otherProps}, ref) => {
+    return (
+      <FormControl isRequired={isRequired} isInvalid={Boolean(error)}>
+        <FormLabel>{label}</FormLabel>
+        {/* @ts-expect-error /// */}
+        <ChakraReactSelect isMulti closeMenuOnSelect={false} {...otherProps} ref={ref} />
+        {helperText && <FormHelperText>{helperText}</FormHelperText>}
+        <Box height="5px" marginTop={2}>
+          <FormErrorMessage margin={0}>{error}</FormErrorMessage>
+        </Box>
+      </FormControl>
+    );
+  }
+);

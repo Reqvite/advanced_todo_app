@@ -5,8 +5,7 @@ type Props = BoxProps & {
   children: ReactNode;
 };
 
-export const BlurBox = (props: Props): ReactElement => {
-  const {children, ...otherProps} = props;
+export const BlurBox = ({children, ...otherProps}: Props): ReactElement => {
   const boxBg = useColorModeValue('secondaryBgColorLightTransparent', 'secondaryBgColorDarkTransparent');
 
   return (

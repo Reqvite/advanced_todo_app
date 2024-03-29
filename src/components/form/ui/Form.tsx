@@ -1,4 +1,5 @@
 import {Box, Button, Stack} from '@chakra-ui/react';
+import {ReactElement} from 'react';
 import {Resolver, useForm} from 'react-hook-form';
 import {BlurBox} from '@/shared/ui';
 import {renderFormBlock} from '../model/renderFormBlock';
@@ -9,26 +10,23 @@ type Props = {
   heading: string;
   options: FormOption<FormInputVariants>[];
   formValidationSchema?: Resolver<any>;
+  defaultValues: {[key: string]: string | number | [] | object};
+  onSubmit: (data: object) => void;
 };
 
-export const Form = (props: Props) => {
-  const {heading, options, formValidationSchema} = props;
+export const Form = ({heading, options, formValidationSchema, onSubmit, defaultValues}: Props): ReactElement => {
   const {
-    register,
     handleSubmit,
     control,
     formState: {errors}
-  } = useForm({resolver: formValidationSchema});
-  const onSubmit = (data: unknown) => {
-    console.log(data);
-  };
+  } = useForm({resolver: formValidationSchema, defaultValues});
 
   return (
     <BlurBox>
       <FormHeader heading={heading} />
-      <Box w="full" as="form" maxW="800px" mt={10} mx={'auto'} onSubmit={handleSubmit(onSubmit)}>
+      <Box w="full" as="form" maxW="800px" mt={10} mx="auto" onSubmit={handleSubmit(onSubmit)}>
         <Stack gap={4}>
-          {options.map((option) => renderFormBlock({option, register, errors, control}))}
+          {options.map((option) => renderFormBlock({option, errors, control}))}
           <Button type="submit" variant="primary" fontFamily="heading" w="full" mt={4}>
             Submit
           </Button>

@@ -5,9 +5,7 @@ type Props = {
   heading: string;
 };
 
-export const FormHeader = (props: Props): ReactElement => {
-  const {heading} = props;
-
+export const FormHeader = ({heading}: Props): ReactElement => {
   return (
     <Stack direction={{base: 'column', md: 'row'}} justify="space-between" mb={5}>
       <Heading as="h2" size="xl" fontWeight="medium">

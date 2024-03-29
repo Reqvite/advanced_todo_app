@@ -1,42 +1,55 @@
 import {ReactElement} from 'react';
-import {Control, Controller, FieldErrors, FieldValues, UseFormRegister} from 'react-hook-form';
+import {Control, Controller, FieldErrors, FieldValues} from 'react-hook-form';
 import {Input, MultiSelect, Select} from '@/shared/ui';
 import {FormInputVariants, FormOption} from './types';
 
 type Props = {
   option: FormOption<FormInputVariants>;
-  register: UseFormRegister<FieldValues>;
   errors: FieldErrors<FieldValues>;
   control: Control<FieldValues>;
 };
 
-export const renderFormBlock = ({option, register, errors, control}: Props): ReactElement => {
+export const renderFormBlock = ({option, errors, control}: Props): ReactElement => {
   switch (option.variant) {
     case FormInputVariants.Input:
       return (
-        <Input
-          error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
-          isRequired={option.isRequired}
+        <Controller
           key={option.id}
-          label={option.name}
-          placeholder={option.name}
-          variant="primary"
-          register={register(option.id)}
+          control={control}
+          name={option.id}
+          render={({field}) => (
+            <Input
+              error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
+              isRequired={option.isRequired}
+              key={option.id}
+              label={option.name}
+              placeholder={option.name}
+              variant="primary"
+              {...field}
+            />
+          )}
         />
       );
     case FormInputVariants.Datepicker:
       return (
-        <Input
-          variant="primary"
-          error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
-          isRequired={option.isRequired}
+        <Controller
           key={option.id}
-          label={option.name}
-          placeholder={option.name}
-          type="date"
-          min={option.minDate}
-          max={option.maxDate}
-          register={register(option.id)}
+          control={control}
+          name={option.id}
+          render={({field}) => (
+            <Input
+              variant="primary"
+              error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
+              isRequired={option.isRequired}
+              key={option.id}
+              label={option.name}
+              placeholder={option.name}
+              type="date"
+              min={option.minDate}
+              max={option.maxDate}
+              {...field}
+            />
+          )}
         />
       );
     case FormInputVariants.Select:

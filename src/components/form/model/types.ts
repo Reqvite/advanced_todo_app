@@ -13,24 +13,23 @@ interface BaseFormOption {
   isRequired?: boolean;
 }
 
-export type FormOption<V extends FormInputVariants> = V extends FormInputVariants.Input
-  ? BaseFormOption & {
-      variant: FormInputVariants.Input;
-    }
-  : V extends FormInputVariants.Select
-    ? BaseFormOption & {
-        variant: FormInputVariants.Select;
-        labelOptions: LabelOptions[];
-      }
-    : V extends FormInputVariants.Datepicker
-      ? BaseFormOption & {
-          variant: FormInputVariants.Datepicker;
-          minDate?: string;
-          maxDate?: string;
-        }
-      : V extends FormInputVariants.MultiSelect
-        ? BaseFormOption & {
-            variant: FormInputVariants.MultiSelect;
-            labelOptions: LabelOptions[];
-          }
-        : never;
+type FormOptionVariantMap = {
+  [FormInputVariants.Input]: {
+    variant: FormInputVariants.Input;
+  };
+  [FormInputVariants.Select]: {
+    variant: FormInputVariants.Select;
+    labelOptions: LabelOptions[];
+  };
+  [FormInputVariants.Datepicker]: {
+    variant: FormInputVariants.Datepicker;
+    minDate?: string;
+    maxDate?: string;
+  };
+  [FormInputVariants.MultiSelect]: {
+    variant: FormInputVariants.MultiSelect;
+    labelOptions: LabelOptions[];
+  };
+};
+
+export type FormOption<T extends FormInputVariants> = BaseFormOption & FormOptionVariantMap[T];

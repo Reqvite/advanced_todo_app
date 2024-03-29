@@ -10,9 +10,7 @@ type Props = ButtonProps & {
   id: string;
 };
 
-export const EditButton = (props: Props): ReactElement => {
-  const {id, ...otherProps} = props;
-
+export const EditButton = ({id, ...otherProps}: Props): ReactElement => {
   return (
     <Button as={NavLink} variant="secondary" to={getRouteUpdateTask(id)} {...otherProps}>
       <Icon boxSize={6} as={CiEdit} />

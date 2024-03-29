@@ -1,10 +1,11 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import {ErrorMessages} from '@/shared/const';
 
 const createTask = yup.object().shape({
-  note: yup.string().min(2, 'Minimum length should be 2 characters').required('Note is required'),
-  priority: yup.object().required('Priority is required'),
-  expDate: yup.date().required('Expiration date is required')
+  note: yup.string().min(2, ErrorMessages.minLength(2)).required(ErrorMessages.isRequired('Note')),
+  priority: yup.object().required(ErrorMessages.isRequired('Priority')),
+  expDate: yup.date().required(ErrorMessages.isRequired('Expiration date'))
 });
 
 export const createTaskSchema = yupResolver(createTask);
