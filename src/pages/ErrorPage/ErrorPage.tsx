@@ -1,4 +1,6 @@
-export const ErrorPage = () => {
+import {ReactElement} from 'react';
+
+export const ErrorPage = (): ReactElement => {
   const reloadPage = () => {
     location.reload();
     localStorage.clear();

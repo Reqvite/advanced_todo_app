@@ -18,8 +18,8 @@ export const TaskItem = ({_id, note, priority, expDate, tags}: TaskI): ReactElem
       <Td>{priorityValue}</Td>
       <Td>
         <Flex gap={2}>
-          {tags.map((tag, idx) => (
-            <ChakraTag key={idx} variant="solid" colorScheme="teal">
+          {tags.map((tag) => (
+            <ChakraTag key={tag} variant="solid" colorScheme="teal">
               {tagOptions.find((option) => option.value === tag)?.label}
             </ChakraTag>
           ))}

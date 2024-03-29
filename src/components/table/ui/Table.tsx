@@ -40,8 +40,8 @@ export const Table = <T,>({items, renderItem, heading, pageSizeOptions = DEFAULT
           <Thead>
             <Tr>
               <Th />
-              {keys.map((key, idx) => (
-                <Th key={idx}>
+              {keys.map((key) => (
+                <Th key={key}>
                   <Flex cursor="pointer" gap={1} alignItems="center" onClick={() => onChangeSort(key)}>
                     {key}
                     {sortField === key ? sortDirection === SortDirection.Ascending ? <FaArrowUpLong /> : <FaLongArrowAltDown /> : ''}

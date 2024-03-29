@@ -24,8 +24,8 @@ export const TablePagination = ({pageSize, setPageSize, pageIndex, setPageIndex,
       <Flex alignItems="center" gap={2}>
         <Text>Items per page:</Text>
         <Select variant="clear" value={pageSize} onChange={onChangePageSize} width="47px">
-          {pageSizeOptions.map((size, idx) => (
-            <option key={idx}>{size}</option>
+          {pageSizeOptions.map((size) => (
+            <option key={size}>{size}</option>
           ))}
         </Select>
       </Flex>
