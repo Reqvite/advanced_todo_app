@@ -6,15 +6,15 @@ import {renderFormBlock} from '../model/renderFormBlock';
 import {FormInputVariants, FormOption} from '../model/types';
 import {FormHeader} from './FormHeader';
 
-type Props = {
+type Props<T> = {
   heading: string;
   options: FormOption<FormInputVariants>[];
   formValidationSchema?: Resolver<any>;
-  defaultValues: {[key: string]: string | number | [] | object};
-  onSubmit: (data: object) => void;
+  defaultValues: T;
+  onSubmit: (data: T) => void;
 };
 
-export const Form = ({heading, options, formValidationSchema, onSubmit, defaultValues}: Props): ReactElement => {
+export const Form = <T,>({heading, options, formValidationSchema, onSubmit, defaultValues}: Props<T>): ReactElement => {
   const {
     handleSubmit,
     control,
