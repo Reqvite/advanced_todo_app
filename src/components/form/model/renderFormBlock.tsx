@@ -58,17 +58,19 @@ export const renderFormBlock = ({option, errors, control}: Props): ReactElement 
           key={option.id}
           control={control}
           name={option.id}
-          render={({field}) => (
-            <Select
-              error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
-              isRequired={option.isRequired}
-              label={option.name}
-              key={option.id}
-              variant="primary"
-              options={option.labelOptions}
-              {...field}
-            />
-          )}
+          render={({field}) => {
+            return (
+              <Select
+                error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
+                isRequired={option.isRequired}
+                label={option.name}
+                key={option.id}
+                variant="primary"
+                options={option.labelOptions}
+                {...field}
+              />
+            );
+          }}
         />
       );
     case FormInputVariants.MultiSelect:
@@ -77,19 +79,15 @@ export const renderFormBlock = ({option, errors, control}: Props): ReactElement 
           key={option.id}
           control={control}
           name={option.id}
-          render={({field: {onChange, onBlur, value, name, ref}}) => (
+          render={({field}) => (
             <MultiSelect
               variant="primary"
               error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
               isRequired={option.isRequired}
               label={option.name}
               options={option.labelOptions}
-              name={name}
-              ref={ref}
-              onChange={onChange}
-              onBlur={onBlur}
-              value={value}
               placeholder={option.name}
+              {...field}
             />
           )}
         />

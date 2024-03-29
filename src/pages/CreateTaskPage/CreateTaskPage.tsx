@@ -16,7 +16,6 @@ const CreateTaskPage = (): ReactElement => {
   const onSubmit = (data: object) => {
     console.log(data);
   };
-
   return (
     <Form<TaskFormModel>
       heading="Create task"
