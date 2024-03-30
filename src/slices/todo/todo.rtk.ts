@@ -9,4 +9,4 @@ export const tasksApi = rtkApi.injectEndpoints({
   })
 });
 
-export const useGetTask = tasksApi.useGetTaskByIdQuery;
+export const {useGetTaskByIdQuery} = tasksApi;

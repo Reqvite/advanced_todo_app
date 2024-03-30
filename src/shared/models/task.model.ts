@@ -1,15 +1,18 @@
+import {tagOptions} from '../lib/helpers';
+import {LabelOptions} from '../types/options';
 import {TaskI} from '../types/task';
 
 export class TaskFormModel {
   public note: string;
-  public priority: string;
+  public priority: number;
   public expDate: string;
-  public tags: [];
+  public tags: LabelOptions[];
 
   constructor(model?: TaskI) {
+    const defaultTags = tagOptions.filter((tag) => model?.tags.includes(tag.value));
     this.note = model?.note || '';
-    this.priority = model?.priority || '';
+    this.priority = model?.priority || 1;
     this.expDate = model?.expDate || '';
-    this.tags = model?.tags || [];
+    this.tags = defaultTags || [];
   }
 }

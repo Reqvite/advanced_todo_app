@@ -17,6 +17,7 @@ export const TablePagination = ({pageSize, setPageSize, pageIndex, setPageIndex,
   const onChangePageSize = (e: ChangeEvent<HTMLSelectElement>) => {
     const newSize = parseInt(e.target.value);
     setPageSize(newSize);
+    setPageIndex(0);
   };
 
   return (
