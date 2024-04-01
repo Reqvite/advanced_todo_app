@@ -5,7 +5,7 @@ export class TaskFormModel {
   public note: string;
   public priority: number;
   public expDate: string;
-  public tags;
+  public tags: any[];
 
   constructor(model?: TaskI) {
     const defaultTags = tagOptions.filter((tag) => model?.tags.includes(tag.value)) || [];
