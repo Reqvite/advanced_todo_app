@@ -10,7 +10,6 @@ type MultiSelectProps = SelectFieldProps & {
   isRequired?: boolean;
   variant?: string;
   options: LabelOptions[];
-  labelOptions: LabelOptions[];
   placeholder?: string;
 };
 
