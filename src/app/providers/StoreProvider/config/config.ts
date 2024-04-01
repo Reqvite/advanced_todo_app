@@ -1,5 +1,5 @@
 import {configureStore, ReducersMapObject} from '@reduxjs/toolkit';
-import {rtkApi} from '@/shared/api';
+import {tasksApi} from '@/slices/todo/todo.rtk';
 import {ExtraArguments, RootReducer, StoreInstance, StorePackage} from './types';
 
 class Store implements StorePackage {
@@ -11,11 +11,11 @@ class Store implements StorePackage {
 
   public constructor() {
     const rootReducer: ReducersMapObject<RootReducer> = {
-      [rtkApi.reducerPath]: rtkApi.reducer
+      [tasksApi.reducerPath]: tasksApi.reducer
     };
     this.#instance = configureStore({
       reducer: rootReducer,
-      middleware: (getDefaultMiddleware) => getDefaultMiddleware({}).concat(rtkApi.middleware)
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware({}).concat(tasksApi.middleware)
     });
   }
 

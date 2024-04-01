@@ -12,9 +12,10 @@ type Props<T> = {
   formValidationSchema?: Resolver<any>;
   defaultValues: T;
   onSubmit: (data: T) => void;
+  isLoading: boolean;
 };
 
-export const Form = <T,>({heading, options, formValidationSchema, onSubmit, defaultValues}: Props<T>): ReactElement => {
+export const Form = <T,>({heading, options, formValidationSchema, onSubmit, defaultValues, isLoading}: Props<T>): ReactElement => {
   const {
     handleSubmit,
     control,
@@ -27,7 +28,7 @@ export const Form = <T,>({heading, options, formValidationSchema, onSubmit, defa
       <Box w="full" as="form" maxW="800px" mt={10} mx="auto" onSubmit={handleSubmit(onSubmit)}>
         <Stack gap={4}>
           {options.map((option) => renderFormBlock({option, errors, control}))}
-          <Button type="submit" variant="primary" fontFamily="heading" w="full" mt={4}>
+          <Button isLoading={isLoading} isDisabled={isLoading} type="submit" variant="primary" fontFamily="heading" w="full" mt={4}>
             Submit
           </Button>
         </Stack>

@@ -1,9 +1,9 @@
 import {type configureStore, type ThunkMiddleware, type Tuple, type UnknownAction} from '@reduxjs/toolkit';
-import {rtkApi} from '@/shared/api';
+import {tasksApi} from '@/slices/todo/todo.rtk';
 import {store} from './store';
 
 type RootReducer = {
-  [rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
+  [tasksApi.reducerPath]: ReturnType<typeof tasksApi.reducer>;
 };
 
 type ExtraArguments = {

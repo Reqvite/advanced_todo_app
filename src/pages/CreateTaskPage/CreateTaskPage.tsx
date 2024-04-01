@@ -3,6 +3,7 @@ import {Form, FormInputVariants, FormOption} from '@/components/form';
 import {priorityOptions, tagOptions} from '@/shared/lib/helpers';
 import {createTaskSchema} from '@/shared/lib/yup/createTask.schema';
 import {TaskFormModel} from '@/shared/models';
+import {useCreateTaskMutation} from '@/slices/todo/todo.rtk';
 
 const options: FormOption<FormInputVariants>[] = [
   {id: 'note', variant: FormInputVariants.Input, name: 'Note', isRequired: true},
@@ -13,9 +14,14 @@ const options: FormOption<FormInputVariants>[] = [
 const defaultValues = new TaskFormModel();
 
 const CreateTaskPage = (): ReactElement => {
-  const onSubmit = (data: object) => {
-    console.log(data);
+  const [createTask, {isLoading: isLoading}] = useCreateTaskMutation();
+
+  const onSubmit = (newTask: TaskFormModel): void => {
+    const tags = newTask.tags.map(({value}) => value);
+    newTask.tags = tags;
+    createTask({newTask});
   };
+
   return (
     <Form<TaskFormModel>
       heading="Create task"
@@ -23,6 +29,7 @@ const CreateTaskPage = (): ReactElement => {
       formValidationSchema={createTaskSchema}
       defaultValues={defaultValues}
       onSubmit={onSubmit}
+      isLoading={isLoading}
     />
   );
 };

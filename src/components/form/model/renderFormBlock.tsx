@@ -86,6 +86,7 @@ export const renderFormBlock = ({option, errors, control}: Props): ReactElement 
               isRequired={option.isRequired}
               label={option.name}
               options={option.labelOptions}
+              labelOptions={option.labelOptions}
               placeholder={option.name}
               {...field}
             />

@@ -64,15 +64,17 @@ export const Table = <T extends {_id: string}>({items, heading, pageSizeOptions 
                 </Td>
               </Tr>
             ) : (
-              data.map((row) => (
-                <Tr key={row._id}>
-                  {columns.map((column) => (
-                    <Td key={column.accessor}>
-                      {column.cell ? column.cell(row[column.accessor as keyof T], row._id) : row[column.accessor as keyof T]}
-                    </Td>
-                  ))}
-                </Tr>
-              ))
+              data
+                .map((row) => (
+                  <Tr key={row._id}>
+                    {columns.map((column) => (
+                      <Td key={column.accessor}>
+                        {column.cell ? column.cell(row[column.accessor as keyof T], row._id) : row[column.accessor as keyof T]}
+                      </Td>
+                    ))}
+                  </Tr>
+                ))
+                .slice(pageSize * pageIndex, pageSize * (pageIndex + 1))
             )}
           </Tbody>
         </ChakraTable>

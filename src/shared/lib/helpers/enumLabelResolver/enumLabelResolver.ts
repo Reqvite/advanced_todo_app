@@ -17,11 +17,11 @@ const enumLabelResolver = {
 
 const priorityOptions = Object.entries(enumLabelResolver.priority).map(([value, label]) => ({
   label,
-  value: +value
+  value: Number(value)
 }));
 const tagOptions = Object.entries(enumLabelResolver.tag).map(([value, label]) => ({
   label,
-  value: +value
+  value: Number(value)
 }));
 
 export {priorityOptions, tagOptions};

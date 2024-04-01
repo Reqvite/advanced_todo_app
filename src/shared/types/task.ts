@@ -12,12 +12,19 @@ enum Tag {
   STUDY = 4
 }
 
-interface TaskI {
+interface BaseTaskI {
   _id: string;
   note: string;
   priority: Priority;
   expDate: string;
+}
+
+interface TaskI extends BaseTaskI {
   tags: Tag[];
 }
 
-export {Priority, Tag, type TaskI};
+interface TaskIWithTagLabel extends BaseTaskI {
+  tags: {label: string; value: string}[];
+}
+
+export {Priority, Tag, type TaskI, type TaskIWithTagLabel};

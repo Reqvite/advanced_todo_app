@@ -10,6 +10,7 @@ type MultiSelectProps = SelectFieldProps & {
   isRequired?: boolean;
   variant?: string;
   options: LabelOptions[];
+  labelOptions: LabelOptions[];
   placeholder?: string;
 };
 
@@ -19,7 +20,7 @@ export const MultiSelect = React.forwardRef<HTMLSelectElement, MultiSelectProps>
       <FormControl isRequired={isRequired} isInvalid={Boolean(error)}>
         <FormLabel>{label}</FormLabel>
         {/* @ts-expect-error /// */}
-        <ChakraReactSelect isMulti closeMenuOnSelect={false} {...otherProps} ref={ref} />
+        <ChakraReactSelect onChange={onChangeNew} isMulti closeMenuOnSelect={false} {...otherProps} ref={ref} />
         {helperText && <FormHelperText>{helperText}</FormHelperText>}
         <Box height="5px" marginTop={2}>
           <FormErrorMessage margin={0}>{error}</FormErrorMessage>
