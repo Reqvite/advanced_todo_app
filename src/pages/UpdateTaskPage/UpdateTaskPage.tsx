@@ -24,7 +24,6 @@ const UpdateTaskPage = (): ReactElement => {
   }
 
   const onSubmit = (updatedTask: TaskFormModel) => {
-    console.log(updatedTask);
     const tags = updatedTask.tags.map(({value}) => value);
     updatedTask.tags = tags;
     updateTask({id, updatedTask});
