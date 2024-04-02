@@ -2,7 +2,7 @@ import {Flex, Table as ChakraTable, TableContainer, Tbody, Td, Th, Thead, Tr} fr
 import {ReactElement, ReactNode, useReducer} from 'react';
 import {FaLongArrowAltDown} from 'react-icons/fa';
 import {FaArrowUpLong} from 'react-icons/fa6';
-import {SortDirection} from '@/shared/types/sortDirection.ts';
+import {SortDirectionEnum} from '@/shared/types/sortDirection.ts';
 import {BlurBox} from '@/shared/ui';
 import {sortData} from '../model/sortData.ts';
 import {tableReducer} from '../model/tableReducer.ts';
@@ -42,7 +42,7 @@ export const Table = <T extends {_id: string}>({items, heading, pageSizeOptions 
                 <Th key={accessor}>
                   <Flex cursor="pointer" gap={1} alignItems="center" onClick={() => onChangeSort(accessor)}>
                     {header}
-                    {sortField === accessor ? sortDirection === SortDirection.Ascending ? <FaArrowUpLong /> : <FaLongArrowAltDown /> : ''}
+                    {sortField === accessor ? sortDirection === SortDirectionEnum.Ascending ? <FaArrowUpLong /> : <FaLongArrowAltDown /> : ''}
                   </Flex>
                 </Th>
               ))}

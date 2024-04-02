@@ -1,22 +1,22 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {TaskFormModel} from '@/shared/models';
-import {ApiPath} from '@/shared/types/apiPath';
-import {RtkApiTags} from '@/shared/types/rtkApiTags';
+import {ApiPathEnum} from '@/shared/types/apiPath';
+import {RtkApiTagsEnum} from '@/shared/types/rtkApiTags';
 import {TaskI} from '@/shared/types/task';
 
 export const tasksApi = createApi({
   reducerPath: 'taskApi',
-  baseQuery: fetchBaseQuery({baseUrl: `${import.meta.env.VITE_API_URL}${ApiPath.TASKS}`}),
-  tagTypes: [RtkApiTags.Task, RtkApiTags.Tasks],
+  baseQuery: fetchBaseQuery({baseUrl: `${import.meta.env.VITE_API_URL}${ApiPathEnum.TASKS}`}),
+  tagTypes: [RtkApiTagsEnum.Task, RtkApiTagsEnum.Tasks],
   endpoints: (builder) => ({
     getTasks: builder.query<{data: TaskI[]}, void>({
       query: () => ``,
-      providesTags: [RtkApiTags.Tasks]
+      providesTags: [RtkApiTagsEnum.Tasks]
     }),
 
     getTaskById: builder.query<{data: TaskI}, string | undefined>({
       query: (id) => `${id}`,
-      providesTags: [RtkApiTags.Task]
+      providesTags: [RtkApiTagsEnum.Task]
     }),
 
     createTask: builder.mutation<{data: TaskI}, {task: TaskFormModel}>({
@@ -25,7 +25,7 @@ export const tasksApi = createApi({
         method: 'POST',
         body: task
       }),
-      invalidatesTags: [RtkApiTags.Tasks]
+      invalidatesTags: [RtkApiTagsEnum.Tasks]
     }),
 
     updateTaskById: builder.mutation<{data: TaskI}, {id: string | undefined; task: Partial<TaskFormModel>}>({
@@ -34,7 +34,7 @@ export const tasksApi = createApi({
         method: 'PUT',
         body: task
       }),
-      invalidatesTags: [RtkApiTags.Tasks, RtkApiTags.Task]
+      invalidatesTags: [RtkApiTagsEnum.Tasks, RtkApiTagsEnum.Task]
     })
   })
 });

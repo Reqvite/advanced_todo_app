@@ -1,11 +1,11 @@
 import {Button, Flex, Text} from '@chakra-ui/react';
 import {ReactElement} from 'react';
-import {Action} from '@/shared/types/reducerAction';
+import {ActionI} from '@/shared/types/reducerAction';
 
 type Props = {
   currentPage: number;
   totalPages: number;
-  onPageChange: ({type}: Action) => void;
+  onPageChange: ({type}: ActionI) => void;
 };
 
 export const Paginator = ({currentPage, totalPages, onPageChange}: Props): ReactElement => {

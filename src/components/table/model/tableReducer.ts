@@ -1,4 +1,4 @@
-import {Action} from '@/shared/types/reducerAction';
+import {ActionI} from '@/shared/types/reducerAction';
 import {State} from './types';
 
 const DEFAULT_PAGINATION = [10, 20, 50];
@@ -11,7 +11,7 @@ const initialState = {
   sortField: ''
 };
 
-const tableReducer = <T>(state: State<T>, action: Action) => {
+const tableReducer = <T>(state: State<T>, action: ActionI) => {
   switch (action.type) {
     case 'SET_PAGE_INDEX':
       return {...state, pageIndex: action.payload};

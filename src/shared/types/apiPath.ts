@@ -1,12 +1,12 @@
-enum ApiPath {
+enum ApiPathEnum {
   TASKS = '/tasks'
 }
 
-enum BasePath {
+enum BasePathEnum {
   BY_ID = '/:id',
   EMPTY = '/'
 }
 
-const TasksApiPath = {...BasePath};
+const TasksApiPath = {...BasePathEnum};
 
-export {ApiPath, TasksApiPath};
+export {ApiPathEnum, TasksApiPath};

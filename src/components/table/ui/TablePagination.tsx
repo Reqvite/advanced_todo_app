@@ -1,14 +1,14 @@
 import {Flex, Text} from '@chakra-ui/layout';
 import {Select} from '@chakra-ui/select';
 import {ChangeEvent, ReactElement} from 'react';
-import {Action} from '@/shared/types/reducerAction';
+import {ActionI} from '@/shared/types/reducerAction';
 import {Paginator} from '@/shared/ui';
 
 type Props = {
   pageSize: number;
-  setPageSize: ({type}: Action) => void;
+  setPageSize: ({type}: ActionI) => void;
   pageIndex: number;
-  setPageIndex: ({type}: Action) => void;
+  setPageIndex: ({type}: ActionI) => void;
   totalItemsCount: number;
   pageSizeOptions: number[];
 };

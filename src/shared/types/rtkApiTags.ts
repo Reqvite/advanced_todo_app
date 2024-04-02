@@ -1,4 +1,4 @@
-export enum RtkApiTags {
+export enum RtkApiTagsEnum {
   Task = 'Task',
   Tasks = 'Tasks'
 }
