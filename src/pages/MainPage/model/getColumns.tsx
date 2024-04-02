@@ -3,13 +3,25 @@ import {Column} from '@/components/table';
 import {formatDate, priorityOptions, tagOptions} from '@/shared/lib/helpers';
 import {TaskI} from '@/shared/types/task';
 import {DeleteButton, EditButton} from '@/shared/ui';
-import {useUpdateTaskStatusByIdMutation} from '@/slices/task/task.rtk';
 
-const renderSwitchCell = () => (_: string, task: TaskI) => {
-  const [updateTaskStatus, {isLoading}] = useUpdateTaskStatusByIdMutation();
-  return <Switch isDisabled={isLoading} isChecked={task.isCompleted} onChange={() => updateTaskStatus({id: task._id, status: task.isCompleted})} />;
-};
+interface Props {
+  updateTaskStatus: ({id, status}: {id: string; status: boolean}) => void;
+  updateTaskStatusIsLoading: boolean;
+}
 
+type RenderSwitchCellProps = Props;
+
+const renderSwitchCell =
+  ({updateTaskStatus, updateTaskStatusIsLoading}: RenderSwitchCellProps) =>
+  (_: string, task: TaskI) => {
+    return (
+      <Switch
+        isDisabled={updateTaskStatusIsLoading}
+        isChecked={task.isCompleted}
+        onChange={() => updateTaskStatus({id: task._id, status: task.isCompleted})}
+      />
+    );
+  };
 const renderPriorityCell = (priority: number) => priorityOptions.find((option) => option.value === priority)?.label;
 
 const renderTagsCell = (tags: number[]) => (
@@ -33,11 +45,11 @@ const renderActionsCell = (_: string, task: TaskI) => (
   </Flex>
 );
 
-export const getColumns = (): Column<TaskI>[] => [
+export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading}: Props): Column<TaskI>[] => [
   {
     header: '',
     accessor: 'id',
-    cell: renderSwitchCell()
+    cell: renderSwitchCell({updateTaskStatus, updateTaskStatusIsLoading})
   },
   {
     header: 'Note',
