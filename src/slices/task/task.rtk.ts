@@ -35,8 +35,17 @@ export const tasksApi = createApi({
         body: task
       }),
       invalidatesTags: [RtkApiTagsEnum.Tasks, RtkApiTagsEnum.Task]
+    }),
+
+    updateTaskStatusById: builder.mutation<{data: TaskI}, {id: string | undefined; status: boolean}>({
+      query: ({id, status}) => ({
+        url: `/${id}`,
+        method: 'PATCH',
+        body: {isCompleted: status}
+      }),
+      invalidatesTags: [RtkApiTagsEnum.Tasks]
     })
   })
 });
 
-export const {useGetTasksQuery, useGetTaskByIdQuery, useUpdateTaskByIdMutation, useCreateTaskMutation} = tasksApi;
+export const {useGetTasksQuery, useGetTaskByIdQuery, useUpdateTaskByIdMutation, useCreateTaskMutation, useUpdateTaskStatusByIdMutation} = tasksApi;

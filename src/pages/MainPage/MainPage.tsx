@@ -13,11 +13,7 @@ const MainPage = (): ReactElement => {
     return <Spinner />;
   }
 
-  const onToggleTask = (id: string) => {
-    console.log(id);
-  };
-
-  const columns = getColumns({onToggleTask});
+  const columns = getColumns();
 
   return (
     <Box>
