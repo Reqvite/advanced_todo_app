@@ -1,22 +1,22 @@
 import {ReactElement} from 'react';
-import {Control, Controller, FieldErrors, FieldValues} from 'react-hook-form';
+import {Control, Controller, FieldErrors, FieldValues, Path} from 'react-hook-form';
 import {Input, MultiSelect, Select} from '@/shared/ui';
 import {FormInputVariants, FormOption} from './types';
 
-type Props = {
+type Props<T extends FieldValues> = {
   option: FormOption<FormInputVariants>;
-  errors: FieldErrors<FieldValues>;
-  control: Control<FieldValues>;
+  errors: FieldErrors<T>;
+  control: Control<T>;
 };
 
-export const renderFormBlock = ({option, errors, control}: Props): ReactElement => {
+export const renderFormBlock = <T extends FieldValues>({option, errors, control}: Props<T>): ReactElement => {
   switch (option.variant) {
     case FormInputVariants.Input:
       return (
         <Controller
           key={option.id}
           control={control}
-          name={option.id}
+          name={option.id as Path<T>}
           render={({field}) => (
             <Input
               error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
@@ -35,7 +35,7 @@ export const renderFormBlock = ({option, errors, control}: Props): ReactElement 
         <Controller
           key={option.id}
           control={control}
-          name={option.id}
+          name={option.id as Path<T>}
           render={({field}) => (
             <Input
               variant="primary"
@@ -57,18 +57,20 @@ export const renderFormBlock = ({option, errors, control}: Props): ReactElement 
         <Controller
           key={option.id}
           control={control}
-          name={option.id}
-          render={({field}) => (
-            <Select
-              error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
-              isRequired={option.isRequired}
-              label={option.name}
-              key={option.id}
-              variant="primary"
-              options={option.labelOptions}
-              {...field}
-            />
-          )}
+          name={option.id as Path<T>}
+          render={({field}) => {
+            return (
+              <Select
+                error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
+                isRequired={option.isRequired}
+                label={option.name}
+                key={option.id}
+                variant="primary"
+                options={option.labelOptions}
+                {...field}
+              />
+            );
+          }}
         />
       );
     case FormInputVariants.MultiSelect:
@@ -76,20 +78,16 @@ export const renderFormBlock = ({option, errors, control}: Props): ReactElement 
         <Controller
           key={option.id}
           control={control}
-          name={option.id}
-          render={({field: {onChange, onBlur, value, name, ref}}) => (
+          name={option.id as Path<T>}
+          render={({field}) => (
             <MultiSelect
               variant="primary"
               error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
               isRequired={option.isRequired}
               label={option.name}
               options={option.labelOptions}
-              name={name}
-              ref={ref}
-              onChange={onChange}
-              onBlur={onBlur}
-              value={value}
               placeholder={option.name}
+              {...field}
             />
           )}
         />

@@ -1,10 +1,9 @@
 import {type configureStore, type ThunkMiddleware, type Tuple, type UnknownAction} from '@reduxjs/toolkit';
-import {PersistPartial} from 'redux-persist/lib/persistReducer';
-import {reducer as todoReducer} from '@/slices/todo';
+import {tasksApi} from '@/slices/task/task.rtk';
 import {store} from './store';
 
 type RootReducer = {
-  todo: ReturnType<typeof todoReducer> & PersistPartial;
+  [tasksApi.reducerPath]: ReturnType<typeof tasksApi.reducer>;
 };
 
 type ExtraArguments = {

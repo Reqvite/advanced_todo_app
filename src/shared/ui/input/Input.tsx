@@ -12,7 +12,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({label, helperTex
   return (
     <FormControl isRequired={isRequired} isInvalid={Boolean(error)}>
       <FormLabel>{label}</FormLabel>
-      <ChakraInput {...otherProps} ref={ref} />
+      <ChakraInput autoComplete="off" {...otherProps} ref={ref} />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
       <Box height="5px" marginTop={2}>
         <FormErrorMessage margin={0}>{error}</FormErrorMessage>

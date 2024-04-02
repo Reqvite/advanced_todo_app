@@ -1,7 +1,7 @@
 import {Box, FormControl, FormErrorMessage, FormHelperText, FormLabel, SelectFieldProps} from '@chakra-ui/react';
 import {Select as ChakraReactSelect} from 'chakra-react-select';
 import React from 'react';
-import {LabelOptions} from '@/shared/types/options';
+import {LabelOptionsI} from '@/shared/types/options';
 
 type MultiSelectProps = SelectFieldProps & {
   label: string;
@@ -9,7 +9,7 @@ type MultiSelectProps = SelectFieldProps & {
   error?: string;
   isRequired?: boolean;
   variant?: string;
-  options: LabelOptions[];
+  options: LabelOptionsI[];
   placeholder?: string;
 };
 

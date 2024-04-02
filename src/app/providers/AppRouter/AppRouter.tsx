@@ -7,7 +7,7 @@ export const AppRouter = () => {
   const renderWithWrapper = useCallback((route: AppRoutesProps) => {
     const element = (
       <Suspense fallback={null}>
-        <Container as={'main'} maxW="1240px" paddingTop={'var(--chakra-sizes-headerHeight)'}>
+        <Container as="main" maxW="1240px" paddingTop="var(--chakra-sizes-headerHeight)">
           {route.element}
         </Container>
       </Suspense>

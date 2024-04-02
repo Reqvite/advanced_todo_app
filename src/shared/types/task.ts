@@ -1,23 +1,30 @@
-enum Priority {
+enum PriorityEnum {
   LOW = 1,
   MEDIUM = 2,
   HIGH = 3,
   CRITICAL = 4
 }
 
-enum Tag {
+enum TagEnum {
   PERSONAL = 1,
   WORK = 2,
   SHOPPING = 3,
   STUDY = 4
 }
 
-interface TaskI {
+interface BaseTaskI {
   _id: string;
   note: string;
-  priority: Priority;
+  priority: PriorityEnum;
   expDate: string;
-  tags: Tag[];
 }
 
-export {Priority, Tag, type TaskI};
+interface TaskI extends BaseTaskI {
+  tags: TagEnum[];
+}
+
+interface TaskIWithTagLabel extends BaseTaskI {
+  tags: {label: string; value: string}[];
+}
+
+export {PriorityEnum, TagEnum, type TaskI, type TaskIWithTagLabel};
