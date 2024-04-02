@@ -1,4 +1,4 @@
-import {LabelOptions} from '@/shared/types/options';
+import {LabelOptionsI} from '@/shared/types/options';
 
 export enum FormInputVariants {
   Input = 'input',
@@ -19,7 +19,7 @@ type FormOptionVariantMap = {
   };
   [FormInputVariants.Select]: {
     variant: FormInputVariants.Select;
-    labelOptions: LabelOptions[];
+    labelOptions: LabelOptionsI[];
   };
   [FormInputVariants.Datepicker]: {
     variant: FormInputVariants.Datepicker;
@@ -28,7 +28,7 @@ type FormOptionVariantMap = {
   };
   [FormInputVariants.MultiSelect]: {
     variant: FormInputVariants.MultiSelect;
-    labelOptions: LabelOptions[];
+    labelOptions: LabelOptionsI[];
   };
 };
 

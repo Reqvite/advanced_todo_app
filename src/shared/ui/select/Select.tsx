@@ -1,6 +1,6 @@
 import {Box, FormControl, FormErrorMessage, FormHelperText, FormLabel, Select as ChakraReactSelect, SelectFieldProps} from '@chakra-ui/react';
 import React from 'react';
-import {LabelOptions} from '@/shared/types/options';
+import {LabelOptionsI} from '@/shared/types/options';
 
 type SelectProps = SelectFieldProps & {
   label: string;
@@ -8,7 +8,7 @@ type SelectProps = SelectFieldProps & {
   error?: string;
   isRequired?: boolean;
   variant?: string;
-  options: LabelOptions[];
+  options: LabelOptionsI[];
   placeholder?: string;
 };
 
