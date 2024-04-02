@@ -5,7 +5,7 @@ import {Form, FormInputVariants, FormOption} from '@/components/form';
 import {priorityOptions, tagOptions} from '@/shared/lib/helpers';
 import {updateTaskSchema} from '@/shared/lib/yup/updateTask.schema';
 import {TaskFormModel} from '@/shared/models';
-import {useGetTaskByIdQuery, useUpdateTaskByIdMutation} from '@/slices/todo/todo.rtk';
+import {useGetTaskByIdQuery, useUpdateTaskByIdMutation} from '@/slices/task/task.rtk';
 
 const options: FormOption<FormInputVariants>[] = [
   {id: 'note', variant: FormInputVariants.Input, name: 'Note'},
@@ -23,20 +23,18 @@ const UpdateTaskPage = (): ReactElement => {
     return <Spinner />;
   }
 
-  const onSubmit = (updatedTask: TaskFormModel) => {
-    const tags = updatedTask.tags.map(({value}) => value);
-    updatedTask.tags = tags;
-    updateTask({id, updatedTask});
+  const onSubmit = (task: TaskFormModel): void => {
+    const tags = task.tags.map(({value}) => value);
+    task.tags = tags;
+    updateTask({id, task});
   };
-
-  const defaultValues = new TaskFormModel(data);
 
   return (
     <Form<TaskFormModel>
       heading={`Update task #${id}`}
       options={options}
       formValidationSchema={updateTaskSchema}
-      defaultValues={defaultValues}
+      defaultValues={new TaskFormModel(data)}
       onSubmit={onSubmit}
       isLoading={updateTaskIsLoading}
     />

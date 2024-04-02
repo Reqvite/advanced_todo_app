@@ -3,7 +3,7 @@ import {Spinner} from '@chakra-ui/react';
 import {ReactElement} from 'react';
 import {Table} from '@/components/table';
 import {TaskI} from '@/shared/types/task';
-import {useGetTasksQuery} from '@/slices/todo/todo.rtk';
+import {useGetTasksQuery} from '@/slices/task/task.rtk';
 import {getColumns} from './model/getColumns';
 
 const MainPage = (): ReactElement => {

@@ -1,5 +1,5 @@
 import {type configureStore, type ThunkMiddleware, type Tuple, type UnknownAction} from '@reduxjs/toolkit';
-import {tasksApi} from '@/slices/todo/todo.rtk';
+import {tasksApi} from '@/slices/task/task.rtk';
 import {store} from './store';
 
 type RootReducer = {

@@ -1,10 +1,11 @@
 import {Button, Flex, Text} from '@chakra-ui/react';
-import {ReactElement, SetStateAction} from 'react';
+import {ReactElement} from 'react';
+import {Action} from '@/shared/types/reducerAction';
 
 type Props = {
   currentPage: number;
   totalPages: number;
-  onPageChange: (callback: SetStateAction<number>) => void;
+  onPageChange: ({type}: Action) => void;
 };
 
 export const Paginator = ({currentPage, totalPages, onPageChange}: Props): ReactElement => {
@@ -14,13 +15,13 @@ export const Paginator = ({currentPage, totalPages, onPageChange}: Props): React
 
   const handlePreviousClick = (): void => {
     if (!isFirstPage) {
-      onPageChange((prevPage) => prevPage - 1);
+      onPageChange({type: 'DECREMENT_PAGE_INDEX'});
     }
   };
 
   const handleNextClick = (): void => {
     if (!isLastPage) {
-      onPageChange((prevPage) => prevPage + 1);
+      onPageChange({type: 'INCREMENT_PAGE_INDEX'});
     }
   };
 

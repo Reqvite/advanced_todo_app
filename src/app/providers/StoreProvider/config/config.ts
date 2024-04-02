@@ -1,5 +1,5 @@
 import {configureStore, ReducersMapObject} from '@reduxjs/toolkit';
-import {tasksApi} from '@/slices/todo/todo.rtk';
+import {tasksApi} from '@/slices/task/task.rtk';
 import {ExtraArguments, RootReducer, StoreInstance, StorePackage} from './types';
 
 class Store implements StorePackage {

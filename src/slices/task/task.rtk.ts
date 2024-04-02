@@ -4,42 +4,35 @@ import {ApiPath} from '@/shared/types/apiPath';
 import {RtkApiTags} from '@/shared/types/rtkApiTags';
 import {TaskI} from '@/shared/types/task';
 
-interface Data {
-  data: TaskI;
-}
-interface ArrayOfData {
-  data: TaskI[] | [];
-}
-
 export const tasksApi = createApi({
   reducerPath: 'taskApi',
   baseQuery: fetchBaseQuery({baseUrl: `${import.meta.env.VITE_API_URL}${ApiPath.TASKS}`}),
   tagTypes: [RtkApiTags.Task, RtkApiTags.Tasks],
   endpoints: (builder) => ({
-    getTasks: builder.query<ArrayOfData, void>({
+    getTasks: builder.query<{data: TaskI[]}, void>({
       query: () => ``,
       providesTags: [RtkApiTags.Tasks]
     }),
 
-    getTaskById: builder.query<Data, string | undefined>({
+    getTaskById: builder.query<{data: TaskI}, string | undefined>({
       query: (id) => `${id}`,
       providesTags: [RtkApiTags.Task]
     }),
 
-    createTask: builder.mutation<Data, {newTask: TaskFormModel}>({
-      query: ({newTask}) => ({
+    createTask: builder.mutation<{data: TaskI}, {task: TaskFormModel}>({
+      query: ({task}) => ({
         url: `/`,
         method: 'POST',
-        body: newTask
+        body: task
       }),
       invalidatesTags: [RtkApiTags.Tasks]
     }),
 
-    updateTaskById: builder.mutation<Data, {id: string | undefined; updatedTask: Partial<TaskFormModel>}>({
-      query: ({id, updatedTask}) => ({
+    updateTaskById: builder.mutation<{data: TaskI}, {id: string | undefined; task: Partial<TaskFormModel>}>({
+      query: ({id, task}) => ({
         url: `/${id}`,
         method: 'PUT',
-        body: updatedTask
+        body: task
       }),
       invalidatesTags: [RtkApiTags.Tasks, RtkApiTags.Task]
     })
