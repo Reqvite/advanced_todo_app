@@ -1,17 +1,17 @@
-import {Priority, Tag} from '@/shared/types/task';
+import {PriorityEnum, TagEnum} from '@/shared/types/task';
 
 const enumLabelResolver = {
   priority: {
-    [Priority.LOW]: 'Low',
-    [Priority.MEDIUM]: 'Medium',
-    [Priority.HIGH]: 'High',
-    [Priority.CRITICAL]: 'Critical'
+    [PriorityEnum.LOW]: 'Low',
+    [PriorityEnum.MEDIUM]: 'Medium',
+    [PriorityEnum.HIGH]: 'High',
+    [PriorityEnum.CRITICAL]: 'Critical'
   },
   tag: {
-    [Tag.PERSONAL]: 'Personal',
-    [Tag.SHOPPING]: 'Shopping',
-    [Tag.STUDY]: 'Study',
-    [Tag.WORK]: 'Work'
+    [TagEnum.PERSONAL]: 'Personal',
+    [TagEnum.SHOPPING]: 'Shopping',
+    [TagEnum.STUDY]: 'Study',
+    [TagEnum.WORK]: 'Work'
   }
 };
 
