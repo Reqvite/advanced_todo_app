@@ -6,9 +6,9 @@ import {Paginator} from '@/shared/ui';
 
 type Props = {
   pageSize: number;
-  setPageSize: ({type}: ActionI) => void;
+  setPageSize: ({type}: ActionI<number>) => void;
   pageIndex: number;
-  setPageIndex: ({type}: ActionI) => void;
+  setPageIndex: ({type}: ActionI<number>) => void;
   totalItemsCount: number;
   pageSizeOptions: number[];
 };
