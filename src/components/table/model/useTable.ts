@@ -3,15 +3,7 @@ import {applyFilters} from './applyFilters';
 import {sortData} from './sortData';
 import {initialState, tableReducer} from './tableReducer';
 
-const DEFAULT_PAGINATION = [10, 20, 50];
-
-export const useTable = <T extends {_id: string}>({
-  items,
-  defaultPageSizeOptions = DEFAULT_PAGINATION
-}: {
-  items: T[];
-  defaultPageSizeOptions?: number[];
-}) => {
+export const useTable = <T extends {_id: string}>({items, defaultPageSizeOptions}: {items: T[]; defaultPageSizeOptions?: number[]}) => {
   const [state, dispatch] = useReducer(tableReducer, {...initialState, data: items});
   const {pageIndex, pageSize, data = items, sortDirection, sortField, filters} = state;
 
