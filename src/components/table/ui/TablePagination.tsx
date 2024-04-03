@@ -15,8 +15,8 @@ type Props = {
 
 export const TablePagination = ({pageSize, setPageSize, pageIndex, setPageIndex, totalItemsCount, pageSizeOptions}: Props): ReactElement => {
   const totalPages = Math.ceil(totalItemsCount / pageSize);
-  const onChangePageSize = (e: ChangeEvent<HTMLSelectElement>) => {
-    const newSize = parseInt(e.target.value);
+  const onChangePageSize = (event: ChangeEvent<HTMLSelectElement>) => {
+    const newSize = parseInt(event.target.value);
     setPageSize({type: 'SET_PAGE_SIZE', payload: newSize});
     setPageIndex({type: 'SET_PAGE_INDEX', payload: 0});
   };

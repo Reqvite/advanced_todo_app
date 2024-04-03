@@ -22,6 +22,7 @@ const renderSwitchCell =
       />
     );
   };
+
 const renderPriorityCell = (priority: number) => priorityOptions.find((option) => option.value === priority)?.label;
 
 const renderTagsCell = (tags: number[]) => (
