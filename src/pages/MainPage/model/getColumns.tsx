@@ -1,5 +1,5 @@
 import {Flex, Switch, Tag} from '@chakra-ui/react';
-import {Column, FilterTypeEnum} from '@/components/table';
+import {Column, FilterTypeEnum, SearchTypeEnum} from '@/components/table';
 import {formatDate, priorityOptions, tagOptions} from '@/shared/lib/helpers';
 import {priorityOptionsWithAll, statusOptionsWithALL} from '@/shared/lib/helpers/enumLabelResolver/enumLabelResolver';
 import {StatusEnum, TaskI} from '@/shared/types/task';
@@ -56,7 +56,10 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading}: Props)
   },
   {
     header: 'Note',
-    accessor: 'note'
+    accessor: 'note',
+    search: {
+      type: SearchTypeEnum.POPOVER_INPUT
+    }
   },
   {
     header: 'Priority',

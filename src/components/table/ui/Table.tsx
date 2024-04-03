@@ -7,6 +7,7 @@ import {TODAYS_DATE} from '@/shared/const/date.ts';
 import {SortDirectionEnum} from '@/shared/types/sortDirection.ts';
 import {BlurBox} from '@/shared/ui';
 import {renderFilterBlock} from '../model/renderFilterBlock.tsx';
+import {renderSearchBlock} from '../model/renderSearchBlock.tsx';
 import {Column} from '../model/types.ts';
 import {useTable} from '../model/useTable.ts';
 import {TableHeader} from './TableHeader.tsx';
@@ -41,7 +42,7 @@ export const Table = <T extends {_id: string; expDate: string}>({
         <ChakraTable size="sm">
           <Thead>
             <Tr>
-              {columns.map(({header, accessor, filter}) => (
+              {columns.map(({header, accessor, filter, search}) => (
                 <Th key={accessor}>
                   <Flex>
                     <Flex cursor="pointer" gap={1} alignItems="center">
@@ -51,6 +52,7 @@ export const Table = <T extends {_id: string; expDate: string}>({
                       </Box>
                     </Flex>
                     {filter && renderFilterBlock(filter, accessor, onChangeFilter)}
+                    {search && renderSearchBlock(search, accessor, onChangeFilter)}
                   </Flex>
                 </Th>
               ))}

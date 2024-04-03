@@ -1,6 +1,16 @@
 import {ReactNode} from 'react';
 import {LabelOptionsI} from '@/shared/types/options';
 
+export enum FilterTypeEnum {
+  SELECT = 'Select',
+  DATEPICKER = 'DatePicker',
+  RANGE_DATEPICKER = 'RangeDatePicker'
+}
+
+export enum SearchTypeEnum {
+  POPOVER_INPUT = 'PopoverInput'
+}
+
 export interface State<T> {
   pageIndex: number;
   pageSize: number;
@@ -15,13 +25,10 @@ export interface Column<T> {
   accessor: string;
   cell?: (value: any, item: T) => ReactNode;
   filter?: {
-    type: string;
+    type: FilterTypeEnum;
     options?: LabelOptionsI[];
   };
-}
-
-export enum FilterTypeEnum {
-  SELECT = 'Select',
-  DATEPICKER = 'DatePicker',
-  RANGE_DATEPICKER = 'RangeDatePicker'
+  search?: {
+    type: SearchTypeEnum;
+  };
 }

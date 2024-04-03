@@ -19,6 +19,11 @@ export const useTable = <T extends {_id: string}>({items, defaultPageSizeOptions
     dispatch({type: 'SET_PAGE_INDEX', payload: 0});
   };
 
+  //   const onChangeSearch = (key: string, value: string) => {
+  //     dispatch({type: 'SET_FILTER', payload: {key, value}});
+  //     dispatch({type: 'SET_PAGE_INDEX', payload: 0});
+  //   };
+
   const onResetFilter = () => {
     dispatch({type: 'SET_FILTER_DEFAULT'});
   };
