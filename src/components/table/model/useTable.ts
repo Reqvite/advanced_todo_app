@@ -23,10 +23,7 @@ export const useTable = <T extends {_id: string}>({items, defaultPageSizeOptions
     dispatch({type: 'SET_FILTER_DEFAULT'});
   };
 
-  const change = () => {
-    return applyFilters<T>(sortField ? sortData(sortField, data) : {data: items}, filters);
-  };
-  const filteredData = change();
+  const filteredData = applyFilters<T>(sortField ? sortData(sortField, data) : {data: items}, filters);
 
   useEffect(() => {
     dispatch({type: 'SET_DATA', payload: items});
