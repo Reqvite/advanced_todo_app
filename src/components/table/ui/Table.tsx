@@ -28,9 +28,9 @@ export const Table = <T extends {_id: string}>({items, heading, pageSizeOptions 
   const isEmptyTable = filteredData.length < 1;
 
   return (
-    <BlurBox>
+    <BlurBox minH="760px">
       <TableHeader heading={heading} onResetFilter={onResetFilter} />
-      <TableContainer w="100%">
+      <TableContainer w="100%" height="100%">
         <ChakraTable size="sm">
           <Thead>
             <Tr>

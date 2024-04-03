@@ -46,7 +46,7 @@ const renderActionsCell = (_: string, task: TaskI) => (
 
 export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading}: Props): Column<TaskI>[] => [
   {
-    header: '',
+    header: 'Status',
     accessor: 'status',
     cell: renderSwitchCell({updateTaskStatus, updateTaskStatusIsLoading}),
     filter: {
