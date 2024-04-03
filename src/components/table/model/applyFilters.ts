@@ -1,21 +1,29 @@
-export const applyFilters = (data, filters) => {
+interface FiltersI {
+  [key: string]: string | number | [string, string];
+}
+
+const DATE = 'date';
+
+export const applyFilters = <T extends Record<string, any>>({data}: {data: T[]}, filters: FiltersI) => {
   const filteredData = data.filter((item) => {
     return Object.keys(filters).every((key) => {
-      if (Number(filters[key]) === 0) {
+      const filterKey = filters[key];
+      if (Number(filterKey) === 0) {
         return true;
       }
 
-      if (!filters[key]) {
+      if (!filterKey) {
         return true;
       }
 
-      if (key === 'expDate' && Array.isArray(filters[key]) && filters[key].length === 2) {
-        const [startTimestamp, endTimestamp] = filters[key].map((date) => new Date(date).getTime());
+      const keyToLowerCase = key.toLocaleLowerCase();
+      if (keyToLowerCase.includes(DATE) && Array.isArray(filterKey) && filterKey.length === 2) {
+        const [startTimestamp, endTimestamp] = filterKey.map((date) => new Date(date).getTime());
         const itemTimestamp = new Date(item[key]).getTime();
         return itemTimestamp >= startTimestamp && itemTimestamp <= endTimestamp;
       }
 
-      return item[key] === +filters[key];
+      return item[key] === filterKey;
     });
   });
 

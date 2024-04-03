@@ -1,8 +1,8 @@
 import {Box} from '@chakra-ui/layout';
-import {Spinner} from '@chakra-ui/react';
 import {ReactElement} from 'react';
 import {Table} from '@/components/table';
 import {TaskI} from '@/shared/types/task';
+import {Loader} from '@/shared/ui';
 import {useGetTasksQuery, useUpdateTaskStatusByIdMutation} from '@/slices/task/task.rtk';
 import {getColumns} from './model/getColumns';
 
@@ -11,7 +11,7 @@ const MainPage = (): ReactElement => {
   const [updateTaskStatus, {isLoading: updateTaskStatusIsLoading}] = useUpdateTaskStatusByIdMutation();
 
   if (isLoading) {
-    return <Spinner />;
+    return <Loader fullHeight />;
   }
 
   const columns = getColumns({updateTaskStatus, updateTaskStatusIsLoading});

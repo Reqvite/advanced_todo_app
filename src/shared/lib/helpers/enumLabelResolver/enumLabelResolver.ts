@@ -21,7 +21,13 @@ const enumLabelResolver = {
   }
 };
 
-const priorityOptions = Object.entries(enumLabelResolver.priority).map(([value, label]) => ({
+const priorityOptions = Object.entries(enumLabelResolver.priority)
+  .filter(([value]) => value !== '0')
+  .map(([value, label]) => ({
+    label,
+    value: Number(value)
+  }));
+const priorityOptionsWithAll = Object.entries(enumLabelResolver.priority).map(([value, label]) => ({
   label,
   value: Number(value)
 }));
@@ -29,9 +35,9 @@ const tagOptions = Object.entries(enumLabelResolver.tag).map(([value, label]) =>
   label,
   value: Number(value)
 }));
-const statusOptions = Object.entries(enumLabelResolver.status).map(([value, label]) => ({
+const statusOptionsWithALL = Object.entries(enumLabelResolver.status).map(([value, label]) => ({
   label,
   value: Number(value)
 }));
 
-export {priorityOptions, statusOptions, tagOptions};
+export {priorityOptions, priorityOptionsWithAll, statusOptionsWithALL, tagOptions};

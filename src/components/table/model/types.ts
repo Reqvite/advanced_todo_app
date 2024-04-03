@@ -10,10 +10,17 @@ export interface State<T> {
   sortField: string;
   filters: {[key: string]: string};
 }
-
 export interface Column<T> {
   header: string;
   accessor: string;
   cell?: (value: any, item: T) => ReactNode;
-  filter?: LabelOptionsI[];
+  filter?: {
+    type: string;
+    options?: LabelOptionsI[];
+  };
+}
+
+export enum FilterTypeEnum {
+  SELECT = 'Select',
+  DATEPICKER = 'DatePicker'
 }

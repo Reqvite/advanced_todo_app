@@ -8,7 +8,7 @@ type Props = ButtonProps;
 
 export const DeleteButton = ({...otherProps}: Props): ReactElement => {
   return (
-    <Button variant={'error'} {...otherProps}>
+    <Button variant="error" {...otherProps}>
       <Icon boxSize={5} as={MdDelete} />
     </Button>
   );

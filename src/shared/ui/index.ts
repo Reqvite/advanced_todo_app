@@ -3,6 +3,7 @@ export {DeleteButton} from './buttons/DeleteButton';
 export {EditButton} from './buttons/EditButton';
 export {DatePicker} from './datePicker/DatePicker.tsx';
 export {Input} from './input/Input';
+export {Loader} from './loader/Loader.tsx';
 export {MultiSelect} from './multiSelect/MultiSelect';
 export {Paginator} from './paginator/Paginator';
 export {PopoverSelect} from './popoverSelect/PopoverSelect.tsx';

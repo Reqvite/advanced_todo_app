@@ -1,14 +1,12 @@
-import {Box, Flex, Table as ChakraTable, TableContainer, Tbody, Td, Th, Thead, Tr} from '@chakra-ui/react';
-import {ChangeEvent, ReactElement, ReactNode, useEffect, useReducer} from 'react';
+import {Box, Flex, Heading, Table as ChakraTable, TableContainer, Tbody, Td, Th, Thead, Tr} from '@chakra-ui/react';
+import {ReactElement, ReactNode} from 'react';
 import {FaLongArrowAltDown} from 'react-icons/fa';
 import {FaArrowUpLong} from 'react-icons/fa6';
 import {SortDirectionEnum} from '@/shared/types/sortDirection.ts';
-import {BlurBox, DatePicker, PopoverSelect} from '@/shared/ui';
-import {applyFilters} from '../model/applyFilters.ts';
-import {sortData} from '../model/sortData.ts';
-import {tableReducer} from '../model/tableReducer.ts';
-import {initialState} from '../model/tableReducer.ts';
+import {BlurBox} from '@/shared/ui';
+import {renderFilter} from '../model/renderFilter.tsx';
 import {Column} from '../model/types.ts';
+import {useTable} from '../model/useTable.ts';
 import {TableHeader} from './TableHeader.tsx';
 import {TablePagination} from './TablePagination.tsx';
 
@@ -17,74 +15,46 @@ interface Props<T> {
   items: T[];
   pageSizeOptions?: number[];
   columns: Column<T>[];
-  isLoading?: boolean;
 }
 
 const DEFAULT_PAGINATION = [10, 20, 50];
 
-export const Table = <T extends {_id: string}>({
-  items,
-  heading,
-  pageSizeOptions = DEFAULT_PAGINATION,
-  isLoading,
-  columns
-}: Props<T>): ReactElement => {
-  const [state, dispatch] = useReducer(tableReducer, {...initialState, data: items});
-  const {pageIndex, pageSize, data = items, sortDirection, sortField, filters} = state;
-
-  const onChangeSort = (key: string) => {
-    const {sortedData, direction} = sortData(key, data);
-    dispatch({type: 'SET_SORT_FIELD', payload: key});
-    dispatch({type: 'SET_SORT_DIRECTION', payload: direction});
-    dispatch({type: 'SET_DATA', payload: sortedData});
-  };
-
-  const onChangeFilter = (key: string, e: ChangeEvent<HTMLSelectElement>) => {
-    dispatch({type: 'SET_FILTER', payload: {key, value: e?.target?.value ? e.target.value : e}});
-    dispatch({type: 'SET_PAGE_INDEX', payload: 0});
-  };
-
-  useEffect(() => {
-    dispatch({type: 'SET_DATA', payload: items});
-  }, [items, dispatch]);
-
-  const filteredData = applyFilters(data, filters);
+export const Table = <T extends {_id: string}>({items, heading, pageSizeOptions = DEFAULT_PAGINATION, columns}: Props<T>): ReactElement => {
+  const {state, onChangeSort, onChangeFilter, onResetFilter, dispatch, filteredData, data, sortField, sortDirection} = useTable<T>({
+    items,
+    defaultPageSizeOptions: pageSizeOptions
+  });
+  const {pageIndex, pageSize} = state;
+  const isEmptyTable = filteredData.length < 1;
 
   return (
     <BlurBox>
-      <TableHeader heading={heading} />
+      <TableHeader heading={heading} onResetFilter={onResetFilter} />
       <TableContainer w="100%">
         <ChakraTable size="sm">
           <Thead>
             <Tr>
-              {columns.map(({header, accessor, filter, datePicker}) => (
+              {columns.map(({header, accessor, filter}) => (
                 <Th key={accessor}>
                   <Flex>
-                    <Flex cursor="pointer" gap={1} alignItems="center" onClick={() => onChangeSort(accessor)}>
-                      {header}
+                    <Flex cursor="pointer" gap={1} alignItems="center">
+                      <Box onClick={() => onChangeSort(accessor)}>{header}</Box>
                       <Box w="12px">
                         {sortField === accessor ? sortDirection === SortDirectionEnum.Ascending ? <FaArrowUpLong /> : <FaLongArrowAltDown /> : ''}
                       </Box>
                     </Flex>
-                    {filter && <PopoverSelect options={filter} onChange={(value) => onChangeFilter(accessor, value)} />}
+                    {filter && renderFilter(filter, accessor, onChangeFilter)}
                   </Flex>
-                  {datePicker && <DatePicker isRangePicker onDateSelect={(value) => onChangeFilter(accessor, value)} />}
                 </Th>
               ))}
               <Th />
             </Tr>
           </Thead>
           <Tbody>
-            {isLoading ? (
+            {isEmptyTable || !data ? (
               <Tr>
                 <Td textAlign="center" colSpan={9}>
-                  Loading
-                </Td>
-              </Tr>
-            ) : data.length < 1 || !data ? (
-              <Tr>
-                <Td textAlign="center" colSpan={9}>
-                  Table is empty
+                  <Heading>Table is empty</Heading>
                 </Td>
               </Tr>
             ) : (
@@ -102,14 +72,15 @@ export const Table = <T extends {_id: string}>({
             )}
           </Tbody>
         </ChakraTable>
-        <TablePagination
-          pageSize={pageSize}
-          setPageSize={dispatch}
-          pageIndex={pageIndex}
-          setPageIndex={dispatch}
-          totalItemsCount={filteredData.length}
-          pageSizeOptions={pageSizeOptions}
-        />
+        {!isEmptyTable && (
+          <TablePagination
+            pageSize={pageSize}
+            dispatch={dispatch}
+            pageIndex={pageIndex}
+            totalItemsCount={filteredData.length}
+            pageSizeOptions={pageSizeOptions}
+          />
+        )}
       </TableContainer>
     </BlurBox>
   );

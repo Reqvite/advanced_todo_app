@@ -1,6 +1,6 @@
+import {Button} from '@chakra-ui/button';
 import {
   Box,
-  Button,
   Flex,
   IconButton,
   Input,
@@ -13,17 +13,21 @@ import {
   PopoverTrigger,
   Portal
 } from '@chakra-ui/react';
-import {addMonths, format, isWithinInterval, startOfMonth, subMonths} from 'date-fns';
-import React, {useState} from 'react';
+import {addDays, addMonths, endOfMonth, format, isWithinInterval, startOfMonth, subMonths} from 'date-fns';
+import React, {ReactElement, useState} from 'react';
 import {FaCalendarAlt} from 'react-icons/fa';
 import {FiChevronLeft, FiChevronRight} from 'react-icons/fi';
 
 interface DatePickerProps {
   isRangePicker?: boolean;
   onDateSelect: (date: Date | null | [Date, Date] | null) => void;
+  showInput?: boolean;
 }
 
-export const DatePicker: React.FC<DatePickerProps> = ({isRangePicker = false, onDateSelect}) => {
+const ADD_1_DAY = 1;
+const WEEK_LENGTH = 7;
+
+export const DatePicker: React.FC<DatePickerProps> = ({isRangePicker = false, onDateSelect, showInput = true}): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -52,20 +56,20 @@ export const DatePicker: React.FC<DatePickerProps> = ({isRangePicker = false, on
   const renderCalendar = () => {
     const monthStart = startOfMonth(selectedDate || new Date());
     const startDateOfMonth = startOfMonth(monthStart);
-    const endDateOfMonth = new Date(monthStart.getTime() + 2678400000); // Add 31 days
-
+    const endDateOfMonth = endOfMonth(monthStart);
     const weeks: Date[][] = [];
     let week: Date[] = [];
     let currentDate = startDateOfMonth;
 
     while (currentDate <= endDateOfMonth) {
-      if (week.length === 7) {
+      if (week.length === WEEK_LENGTH) {
         weeks.push(week);
         week = [];
       }
       week.push(currentDate);
-      currentDate = new Date(currentDate.getTime() + 86400000); // Add 1 day
+      currentDate = addDays(currentDate, ADD_1_DAY);
     }
+
     weeks.push(week);
 
     return (
@@ -88,13 +92,16 @@ export const DatePicker: React.FC<DatePickerProps> = ({isRangePicker = false, on
           />
         </Flex>
         {weeks.map((week, index) => (
-          <Flex key={index} justifyContent="space-around">
+          <Flex gap={1} key={index} justifyContent="center">
             {week.map((date) => (
               <Button
                 key={date.toISOString()}
-                variant={isRangePicker && startDate && endDate && isWithinInterval(date, {start: startDate, end: endDate}) ? 'solid' : 'ghost'}
+                variant={isRangePicker && startDate && endDate && isWithinInterval(date, {start: startDate, end: endDate}) ? 'primary' : 'secondary'}
                 colorScheme={isRangePicker && startDate && endDate && isWithinInterval(date, {start: startDate, end: endDate}) ? 'blue' : undefined}
                 onClick={() => handleDateClick(date)}
+                w="50px"
+                alignSelf="center"
+                mb="2px"
               >
                 {format(date, 'd')}
               </Button>
@@ -107,22 +114,38 @@ export const DatePicker: React.FC<DatePickerProps> = ({isRangePicker = false, on
 
   return (
     <Popover isOpen={showCalendar} onClose={() => setShowCalendar(false)} placement="bottom">
-      <PopoverTrigger>
-        <InputGroup onClick={() => setShowCalendar(!showCalendar)}>
-          <InputLeftElement pointerEvents="none" children={<FaCalendarAlt color="gray.300" />} />
-          <Input
-            placeholder="Select Date"
-            value={
-              isRangePicker && startDate && endDate
-                ? `${format(startDate, 'MMM d')} - ${format(endDate, 'MMM d, yyyy')}`
-                : selectedDate
-                  ? format(selectedDate, 'MMM d, yyyy')
-                  : ''
-            }
-            readOnly
+      {showInput ? (
+        <PopoverTrigger>
+          {showInput && (
+            <InputGroup onClick={() => setShowCalendar(!showCalendar)}>
+              <InputLeftElement pointerEvents="none" children={<FaCalendarAlt color="gray.300" />} />
+              <Input
+                placeholder="Select Date"
+                value={
+                  isRangePicker && startDate && endDate
+                    ? `${format(startDate, 'MMM d')} - ${format(endDate, 'MMM d, yyyy')}`
+                    : selectedDate
+                      ? format(selectedDate, 'MMM d, yyyy')
+                      : ''
+                }
+                readOnly
+              />
+            </InputGroup>
+          )}
+        </PopoverTrigger>
+      ) : (
+        <PopoverTrigger>
+          <IconButton
+            aria-label="Calendar"
+            variant="primary"
+            w="25px"
+            h="25px"
+            minW="25px"
+            icon={<FaCalendarAlt color="gray.300" />}
+            onClick={() => setShowCalendar(!showCalendar)}
           />
-        </InputGroup>
-      </PopoverTrigger>
+        </PopoverTrigger>
+      )}
       <Portal>
         <PopoverContent>
           <PopoverArrow />

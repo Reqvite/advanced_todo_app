@@ -1,7 +1,7 @@
 import {Flex, Switch, Tag} from '@chakra-ui/react';
-import {Column} from '@/components/table';
+import {Column, FilterTypeEnum} from '@/components/table';
 import {formatDate, priorityOptions, tagOptions} from '@/shared/lib/helpers';
-import {statusOptions} from '@/shared/lib/helpers/enumLabelResolver/enumLabelResolver';
+import {priorityOptionsWithAll, statusOptionsWithALL} from '@/shared/lib/helpers/enumLabelResolver/enumLabelResolver';
 import {StatusEnum, TaskI} from '@/shared/types/task';
 import {DeleteButton, EditButton} from '@/shared/ui';
 
@@ -49,7 +49,10 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading}: Props)
     header: '',
     accessor: 'status',
     cell: renderSwitchCell({updateTaskStatus, updateTaskStatusIsLoading}),
-    filter: statusOptions
+    filter: {
+      type: FilterTypeEnum.SELECT,
+      options: statusOptionsWithALL
+    }
   },
   {
     header: 'Note',
@@ -59,7 +62,10 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading}: Props)
     header: 'Priority',
     accessor: 'priority',
     cell: renderPriorityCell,
-    filter: priorityOptions
+    filter: {
+      type: FilterTypeEnum.SELECT,
+      options: priorityOptionsWithAll
+    }
   },
   {
     header: 'Tags',
@@ -70,7 +76,9 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading}: Props)
     header: 'Expiration date',
     accessor: 'expDate',
     cell: renderExpirationDateCell,
-    datePicker: true
+    filter: {
+      type: FilterTypeEnum.DATEPICKER
+    }
   },
   {
     header: '',

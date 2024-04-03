@@ -2,7 +2,7 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {TaskFormModel} from '@/shared/models';
 import {ApiPathEnum} from '@/shared/types/apiPath';
 import {RtkApiTagsEnum} from '@/shared/types/rtkApiTags';
-import {TaskI} from '@/shared/types/task';
+import {StatusEnum, TaskI} from '@/shared/types/task';
 
 export const tasksApi = createApi({
   reducerPath: 'taskApi',
@@ -37,7 +37,7 @@ export const tasksApi = createApi({
       invalidatesTags: [RtkApiTagsEnum.Tasks, RtkApiTagsEnum.Task]
     }),
 
-    updateTaskStatusById: builder.mutation<{data: TaskI}, {id: string | undefined; status: boolean}>({
+    updateTaskStatusById: builder.mutation<{data: TaskI}, {id: string | undefined; status: StatusEnum}>({
       query: ({id, status}) => ({
         url: `/${id}`,
         method: 'PATCH',

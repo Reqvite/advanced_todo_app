@@ -6,7 +6,7 @@ import {LabelOptionsI} from '@/shared/types/options';
 
 interface Props {
   options: LabelOptionsI[];
-  onChange: (value: string) => void;
+  onChange: (value: number) => void;
   icon?: IconType;
 }
 
@@ -14,7 +14,7 @@ export const PopoverSelect = ({options, onChange, icon: Icon = FaFilter}: Props)
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<number | null>(null);
 
-  const handleItemClick = (selectedValue: any) => {
+  const handleItemClick = (selectedValue: number) => {
     setSelectedValue(selectedValue);
     onChange(selectedValue);
     setIsOpen(false);
@@ -24,7 +24,7 @@ export const PopoverSelect = ({options, onChange, icon: Icon = FaFilter}: Props)
     <div>
       <Popover isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <PopoverTrigger>
-          <IconButton h="25px" w="25px" minW="25px" background="none" aria-label="Settings" icon={<Icon />} onClick={() => setIsOpen(!isOpen)} />
+          <IconButton variant="primary" w="25px" h="25px" minW="25px" aria-label="Settings" icon={<Icon />} onClick={() => setIsOpen(!isOpen)} />
         </PopoverTrigger>
         <PopoverContent maxW="150px">
           <PopoverArrow />
@@ -35,7 +35,7 @@ export const PopoverSelect = ({options, onChange, icon: Icon = FaFilter}: Props)
                   key={index}
                   onClick={() => handleItemClick(option.value)}
                   cursor="pointer"
-                  padding="3px"
+                  padding="5px"
                   color="white"
                   borderRadius="10px"
                   _hover={{
