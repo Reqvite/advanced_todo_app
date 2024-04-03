@@ -28,7 +28,7 @@ export const Table = <T extends {_id: string; expDate: string}>({
   pageSizeOptions = DEFAULT_PAGINATION,
   columns
 }: Props<T>): ReactElement => {
-  const {state, onChangeSort, onChangeFilter, onResetFilter, dispatch, filteredData, data, sortField, sortDirection} = useTable<T>({
+  const {state, onChangeSort, onChangeSearch, onChangeFilter, onResetFilter, dispatch, filteredData, data, sortField, sortDirection} = useTable<T>({
     items,
     defaultPageSizeOptions: pageSizeOptions
   });
@@ -52,7 +52,7 @@ export const Table = <T extends {_id: string; expDate: string}>({
                       </Box>
                     </Flex>
                     {filter && renderFilterBlock(filter, accessor, onChangeFilter)}
-                    {search && renderSearchBlock(search, accessor, onChangeFilter)}
+                    {search && renderSearchBlock(search, accessor, onChangeSearch)}
                   </Flex>
                 </Th>
               ))}

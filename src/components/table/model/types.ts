@@ -19,6 +19,7 @@ export interface State<T> {
   sortDirection: string;
   sortField: string;
   filters: {[key: string]: string};
+  search: {[key: string]: string};
 }
 export interface Column<T> {
   header: string;
