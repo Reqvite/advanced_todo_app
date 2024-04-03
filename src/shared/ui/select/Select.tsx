@@ -3,7 +3,7 @@ import React from 'react';
 import {LabelOptionsI} from '@/shared/types/options';
 
 type SelectProps = SelectFieldProps & {
-  label: string;
+  label?: string;
   helperText?: string;
   error?: string;
   isRequired?: boolean;

@@ -3,12 +3,12 @@ import {ReactElement} from 'react';
 import {DefaultValues, FieldValues, Resolver, useForm} from 'react-hook-form';
 import {BlurBox} from '@/shared/ui';
 import {renderFormBlock} from '../model/renderFormBlock';
-import {FormInputVariants, FormOption} from '../model/types';
+import {FormInputVariantsEnum, FormOption} from '../model/types';
 import {FormHeader} from './FormHeader';
 
 type Props<T> = {
   heading: string;
-  options: FormOption<FormInputVariants>[];
+  options: FormOption<FormInputVariantsEnum>[];
   formValidationSchema?: Resolver<any>;
   defaultValues: T;
   onSubmit: (data: T) => void;

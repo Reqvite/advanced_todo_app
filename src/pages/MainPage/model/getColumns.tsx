@@ -1,14 +1,25 @@
 import {Flex, Switch, Tag} from '@chakra-ui/react';
 import {Column} from '@/components/table';
 import {formatDate, priorityOptions, tagOptions} from '@/shared/lib/helpers';
-import {TaskI} from '@/shared/types/task';
+import {statusOptions} from '@/shared/lib/helpers/enumLabelResolver/enumLabelResolver';
+import {StatusEnum, TaskI} from '@/shared/types/task';
 import {DeleteButton, EditButton} from '@/shared/ui';
-import {useUpdateTaskStatusByIdMutation} from '@/slices/task/task.rtk';
 
-const renderSwitchCell = () => (_: string, task: TaskI) => {
-  const [updateTaskStatus, {isLoading}] = useUpdateTaskStatusByIdMutation();
-  return <Switch isDisabled={isLoading} isChecked={task.isCompleted} onChange={() => updateTaskStatus({id: task._id, status: task.isCompleted})} />;
-};
+interface Props {
+  updateTaskStatus: ({id, status}: {id: string; status: StatusEnum}) => void;
+  updateTaskStatusIsLoading: boolean;
+}
+
+type RenderSwitchCellProps = Props;
+
+const renderSwitchCell =
+  ({updateTaskStatus, updateTaskStatusIsLoading}: RenderSwitchCellProps) =>
+  (_: string, task: TaskI) => {
+    const isCompleted = task.status === StatusEnum.COMPLETED ? true : false;
+    return (
+      <Switch isDisabled={updateTaskStatusIsLoading} isChecked={isCompleted} onChange={() => updateTaskStatus({id: task._id, status: task.status})} />
+    );
+  };
 
 const renderPriorityCell = (priority: number) => priorityOptions.find((option) => option.value === priority)?.label;
 
@@ -33,11 +44,12 @@ const renderActionsCell = (_: string, task: TaskI) => (
   </Flex>
 );
 
-export const getColumns = (): Column<TaskI>[] => [
+export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading}: Props): Column<TaskI>[] => [
   {
     header: '',
-    accessor: 'id',
-    cell: renderSwitchCell()
+    accessor: 'status',
+    cell: renderSwitchCell({updateTaskStatus, updateTaskStatusIsLoading}),
+    filter: statusOptions
   },
   {
     header: 'Note',
@@ -46,7 +58,8 @@ export const getColumns = (): Column<TaskI>[] => [
   {
     header: 'Priority',
     accessor: 'priority',
-    cell: renderPriorityCell
+    cell: renderPriorityCell,
+    filter: priorityOptions
   },
   {
     header: 'Tags',
@@ -56,7 +69,8 @@ export const getColumns = (): Column<TaskI>[] => [
   {
     header: 'Expiration date',
     accessor: 'expDate',
-    cell: renderExpirationDateCell
+    cell: renderExpirationDateCell,
+    datePicker: true
   },
   {
     header: '',

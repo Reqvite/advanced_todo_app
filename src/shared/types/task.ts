@@ -1,4 +1,5 @@
 enum PriorityEnum {
+  ALL = 0,
   LOW = 1,
   MEDIUM = 2,
   HIGH = 3,
@@ -6,10 +7,17 @@ enum PriorityEnum {
 }
 
 enum TagEnum {
+  ALL = 0,
   PERSONAL = 1,
   WORK = 2,
   SHOPPING = 3,
   STUDY = 4
+}
+
+enum StatusEnum {
+  ALL = 0,
+  COMPLETED = 1,
+  NOT_COMPLETED = 2
 }
 
 interface BaseTaskI {
@@ -17,7 +25,7 @@ interface BaseTaskI {
   note: string;
   priority: PriorityEnum;
   expDate: string;
-  isCompleted: boolean;
+  status: StatusEnum;
 }
 
 interface TaskI extends BaseTaskI {
@@ -28,4 +36,4 @@ interface TaskIWithTagLabel extends BaseTaskI {
   tags: {label: string; value: string}[];
 }
 
-export {PriorityEnum, TagEnum, type TaskI, type TaskIWithTagLabel};
+export {PriorityEnum, StatusEnum, TagEnum, type TaskI, type TaskIWithTagLabel};

@@ -1,9 +1,10 @@
-import {Flex, Table as ChakraTable, TableContainer, Tbody, Td, Th, Thead, Tr} from '@chakra-ui/react';
-import {ReactElement, ReactNode, useEffect, useReducer} from 'react';
+import {Box, Flex, Table as ChakraTable, TableContainer, Tbody, Td, Th, Thead, Tr} from '@chakra-ui/react';
+import {ChangeEvent, ReactElement, ReactNode, useEffect, useReducer} from 'react';
 import {FaLongArrowAltDown} from 'react-icons/fa';
 import {FaArrowUpLong} from 'react-icons/fa6';
 import {SortDirectionEnum} from '@/shared/types/sortDirection.ts';
-import {BlurBox} from '@/shared/ui';
+import {BlurBox, DatePicker, PopoverSelect} from '@/shared/ui';
+import {applyFilters} from '../model/applyFilters.ts';
 import {sortData} from '../model/sortData.ts';
 import {tableReducer} from '../model/tableReducer.ts';
 import {initialState} from '../model/tableReducer.ts';
@@ -16,13 +17,20 @@ interface Props<T> {
   items: T[];
   pageSizeOptions?: number[];
   columns: Column<T>[];
+  isLoading?: boolean;
 }
 
 const DEFAULT_PAGINATION = [10, 20, 50];
 
-export const Table = <T extends {_id: string}>({items, heading, pageSizeOptions = DEFAULT_PAGINATION, columns}: Props<T>): ReactElement => {
+export const Table = <T extends {_id: string}>({
+  items,
+  heading,
+  pageSizeOptions = DEFAULT_PAGINATION,
+  isLoading,
+  columns
+}: Props<T>): ReactElement => {
   const [state, dispatch] = useReducer(tableReducer, {...initialState, data: items});
-  const {pageIndex, pageSize, data = items, loading, sortDirection, sortField} = state;
+  const {pageIndex, pageSize, data = items, sortDirection, sortField, filters} = state;
 
   const onChangeSort = (key: string) => {
     const {sortedData, direction} = sortData(key, data);
@@ -31,11 +39,16 @@ export const Table = <T extends {_id: string}>({items, heading, pageSizeOptions 
     dispatch({type: 'SET_DATA', payload: sortedData});
   };
 
+  const onChangeFilter = (key: string, e: ChangeEvent<HTMLSelectElement>) => {
+    dispatch({type: 'SET_FILTER', payload: {key, value: e?.target?.value ? e.target.value : e}});
+    dispatch({type: 'SET_PAGE_INDEX', payload: 0});
+  };
+
   useEffect(() => {
-    if (data) {
-      dispatch({type: 'SET_DATA', payload: items});
-    }
-  }, [data, items]);
+    dispatch({type: 'SET_DATA', payload: items});
+  }, [items, dispatch]);
+
+  const filteredData = applyFilters(data, filters);
 
   return (
     <BlurBox>
@@ -44,19 +57,25 @@ export const Table = <T extends {_id: string}>({items, heading, pageSizeOptions 
         <ChakraTable size="sm">
           <Thead>
             <Tr>
-              {columns.map(({header, accessor}) => (
+              {columns.map(({header, accessor, filter, datePicker}) => (
                 <Th key={accessor}>
-                  <Flex cursor="pointer" gap={1} alignItems="center" onClick={() => onChangeSort(accessor)}>
-                    {header}
-                    {sortField === accessor ? sortDirection === SortDirectionEnum.Ascending ? <FaArrowUpLong /> : <FaLongArrowAltDown /> : ''}
+                  <Flex>
+                    <Flex cursor="pointer" gap={1} alignItems="center" onClick={() => onChangeSort(accessor)}>
+                      {header}
+                      <Box w="12px">
+                        {sortField === accessor ? sortDirection === SortDirectionEnum.Ascending ? <FaArrowUpLong /> : <FaLongArrowAltDown /> : ''}
+                      </Box>
+                    </Flex>
+                    {filter && <PopoverSelect options={filter} onChange={(value) => onChangeFilter(accessor, value)} />}
                   </Flex>
+                  {datePicker && <DatePicker isRangePicker onDateSelect={(value) => onChangeFilter(accessor, value)} />}
                 </Th>
               ))}
               <Th />
             </Tr>
           </Thead>
           <Tbody>
-            {loading ? (
+            {isLoading ? (
               <Tr>
                 <Td textAlign="center" colSpan={9}>
                   Loading
@@ -69,7 +88,7 @@ export const Table = <T extends {_id: string}>({items, heading, pageSizeOptions 
                 </Td>
               </Tr>
             ) : (
-              data
+              filteredData
                 .map((row: T) => (
                   <Tr key={row._id}>
                     {columns.map((column) => (
@@ -88,7 +107,7 @@ export const Table = <T extends {_id: string}>({items, heading, pageSizeOptions 
           setPageSize={dispatch}
           pageIndex={pageIndex}
           setPageIndex={dispatch}
-          totalItemsCount={data.length}
+          totalItemsCount={filteredData.length}
           pageSizeOptions={pageSizeOptions}
         />
       </TableContainer>
