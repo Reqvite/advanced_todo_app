@@ -6,7 +6,7 @@ import {FaArrowUpLong} from 'react-icons/fa6';
 import {TODAYS_DATE} from '@/shared/const/date.ts';
 import {SortDirectionEnum} from '@/shared/types/sortDirection.ts';
 import {BlurBox} from '@/shared/ui';
-import {renderFilter} from '../model/renderFilter.tsx';
+import {renderFilterBlock} from '../model/renderFilterBlock.tsx';
 import {Column} from '../model/types.ts';
 import {useTable} from '../model/useTable.ts';
 import {TableHeader} from './TableHeader.tsx';
@@ -50,7 +50,7 @@ export const Table = <T extends {_id: string; expDate: string}>({
                         {sortField === accessor ? sortDirection === SortDirectionEnum.Ascending ? <FaArrowUpLong /> : <FaLongArrowAltDown /> : ''}
                       </Box>
                     </Flex>
-                    {filter && renderFilter(filter, accessor, onChangeFilter)}
+                    {filter && renderFilterBlock(filter, accessor, onChangeFilter)}
                   </Flex>
                 </Th>
               ))}

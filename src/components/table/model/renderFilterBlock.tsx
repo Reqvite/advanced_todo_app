@@ -1,10 +1,18 @@
+import {LabelOptionsI} from '@/shared/types/options';
 import {DatePicker, PopoverSelect} from '@/shared/ui';
 import {FilterTypeEnum} from './types';
 
-export const renderFilter = (filter: any, accessor: string, onChangeFilter: (key: string, value: any) => void) => {
+export const renderFilterBlock = (
+  filter: {
+    type: string;
+    options?: LabelOptionsI[];
+  },
+  accessor: string,
+  onChangeFilter: (key: string, value: any) => void
+) => {
   switch (filter.type) {
     case FilterTypeEnum.SELECT:
-      return <PopoverSelect options={filter.options} onChange={(value) => onChangeFilter(accessor, value)} />;
+      return filter?.options && <PopoverSelect options={filter.options} onChange={(value) => onChangeFilter(accessor, value)} />;
     case FilterTypeEnum.DATEPICKER:
       return <DatePicker showInput={false} onDateSelect={(value) => onChangeFilter(accessor, value)} />;
     case FilterTypeEnum.RANGE_DATEPICKER:
