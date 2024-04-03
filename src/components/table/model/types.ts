@@ -22,5 +22,6 @@ export interface Column<T> {
 
 export enum FilterTypeEnum {
   SELECT = 'Select',
-  DATEPICKER = 'DatePicker'
+  DATEPICKER = 'DatePicker',
+  RANGE_DATEPICKER = 'RangeDatePicker'
 }

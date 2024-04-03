@@ -77,7 +77,7 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading}: Props)
     accessor: 'expDate',
     cell: renderExpirationDateCell,
     filter: {
-      type: FilterTypeEnum.DATEPICKER
+      type: FilterTypeEnum.RANGE_DATEPICKER
     }
   },
   {

@@ -1,7 +1,9 @@
 import {Box, Flex, Heading, Table as ChakraTable, TableContainer, Tbody, Td, Th, Thead, Tr} from '@chakra-ui/react';
+import {isBefore} from 'date-fns';
 import {ReactElement, ReactNode} from 'react';
 import {FaLongArrowAltDown} from 'react-icons/fa';
 import {FaArrowUpLong} from 'react-icons/fa6';
+import {TODAYS_DATE} from '@/shared/const/date.ts';
 import {SortDirectionEnum} from '@/shared/types/sortDirection.ts';
 import {BlurBox} from '@/shared/ui';
 import {renderFilter} from '../model/renderFilter.tsx';
@@ -19,7 +21,12 @@ interface Props<T> {
 
 const DEFAULT_PAGINATION = [10, 20, 50];
 
-export const Table = <T extends {_id: string}>({items, heading, pageSizeOptions = DEFAULT_PAGINATION, columns}: Props<T>): ReactElement => {
+export const Table = <T extends {_id: string; expDate: string}>({
+  items,
+  heading,
+  pageSizeOptions = DEFAULT_PAGINATION,
+  columns
+}: Props<T>): ReactElement => {
   const {state, onChangeSort, onChangeFilter, onResetFilter, dispatch, filteredData, data, sortField, sortDirection} = useTable<T>({
     items,
     defaultPageSizeOptions: pageSizeOptions
@@ -59,15 +66,18 @@ export const Table = <T extends {_id: string}>({items, heading, pageSizeOptions 
               </Tr>
             ) : (
               filteredData
-                .map((row: T) => (
-                  <Tr key={row._id}>
-                    {columns.map((column) => (
-                      <Td key={column.accessor}>
-                        {(column.cell ? column.cell(row[column.accessor as keyof T], row) : row[column.accessor as keyof T]) as ReactNode}
-                      </Td>
-                    ))}
-                  </Tr>
-                ))
+                .map((row: T) => {
+                  const dateIsExpired = isBefore(row?.expDate, TODAYS_DATE);
+                  return (
+                    <Tr key={row._id} opacity={dateIsExpired ? 0.25 : 1} pointerEvents={dateIsExpired ? 'none' : 'auto'}>
+                      {columns.map((column) => (
+                        <Td key={column.accessor}>
+                          {(column.cell ? column.cell(row[column.accessor as keyof T], row) : row[column.accessor as keyof T]) as ReactNode}
+                        </Td>
+                      ))}
+                    </Tr>
+                  );
+                })
                 .slice(pageSize * pageIndex, pageSize * (pageIndex + 1))
             )}
           </Tbody>

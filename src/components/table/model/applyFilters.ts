@@ -1,3 +1,5 @@
+import {isEqual, startOfDay} from 'date-fns';
+
 interface FiltersI {
   [key: string]: string | number | [string, string];
 }
@@ -8,6 +10,8 @@ export const applyFilters = <T extends Record<string, any>>({data}: {data: T[]},
   const filteredData = data.filter((item) => {
     return Object.keys(filters).every((key) => {
       const filterKey = filters[key];
+      const keyToLowerCase = key.toLocaleLowerCase();
+
       if (Number(filterKey) === 0) {
         return true;
       }
@@ -16,11 +20,16 @@ export const applyFilters = <T extends Record<string, any>>({data}: {data: T[]},
         return true;
       }
 
-      const keyToLowerCase = key.toLocaleLowerCase();
       if (keyToLowerCase.includes(DATE) && Array.isArray(filterKey) && filterKey.length === 2) {
-        const [startTimestamp, endTimestamp] = filterKey.map((date) => new Date(date).getTime());
-        const itemTimestamp = new Date(item[key]).getTime();
+        const [startTimestamp, endTimestamp] = filterKey.map((date) => startOfDay(date).getTime());
+        const itemTimestamp = startOfDay(item[key]).getTime();
         return itemTimestamp >= startTimestamp && itemTimestamp <= endTimestamp;
+      }
+
+      if (keyToLowerCase.includes(DATE)) {
+        const filterDate = startOfDay(filterKey as string);
+        const keyDate = startOfDay(item[key]);
+        return isEqual(filterDate, keyDate);
       }
 
       return item[key] === filterKey;

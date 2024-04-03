@@ -1,1 +1,3 @@
-export const TODAYS_DATE = new Date().toISOString();
+import {startOfToday} from 'date-fns';
+
+export const TODAYS_DATE = startOfToday();
