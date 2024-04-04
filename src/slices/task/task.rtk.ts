@@ -41,7 +41,7 @@ export const tasksApi = createApi({
       query: ({id, status}) => ({
         url: `/${id}`,
         method: 'PATCH',
-        body: {isCompleted: status}
+        body: {status}
       }),
       invalidatesTags: [RtkApiTagsEnum.Tasks]
     })

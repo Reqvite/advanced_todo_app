@@ -4,7 +4,7 @@ import {LabelOptionsI} from '@/shared/types/options';
 export interface State<T> {
   pageIndex: number;
   pageSize: number;
-  data: T[];
+  rows: T[];
   loading: boolean;
   sortDirection: string;
   sortField: string;
