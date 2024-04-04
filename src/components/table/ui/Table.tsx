@@ -65,20 +65,18 @@ export const Table = <T extends {_id: string; expDate: string}>({
                 </Td>
               </Tr>
             ) : (
-              filteredData
-                .map((row: T) => {
-                  const dateIsExpired = isBefore(row?.expDate, TODAYS_DATE);
-                  return (
-                    <Tr key={row._id} opacity={dateIsExpired ? 0.25 : 1} pointerEvents={dateIsExpired ? 'none' : 'auto'}>
-                      {columns.map((column) => (
-                        <Td key={column.accessor}>
-                          {(column.cell ? column.cell(row[column.accessor as keyof T], row) : row[column.accessor as keyof T]) as ReactNode}
-                        </Td>
-                      ))}
-                    </Tr>
-                  );
-                })
-                .slice(pageSize * pageIndex, pageSize * (pageIndex + 1))
+              filteredData.slice(pageSize * pageIndex, pageSize * (pageIndex + 1)).map((row: T) => {
+                const dateIsExpired = isBefore(row?.expDate, TODAYS_DATE);
+                return (
+                  <Tr key={row._id} opacity={dateIsExpired ? 0.25 : 1} pointerEvents={dateIsExpired ? 'none' : 'auto'}>
+                    {columns.map((column) => (
+                      <Td key={column.accessor}>
+                        {(column.cell ? column.cell(row[column.accessor as keyof T], row) : row[column.accessor as keyof T]) as ReactNode}
+                      </Td>
+                    ))}
+                  </Tr>
+                );
+              })
             )}
           </Tbody>
         </ChakraTable>
