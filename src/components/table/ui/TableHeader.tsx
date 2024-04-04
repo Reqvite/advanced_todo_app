@@ -20,7 +20,7 @@ export const TableHeader = ({heading, onResetFilter, onChangeSearch}: Props): Re
         {heading}
       </Text>
       <Flex alignItems="baseline" gap={2}>
-        <Input onChange={onChange} variant="primary" placeholder="Search" />
+        <Input debounceTime={300} onChange={onChange} variant="primary" placeholder="Search" />
         {onResetFilter && (
           <Button variant="secondary" onClick={onResetFilter}>
             Reset filters
