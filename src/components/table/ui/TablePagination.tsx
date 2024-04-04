@@ -6,17 +6,17 @@ import {Paginator} from '@/shared/ui';
 
 type Props = {
   pageSize: number;
-  setPageSize: ({type}: ActionI) => void;
+  setPageSize: ({type}: ActionI<number>) => void;
   pageIndex: number;
-  setPageIndex: ({type}: ActionI) => void;
+  setPageIndex: ({type}: ActionI<number>) => void;
   totalItemsCount: number;
   pageSizeOptions: number[];
 };
 
 export const TablePagination = ({pageSize, setPageSize, pageIndex, setPageIndex, totalItemsCount, pageSizeOptions}: Props): ReactElement => {
   const totalPages = Math.ceil(totalItemsCount / pageSize);
-  const onChangePageSize = (e: ChangeEvent<HTMLSelectElement>) => {
-    const newSize = parseInt(e.target.value);
+  const onChangePageSize = (event: ChangeEvent<HTMLSelectElement>) => {
+    const newSize = parseInt(event.target.value);
     setPageSize({type: 'SET_PAGE_SIZE', payload: newSize});
     setPageIndex({type: 'SET_PAGE_INDEX', payload: 0});
   };

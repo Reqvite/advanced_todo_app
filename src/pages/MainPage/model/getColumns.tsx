@@ -1,15 +1,27 @@
 import {Flex, Switch, Tag} from '@chakra-ui/react';
 import {Column} from '@/components/table';
 import {formatDate, priorityOptions, tagOptions} from '@/shared/lib/helpers';
+import {TaskI} from '@/shared/types/task';
 import {DeleteButton, EditButton} from '@/shared/ui';
 
-type RenderSwitchCellProps = {
-  onToggleTask: (id: string) => void;
-};
+interface Props {
+  updateTaskStatus: ({id, status}: {id: string; status: boolean}) => void;
+  updateTaskStatusIsLoading: boolean;
+}
+
+type RenderSwitchCellProps = Props;
 
 const renderSwitchCell =
-  ({onToggleTask}: RenderSwitchCellProps) =>
-  (_: string, id: string) => <Switch onChange={() => onToggleTask(id)} />;
+  ({updateTaskStatus, updateTaskStatusIsLoading}: RenderSwitchCellProps) =>
+  (_: string, task: TaskI) => {
+    return (
+      <Switch
+        isDisabled={updateTaskStatusIsLoading}
+        isChecked={task.isCompleted}
+        onChange={() => updateTaskStatus({id: task._id, status: task.isCompleted})}
+      />
+    );
+  };
 
 const renderPriorityCell = (priority: number) => priorityOptions.find((option) => option.value === priority)?.label;
 
@@ -25,20 +37,20 @@ const renderTagsCell = (tags: number[]) => (
 
 const renderExpirationDateCell = (expDate: string) => formatDate(new Date(expDate));
 
-const renderActionsCell = (_: string, id: string) => (
+const renderActionsCell = (_: string, task: TaskI) => (
   <Flex justifyContent="flex-end">
     <Flex gap={2}>
       <DeleteButton />
-      <EditButton id={id} />
+      <EditButton id={task._id} />
     </Flex>
   </Flex>
 );
 
-export const getColumns = ({onToggleTask}: RenderSwitchCellProps): Column[] => [
+export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading}: Props): Column<TaskI>[] => [
   {
     header: '',
     accessor: 'id',
-    cell: renderSwitchCell({onToggleTask})
+    cell: renderSwitchCell({updateTaskStatus, updateTaskStatusIsLoading})
   },
   {
     header: 'Note',

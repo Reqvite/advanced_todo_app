@@ -3,7 +3,7 @@ import {ReactElement} from 'react';
 import {useParams} from 'react-router';
 import {Form, FormInputVariants, FormOption} from '@/components/form';
 import {priorityOptions, tagOptions} from '@/shared/lib/helpers';
-import {updateTaskSchema} from '@/shared/lib/yup/updateTask.schema';
+import {createTaskSchema} from '@/shared/lib/yup/createTask.schema';
 import {TaskFormModel} from '@/shared/models';
 import {useGetTaskByIdQuery, useUpdateTaskByIdMutation} from '@/slices/task/task.rtk';
 
@@ -33,7 +33,7 @@ const UpdateTaskPage = (): ReactElement => {
     <Form<TaskFormModel>
       heading={`Update task #${id}`}
       options={options}
-      formValidationSchema={updateTaskSchema}
+      formValidationSchema={createTaskSchema}
       defaultValues={new TaskFormModel(data)}
       onSubmit={onSubmit}
       isLoading={updateTaskIsLoading}

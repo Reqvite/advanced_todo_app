@@ -1,4 +1,6 @@
 import {ReactElement} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {getRouteMain} from '@/app/providers/AppRouter/routeConfig';
 import {Form, FormInputVariants, FormOption} from '@/components/form';
 import {priorityOptions, tagOptions} from '@/shared/lib/helpers';
 import {createTaskSchema} from '@/shared/lib/yup/createTask.schema';
@@ -14,11 +16,13 @@ const options: FormOption<FormInputVariants>[] = [
 
 const CreateTaskPage = (): ReactElement => {
   const [createTask, {isLoading: isLoading}] = useCreateTaskMutation();
+  const navigate = useNavigate();
 
-  const onSubmit = (task: TaskFormModel): void => {
+  const onSubmit = async (task: TaskFormModel): Promise<void> => {
     const tags = task.tags.map(({value}) => value);
     task.tags = tags;
-    createTask({task});
+    await createTask({task});
+    navigate(getRouteMain());
   };
 
   return (

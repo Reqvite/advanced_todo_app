@@ -17,6 +17,7 @@ interface BaseTaskI {
   note: string;
   priority: PriorityEnum;
   expDate: string;
+  isCompleted: boolean;
 }
 
 interface TaskI extends BaseTaskI {

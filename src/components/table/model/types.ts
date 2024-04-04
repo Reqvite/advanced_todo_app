@@ -9,8 +9,8 @@ export interface State<T> {
   sortField: string;
 }
 
-export interface Column {
+export interface Column<T> {
   header: string;
   accessor: string;
-  cell?: (value: any, id: string) => ReactNode;
+  cell?: (value: any, item: T) => ReactNode;
 }

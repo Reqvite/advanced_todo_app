@@ -3,21 +3,18 @@ import {Spinner} from '@chakra-ui/react';
 import {ReactElement} from 'react';
 import {Table} from '@/components/table';
 import {TaskI} from '@/shared/types/task';
-import {useGetTasksQuery} from '@/slices/task/task.rtk';
+import {useGetTasksQuery, useUpdateTaskStatusByIdMutation} from '@/slices/task/task.rtk';
 import {getColumns} from './model/getColumns';
 
 const MainPage = (): ReactElement => {
   const {data: {data} = {data: []}, isLoading} = useGetTasksQuery();
+  const [updateTaskStatus, {isLoading: updateTaskStatusIsLoading}] = useUpdateTaskStatusByIdMutation();
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  const onToggleTask = (id: string) => {
-    console.log(id);
-  };
-
-  const columns = getColumns({onToggleTask});
+  const columns = getColumns({updateTaskStatus, updateTaskStatusIsLoading});
 
   return (
     <Box>

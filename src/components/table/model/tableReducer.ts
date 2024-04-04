@@ -11,7 +11,7 @@ const initialState = {
   sortField: ''
 };
 
-const tableReducer = <T>(state: State<T>, action: ActionI) => {
+const tableReducer = <T>(state: State<T>, action: ActionI<any>) => {
   switch (action.type) {
     case 'SET_PAGE_INDEX':
       return {...state, pageIndex: action.payload};

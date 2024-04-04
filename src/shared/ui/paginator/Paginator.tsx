@@ -5,7 +5,7 @@ import {ActionI} from '@/shared/types/reducerAction';
 type Props = {
   currentPage: number;
   totalPages: number;
-  onPageChange: ({type}: ActionI) => void;
+  onPageChange: ({type}: ActionI<any>) => void;
 };
 
 export const Paginator = ({currentPage, totalPages, onPageChange}: Props): ReactElement => {

@@ -1,5 +1,5 @@
 import {Flex, Table as ChakraTable, TableContainer, Tbody, Td, Th, Thead, Tr} from '@chakra-ui/react';
-import {ReactElement, ReactNode, useReducer} from 'react';
+import {ReactElement, ReactNode, useEffect, useReducer} from 'react';
 import {FaLongArrowAltDown} from 'react-icons/fa';
 import {FaArrowUpLong} from 'react-icons/fa6';
 import {SortDirectionEnum} from '@/shared/types/sortDirection.ts';
@@ -15,7 +15,7 @@ interface Props<T> {
   heading: string;
   items: T[];
   pageSizeOptions?: number[];
-  columns: Column[];
+  columns: Column<T>[];
 }
 
 const DEFAULT_PAGINATION = [10, 20, 50];
@@ -30,6 +30,12 @@ export const Table = <T extends {_id: string}>({items, heading, pageSizeOptions 
     dispatch({type: 'SET_SORT_DIRECTION', payload: direction});
     dispatch({type: 'SET_DATA', payload: sortedData});
   };
+
+  useEffect(() => {
+    if (data) {
+      dispatch({type: 'SET_DATA', payload: items});
+    }
+  }, [data, items]);
 
   return (
     <BlurBox>
@@ -63,17 +69,15 @@ export const Table = <T extends {_id: string}>({items, heading, pageSizeOptions 
                 </Td>
               </Tr>
             ) : (
-              data
-                .map((row: T) => (
-                  <Tr key={row._id}>
-                    {columns.map((column) => (
-                      <Td key={column.accessor}>
-                        {(column.cell ? column.cell(row[column.accessor as keyof T], row._id) : row[column.accessor as keyof T]) as ReactNode}
-                      </Td>
-                    ))}
-                  </Tr>
-                ))
-                .slice(pageSize * pageIndex, pageSize * (pageIndex + 1))
+              data.slice(pageSize * pageIndex, pageSize * (pageIndex + 1)).map((row: T) => (
+                <Tr key={row._id}>
+                  {columns.map((column) => (
+                    <Td key={`${row._id}-${column.accessor}`}>
+                      {(column.cell ? column.cell(row[column.accessor as keyof T], row) : row[column.accessor as keyof T]) as ReactNode}
+                    </Td>
+                  ))}
+                </Tr>
+              ))
             )}
           </Tbody>
         </ChakraTable>
