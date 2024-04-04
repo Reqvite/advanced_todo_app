@@ -5,14 +5,14 @@ import {sortData} from './sortData';
 import {initialState, tableReducer} from './tableReducer';
 
 export const useTable = <T extends {_id: string}>({items, defaultPageSizeOptions}: {items: T[]; defaultPageSizeOptions?: number[]}) => {
-  const [state, dispatch] = useReducer(tableReducer, {...initialState, data: items});
-  const {pageIndex, pageSize, data = items, sortDirection, sortField, filters, search} = state;
+  const [state, dispatch] = useReducer(tableReducer, {...initialState, rows: items});
+  const {pageIndex, pageSize, rows = items, sortDirection, sortField, filters, search} = state;
 
   const onChangeSort = (key: string) => {
-    const {data: sortedData, direction} = sortData(key, data);
+    const {data: sortedRows, direction} = sortData(key, rows);
     dispatch({type: 'SET_SORT_FIELD', payload: key});
     dispatch({type: 'SET_SORT_DIRECTION', payload: direction});
-    dispatch({type: 'SET_DATA', payload: sortedData});
+    dispatch({type: 'SET_ROWS', payload: sortedRows});
   };
 
   const onChangeFilter = (key: string, value: string) => {
@@ -29,17 +29,17 @@ export const useTable = <T extends {_id: string}>({items, defaultPageSizeOptions
     dispatch({type: 'SET_FILTER_DEFAULT'});
   };
 
-  const filteredData = applyFilters<T>(sortField ? sortData(sortField, data) : {data: items}, filters);
-  const searchFilteredData = applySearch<T>({data: filteredData}, search);
+  const filteredRows = applyFilters<T>(sortField ? sortData(sortField, rows) : {data: items}, filters);
+  const searchFilteredRows = applySearch<T>({data: filteredRows}, search);
 
   useEffect(() => {
-    dispatch({type: 'SET_DATA', payload: items});
+    dispatch({type: 'SET_ROWS', payload: items});
   }, [items, dispatch]);
 
   return {
-    data,
+    rows,
     state,
-    filteredData: searchFilteredData,
+    filteredRows: searchFilteredRows,
     defaultPageSizeOptions,
     pageIndex,
     pageSize,

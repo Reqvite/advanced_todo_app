@@ -28,12 +28,12 @@ export const Table = <T extends {_id: string; expDate: string}>({
   pageSizeOptions = DEFAULT_PAGINATION,
   columns
 }: Props<T>): ReactElement => {
-  const {state, onChangeSort, onChangeSearch, onChangeFilter, onResetFilter, dispatch, filteredData, data, sortField, sortDirection} = useTable<T>({
+  const {state, onChangeSort, onChangeSearch, onChangeFilter, onResetFilter, dispatch, filteredRows, rows, sortField, sortDirection} = useTable<T>({
     items,
     defaultPageSizeOptions: pageSizeOptions
   });
   const {pageIndex, pageSize} = state;
-  const isEmptyTable = filteredData.length < 1;
+  const isEmptyTable = filteredRows.length < 1;
 
   return (
     <BlurBox minH="760px">
@@ -60,27 +60,25 @@ export const Table = <T extends {_id: string; expDate: string}>({
             </Tr>
           </Thead>
           <Tbody>
-            {isEmptyTable || !data ? (
+            {isEmptyTable || !rows ? (
               <Tr>
                 <Td textAlign="center" colSpan={9}>
                   <Heading>Table is empty</Heading>
                 </Td>
               </Tr>
             ) : (
-              filteredData
-                .map((row: T) => {
-                  const dateIsExpired = isBefore(row?.expDate, TODAYS_DATE);
-                  return (
-                    <Tr key={row._id} opacity={dateIsExpired ? 0.25 : 1} pointerEvents={dateIsExpired ? 'none' : 'auto'}>
-                      {columns.map((column) => (
-                        <Td key={column.accessor}>
-                          {(column.cell ? column.cell(row[column.accessor as keyof T], row) : row[column.accessor as keyof T]) as ReactNode}
-                        </Td>
-                      ))}
-                    </Tr>
-                  );
-                })
-                .slice(pageSize * pageIndex, pageSize * (pageIndex + 1))
+              filteredRows.slice(pageSize * pageIndex, pageSize * (pageIndex + 1)).map((row: T) => {
+                const dateIsExpired = isBefore(row?.expDate, TODAYS_DATE);
+                return (
+                  <Tr key={row._id} opacity={dateIsExpired ? 0.25 : 1} pointerEvents={dateIsExpired ? 'none' : 'auto'}>
+                    {columns.map((column) => (
+                      <Td key={column.accessor}>
+                        {(column.cell ? column.cell(row[column.accessor as keyof T], row) : row[column.accessor as keyof T]) as ReactNode}
+                      </Td>
+                    ))}
+                  </Tr>
+                );
+              })
             )}
           </Tbody>
         </ChakraTable>
@@ -89,7 +87,7 @@ export const Table = <T extends {_id: string; expDate: string}>({
             pageSize={pageSize}
             dispatch={dispatch}
             pageIndex={pageIndex}
-            totalItemsCount={filteredData.length}
+            totalItemsCount={filteredRows.length}
             pageSizeOptions={pageSizeOptions}
           />
         )}
