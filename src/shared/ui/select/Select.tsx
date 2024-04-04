@@ -20,7 +20,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         <ChakraReactSelect {...otherProps} ref={ref} value={value} onChange={onChange}>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
-              {option.label}
+              {option.label as string}
             </option>
           ))}
         </ChakraReactSelect>

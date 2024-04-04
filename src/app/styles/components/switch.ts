@@ -1,6 +1,6 @@
 import {switchAnatomy} from '@chakra-ui/anatomy';
 import {createMultiStyleConfigHelpers} from '@chakra-ui/react';
-import {accentColor} from '../const';
+import {errorColorLight, successColor} from '../const';
 
 const {definePartsStyle, defineMultiStyleConfig} = createMultiStyleConfigHelpers(switchAnatomy.keys);
 
@@ -10,9 +10,9 @@ const baseStyle = definePartsStyle({
     bg: 'gray.700'
   },
   track: {
-    bg: 'gray.100',
+    bg: errorColorLight,
     _checked: {
-      bg: accentColor
+      bg: successColor
     }
   }
 });

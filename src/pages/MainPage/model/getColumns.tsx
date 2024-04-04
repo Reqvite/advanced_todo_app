@@ -1,7 +1,7 @@
 import {Flex, Switch, Tag} from '@chakra-ui/react';
 import {Column, FilterTypeEnum, SearchTypeEnum} from '@/components/table';
-import {formatDate, priorityOptions, tagOptions} from '@/shared/lib/helpers';
-import {priorityOptionsWithAll, statusOptionsWithALL} from '@/shared/lib/helpers/enumLabelResolver/enumLabelResolver';
+import {formatDate, getPriorityOptions, GetPriorityOptionsEnum, tagOptions} from '@/shared/lib/helpers';
+import {statusOptionsWithALL} from '@/shared/lib/helpers/enumLabelResolver/enumLabelResolver';
 import {StatusEnum, TaskI} from '@/shared/types/task';
 import {DeleteButton, EditButton} from '@/shared/ui';
 
@@ -21,7 +21,8 @@ const renderSwitchCell =
     );
   };
 
-const renderPriorityCell = (priority: number) => priorityOptions.find((option) => option.value === priority)?.label;
+const renderPriorityCell = (priority: number) =>
+  getPriorityOptions(GetPriorityOptionsEnum.withIcons).find((option) => option.value === priority)?.label;
 
 const renderTagsCell = (tags: number[]) => (
   <Flex gap={2}>
@@ -33,13 +34,13 @@ const renderTagsCell = (tags: number[]) => (
   </Flex>
 );
 
-const renderExpirationDateCell = (expDate: string) => formatDate(new Date(expDate));
+const renderExpirationDateCell = (expDate: Date) => formatDate(expDate);
 
 const renderActionsCell = (_: string, task: TaskI) => (
   <Flex justifyContent="flex-end">
     <Flex gap={2}>
-      <DeleteButton />
       <EditButton id={task._id} />
+      <DeleteButton />
     </Flex>
   </Flex>
 );
@@ -67,7 +68,7 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading}: Props)
     cell: renderPriorityCell,
     filter: {
       type: FilterTypeEnum.SELECT,
-      options: priorityOptionsWithAll
+      options: getPriorityOptions(GetPriorityOptionsEnum.withIconsAndLabel)
     }
   },
   {
@@ -84,7 +85,7 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading}: Props)
     }
   },
   {
-    header: '',
+    header: 'Actions',
     accessor: 'actions',
     cell: renderActionsCell
   }

@@ -1,3 +1,5 @@
+import {format} from 'date-fns';
+
 export const formatDate = (date: Date): string => {
-  return date.toLocaleDateString('ru-RU');
+  return format(date, 'MMM d, yyyy');
 };

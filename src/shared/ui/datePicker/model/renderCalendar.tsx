@@ -1,5 +1,5 @@
 import {Box, Button, Flex, IconButton} from '@chakra-ui/react';
-import {addDays, addMonths, endOfMonth, format, isWithinInterval, startOfMonth, subMonths} from 'date-fns';
+import {addDays, addMonths, endOfMonth, format, isAfter, isWithinInterval, startOfMonth, subMonths} from 'date-fns';
 import {FiChevronLeft, FiChevronRight} from 'react-icons/fi';
 
 interface RenderCalendarProps {
@@ -9,12 +9,13 @@ interface RenderCalendarProps {
   isRangePicker: boolean;
   handleDateClick: (date: Date) => void;
   setSelectedDate: (date: Date) => void;
+  minDate?: Date;
 }
 
 const ADD_1_DAY = 1;
 const WEEK_LENGTH = 7;
 
-export const renderCalendar = ({selectedDate, startDate, endDate, isRangePicker, handleDateClick, setSelectedDate}: RenderCalendarProps) => {
+export const renderCalendar = ({selectedDate, startDate, endDate, isRangePicker, handleDateClick, setSelectedDate, minDate}: RenderCalendarProps) => {
   const monthStart = startOfMonth(selectedDate || new Date());
   const startDateOfMonth = startOfMonth(monthStart);
   const endDateOfMonth = endOfMonth(monthStart);
@@ -55,6 +56,7 @@ export const renderCalendar = ({selectedDate, startDate, endDate, isRangePicker,
       {weeks.map((week, index) => (
         <Flex gap={1} key={index} justifyContent="center">
           {week.map((date) => {
+            const isAfterMinDate = minDate && isAfter(date, minDate);
             const isInRange = isRangePicker && startDate && endDate && isWithinInterval(date, {start: startDate, end: endDate});
             const isSelected = !isRangePicker && selectedDate && date.getTime() === selectedDate.getTime();
             const isStartSelected = isRangePicker && startDate && date.getTime() === startDate.getTime();
@@ -62,6 +64,7 @@ export const renderCalendar = ({selectedDate, startDate, endDate, isRangePicker,
 
             return (
               <Button
+                isDisabled={minDate && !isAfterMinDate}
                 key={date.toISOString()}
                 variant={isInRange || isSelected || isStartSelected || isEndSelected ? 'primary' : 'secondary'}
                 colorScheme={isInRange || isSelected || isStartSelected || isEndSelected ? 'blue' : undefined}

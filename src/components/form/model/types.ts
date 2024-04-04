@@ -23,8 +23,8 @@ interface FormOptionVariantMapI {
   };
   [FormInputVariantsEnum.Datepicker]: {
     variant: FormInputVariantsEnum.Datepicker;
-    minDate?: string;
-    maxDate?: string;
+    minDate?: Date | undefined;
+    maxDate?: Date;
   };
   [FormInputVariantsEnum.MultiSelect]: {
     variant: FormInputVariantsEnum.MultiSelect;
