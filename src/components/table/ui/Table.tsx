@@ -33,8 +33,6 @@ export const Table = <T extends {_id: string; expDate: string}>({
   const {pageIndex, pageSize} = state;
   const isEmptyTable = filteredRows.length < 1;
 
-  console.log(items);
-
   return (
     <BlurBox minH="670px" mb={50}>
       <TableHeader heading={heading} onResetFilter={onResetFilter} onChangeSearch={onChangeSearch} />
