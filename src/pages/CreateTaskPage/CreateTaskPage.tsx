@@ -1,6 +1,5 @@
 import {ReactElement} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {getRouteMain} from '@/app/providers/AppRouter/routeConfig';
 import {Form, FormInputVariantsEnum, FormOption} from '@/components/form';
 import {TODAYS_DATE} from '@/shared/const';
 import {getPriorityOptions, tagOptions} from '@/shared/lib/helpers';
@@ -28,8 +27,7 @@ const CreateTaskPage = (): ReactElement => {
   const onSubmit = async (task: TaskFormModel): Promise<void> => {
     const tags = task.tags.map(({value}) => value);
     task.tags = tags;
-    await createTask({task});
-    navigate(getRouteMain());
+    await createTask({task, navigate});
   };
 
   return (

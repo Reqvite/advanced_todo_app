@@ -1,3 +1,4 @@
+export {Alert} from './alert/Alert.tsx';
 export {BlurBox} from './blurBox/BlurBox';
 export {BackButton} from './buttons/BackButton.tsx';
 export {DeleteButton} from './buttons/DeleteButton';

@@ -35,8 +35,7 @@ const UpdateTaskPage = (): ReactElement | null => {
   const onSubmit = (task: TaskFormModel): void => {
     const tags = task.tags.map(({value}) => value);
     task.tags = tags;
-    updateTask({id, task});
-    navigate(getRouteMain());
+    updateTask({id, task, navigate});
   };
 
   return (

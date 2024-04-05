@@ -1,8 +1,24 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {NavigateFunction} from 'react-router';
+import {getRouteMain} from '@/app/providers/AppRouter/routeConfig';
 import {TaskFormModel} from '@/shared/models';
+import {notificationApi} from '@/shared/services/notification';
+import {NotificationMessage} from '@/shared/services/notification/lib/enums/enums';
 import {ApiPathEnum} from '@/shared/types/apiPath';
+import {ErrorI} from '@/shared/types/error';
 import {RtkApiTagsEnum} from '@/shared/types/rtkApiTags';
 import {StatusEnum, TaskI} from '@/shared/types/task';
+
+const onQueryStartedToast = async ({navigate}: {navigate: NavigateFunction}, {queryFulfilled}: {queryFulfilled: any}, message = 'Success') => {
+  try {
+    await queryFulfilled;
+    notificationApi.success(message);
+    navigate(getRouteMain());
+  } catch (error: unknown) {
+    const {error: newError} = error as ErrorI;
+    notificationApi.error(newError.data.error);
+  }
+};
 
 export const tasksApi = createApi({
   reducerPath: 'taskApi',
@@ -17,21 +33,23 @@ export const tasksApi = createApi({
       query: (id) => `${id}`,
       providesTags: [RtkApiTagsEnum.Task]
     }),
-    createTask: builder.mutation<{data: TaskI}, {task: TaskFormModel}>({
+    createTask: builder.mutation<{data: TaskI}, {task: TaskFormModel; navigate: NavigateFunction}>({
       query: ({task}) => ({
         url: `/`,
         method: 'POST',
         body: {...task}
       }),
-      invalidatesTags: [RtkApiTagsEnum.Tasks]
+      invalidatesTags: [RtkApiTagsEnum.Tasks],
+      onQueryStarted: ({navigate}, {queryFulfilled}) => onQueryStartedToast({navigate}, {queryFulfilled}, NotificationMessage.SUCCESS('Task created'))
     }),
-    updateTaskById: builder.mutation<{data: TaskI}, {id: string; task: Partial<TaskFormModel>}>({
+    updateTaskById: builder.mutation<{data: TaskI}, {id: string; task: Partial<TaskFormModel>; navigate: NavigateFunction}>({
       query: ({id, task}) => ({
         url: `/${id}`,
         method: 'PUT',
         body: {...task}
       }),
-      invalidatesTags: [RtkApiTagsEnum.Tasks, RtkApiTagsEnum.Task]
+      invalidatesTags: [RtkApiTagsEnum.Tasks, RtkApiTagsEnum.Task],
+      onQueryStarted: ({navigate}, {queryFulfilled}) => onQueryStartedToast({navigate}, {queryFulfilled}, NotificationMessage.SUCCESS('Task updated'))
     }),
     updateTaskStatusById: builder.mutation<{data: TaskI}, {id: string; status: StatusEnum}>({
       query: ({id, status}) => ({
