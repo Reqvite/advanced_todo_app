@@ -1,9 +1,9 @@
-import {IconButton, InputGroup, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger, Portal} from '@chakra-ui/react';
+import {IconButton, InputGroup, Popover, PopoverArrow, PopoverContent, PopoverTrigger, Portal} from '@chakra-ui/react';
 import {ForwardedRef, forwardRef, ReactElement, useState} from 'react';
 import {FaCalendarAlt} from 'react-icons/fa';
 import {formatDate} from '@/shared/lib/helpers';
 import {Input} from '..';
-import {renderCalendar} from './model/renderCalendar';
+import {RenderCalendar} from './model/renderCalendar';
 
 interface DatePickerProps {
   isRangePicker?: boolean;
@@ -25,23 +25,45 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const [endDate, setEndDate] = useState<Date | null>(null);
     const [showCalendar, setShowCalendar] = useState<boolean>(false);
 
-    const handleDateClick = (date: Date) => {
-      if (!isRangePicker) {
-        setSelectedDate(date);
-        onChange(formatDate(date));
-        setShowCalendar(false);
-      } else {
-        if (!startDate || endDate) {
+    const handleSingleDateClick = (date: Date) => {
+      setSelectedDate(date);
+      onChange(formatDate(date));
+      setShowCalendar(false);
+    };
+
+    const handleRangeDateClick = (date: Date) => {
+      switch (true) {
+        case !startDate || endDate:
           setStartDate(date);
           setEndDate(null);
-        } else if (startDate && !endDate && date >= startDate) {
+          break;
+        case startDate && !endDate && date >= startDate:
           setEndDate(date);
           onChange([startDate, date]);
           setShowCalendar(false);
-        } else {
+          break;
+        default:
           setStartDate(date);
           setEndDate(null);
-        }
+          break;
+      }
+    };
+
+    const handleDateClick = (date: Date) => {
+      if (!isRangePicker) {
+        handleSingleDateClick(date);
+      } else {
+        handleRangeDateClick(date);
+      }
+    };
+
+    const getDateRangeString = () => {
+      if (isRangePicker && startDate && endDate) {
+        return `${formatDate(startDate)} - ${formatDate(endDate)}`;
+      } else if (selectedDate) {
+        return formatDate(selectedDate);
+      } else {
+        return '';
       }
     };
 
@@ -58,13 +80,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                   label={label}
                   error={error}
                   placeholder="Select Date"
-                  value={
-                    isRangePicker && startDate && endDate
-                      ? `${formatDate(startDate)} - ${formatDate(endDate)}`
-                      : selectedDate
-                        ? formatDate(selectedDate)
-                        : ''
-                  }
+                  value={getDateRangeString()}
                   readOnly
                   {...otherProps}
                 />
@@ -85,19 +101,16 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           </PopoverTrigger>
         )}
         <Portal>
-          <PopoverContent>
+          <PopoverContent padding={2}>
             <PopoverArrow />
-            <PopoverBody>
-              {renderCalendar({
-                selectedDate,
-                startDate,
-                endDate,
-                isRangePicker,
-                handleDateClick,
-                setSelectedDate,
-                minDate
-              })}
-            </PopoverBody>
+            <RenderCalendar
+              selectedDate={selectedDate}
+              startDate={startDate}
+              endDate={endDate}
+              isRangePicker={isRangePicker}
+              handleDateClick={handleDateClick}
+              minDate={minDate}
+            />
           </PopoverContent>
         </Portal>
       </Popover>

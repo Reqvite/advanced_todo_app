@@ -1,11 +1,11 @@
 import {ReactElement} from 'react';
-import {useParams} from 'react-router';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router';
 import {getRouteMain} from '@/app/providers/AppRouter/routeConfig';
 import {Form, FormInputVariantsEnum, FormOption} from '@/components/form';
 import {TODAYS_DATE} from '@/shared/const';
-import {getPriorityOptions, tagOptions} from '@/shared/lib/helpers';
-import {createTaskSchema} from '@/shared/lib/yup/createTask.schema';
+import {getPriorityOptions} from '@/shared/lib/helpers';
+import {tagOptions} from '@/shared/lib/helpers';
+import {taskSchema} from '@/shared/lib/yup/task.schema';
 import {TaskFormModel} from '@/shared/models';
 import {Loader} from '@/shared/ui';
 import {useGetTaskByIdQuery, useUpdateTaskByIdMutation} from '@/slices/task/task.rtk';
@@ -17,11 +17,16 @@ const options: FormOption<FormInputVariantsEnum>[] = [
   {id: 'tags', variant: FormInputVariantsEnum.MultiSelect, name: 'Tags', labelOptions: tagOptions}
 ];
 
-const UpdateTaskPage = (): ReactElement => {
+const UpdateTaskPage = (): ReactElement | null => {
   const {id} = useParams();
-  const {data: {data} = {}, isLoading: taskIsLoading} = useGetTaskByIdQuery(id);
+  const {data: {data} = {}, isLoading: taskIsLoading, isError} = useGetTaskByIdQuery(id);
   const [updateTask, {isLoading: updateTaskIsLoading}] = useUpdateTaskByIdMutation();
   const navigate = useNavigate();
+
+  if (!id || isError) {
+    navigate(getRouteMain());
+    return null;
+  }
 
   if (taskIsLoading) {
     return <Loader fullHeight />;
@@ -38,7 +43,7 @@ const UpdateTaskPage = (): ReactElement => {
     <Form<TaskFormModel>
       heading={`Update task`}
       options={options}
-      formValidationSchema={createTaskSchema}
+      formValidationSchema={taskSchema}
       defaultValues={new TaskFormModel(data)}
       onSubmit={onSubmit}
       isLoading={updateTaskIsLoading}

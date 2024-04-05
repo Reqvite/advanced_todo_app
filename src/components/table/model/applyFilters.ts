@@ -6,6 +6,20 @@ interface FiltersI {
 
 const DATE = 'date';
 
+const applyDateRangeFilter = (item: Record<string, any>, key: string, filterKey: [string, string]): boolean => {
+  const [startTimestamp, endTimestamp] = filterKey.map((date) => startOfDay(date).getTime());
+  const itemTimestamp = startOfDay(item[key]).getTime();
+
+  return itemTimestamp >= startTimestamp && itemTimestamp <= endTimestamp;
+};
+
+const applySingleDateFilter = (item: Record<string, any>, key: string, filterKey: string): boolean => {
+  const filterDate = startOfDay(filterKey);
+  const keyDate = startOfDay(item[key]);
+
+  return isEqual(filterDate, keyDate);
+};
+
 export const applyFilters = <T extends Record<string, any>>({data}: {data: T[]}, filters: FiltersI) => {
   const filteredData = data.filter((item) => {
     return Object.keys(filters).every((key) => {
@@ -21,15 +35,11 @@ export const applyFilters = <T extends Record<string, any>>({data}: {data: T[]},
       }
 
       if (keyToLowerCase.includes(DATE) && Array.isArray(filterKey) && filterKey.length === 2) {
-        const [startTimestamp, endTimestamp] = filterKey.map((date) => startOfDay(date).getTime());
-        const itemTimestamp = startOfDay(item[key]).getTime();
-        return itemTimestamp >= startTimestamp && itemTimestamp <= endTimestamp;
+        return applyDateRangeFilter(item, key, filterKey as [string, string]);
       }
 
       if (keyToLowerCase.includes(DATE)) {
-        const filterDate = startOfDay(filterKey as string);
-        const keyDate = startOfDay(item[key]);
-        return isEqual(filterDate, keyDate);
+        return applySingleDateFilter(item, key, filterKey as string);
       }
 
       return item[key] === filterKey;

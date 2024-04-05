@@ -3,8 +3,8 @@ import {useNavigate} from 'react-router-dom';
 import {getRouteMain} from '@/app/providers/AppRouter/routeConfig';
 import {Form, FormInputVariantsEnum, FormOption} from '@/components/form';
 import {TODAYS_DATE} from '@/shared/const';
-import {getPriorityOptions, tagOptions} from '@/shared/lib/helpers';
-import {createTaskSchema} from '@/shared/lib/yup/createTask.schema';
+import {getPriorityOptions} from '@/shared/lib/helpers';
+import {taskSchema} from '@/shared/lib/yup/task.schema';
 import {TaskFormModel} from '@/shared/models';
 import {useCreateTaskMutation} from '@/slices/task/task.rtk';
 
@@ -36,7 +36,7 @@ const CreateTaskPage = (): ReactElement => {
     <Form<TaskFormModel>
       heading="Create task"
       options={options}
-      formValidationSchema={createTaskSchema}
+      formValidationSchema={taskSchema}
       defaultValues={new TaskFormModel()}
       onSubmit={onSubmit}
       isLoading={isLoading}

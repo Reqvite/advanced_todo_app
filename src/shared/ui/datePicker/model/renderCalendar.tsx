@@ -1,6 +1,8 @@
 import {Box, Button, Flex, IconButton} from '@chakra-ui/react';
-import {addDays, addMonths, endOfMonth, format, isAfter, isWithinInterval, startOfMonth, subMonths} from 'date-fns';
+import {addDays, addMonths, endOfMonth, isAfter, isWithinInterval, startOfMonth, subMonths} from 'date-fns';
+import {useState} from 'react';
 import {FiChevronLeft, FiChevronRight} from 'react-icons/fi';
+import {formatDayDate, formatMonthWithYearDate} from '@/shared/lib/helpers';
 
 interface RenderCalendarProps {
   selectedDate: Date | null;
@@ -8,50 +10,52 @@ interface RenderCalendarProps {
   endDate: Date | null;
   isRangePicker: boolean;
   handleDateClick: (date: Date) => void;
-  setSelectedDate: (date: Date) => void;
   minDate?: Date;
 }
 
 const ADD_1_DAY = 1;
 const WEEK_LENGTH = 7;
 
-export const renderCalendar = ({selectedDate, startDate, endDate, isRangePicker, handleDateClick, setSelectedDate, minDate}: RenderCalendarProps) => {
-  const monthStart = startOfMonth(selectedDate || new Date());
-  const startDateOfMonth = startOfMonth(monthStart);
-  const endDateOfMonth = endOfMonth(monthStart);
-  const weeks: Date[][] = [];
-  let week: Date[] = [];
-  let currentDate = startDateOfMonth;
+export const RenderCalendar = ({selectedDate, startDate, endDate, isRangePicker, handleDateClick, minDate}: RenderCalendarProps) => {
+  const [monthStart, setMonthStart] = useState<Date>(startOfMonth(selectedDate || new Date()));
+  const [weeks, setWeeks] = useState<Date[][]>(generateWeeks(monthStart));
 
-  while (currentDate <= endDateOfMonth) {
-    if (week.length === WEEK_LENGTH) {
-      weeks.push(week);
-      week = [];
+  function generateWeeks(monthStart: Date): Date[][] {
+    const startDateOfMonth = startOfMonth(monthStart);
+    const endDateOfMonth = endOfMonth(monthStart);
+    const newWeeks: Date[][] = [];
+    let week: Date[] = [];
+    let currentDate = startDateOfMonth;
+
+    while (currentDate <= endDateOfMonth) {
+      if (week.length === WEEK_LENGTH) {
+        newWeeks.push(week);
+        week = [];
+      }
+      week.push(currentDate);
+      currentDate = addDays(currentDate, ADD_1_DAY);
     }
-    week.push(currentDate);
-    currentDate = addDays(currentDate, ADD_1_DAY);
+
+    newWeeks.push(week);
+    return newWeeks;
   }
 
-  weeks.push(week);
+  const handlePrevMonthClick = () => {
+    setMonthStart(subMonths(monthStart, 1));
+    setWeeks(generateWeeks(subMonths(monthStart, 1)));
+  };
+
+  const handleNextMonthClick = () => {
+    setMonthStart(addMonths(monthStart, 1));
+    setWeeks(generateWeeks(addMonths(monthStart, 1)));
+  };
 
   return (
     <Flex flexDirection="column">
       <Flex justifyContent="space-between" alignItems="center" mb={2}>
-        <IconButton
-          aria-label="Previous month"
-          icon={<FiChevronLeft />}
-          onClick={() => setSelectedDate(subMonths(selectedDate || new Date(), 1))}
-          variant="ghost"
-          size="sm"
-        />
-        <Box fontSize="xl">{format(selectedDate || new Date(), 'MMMM yyyy')}</Box>
-        <IconButton
-          aria-label="Next month"
-          icon={<FiChevronRight />}
-          onClick={() => setSelectedDate(addMonths(selectedDate || new Date(), 1))}
-          variant="ghost"
-          size="sm"
-        />
+        <IconButton aria-label="Previous month" icon={<FiChevronLeft />} onClick={handlePrevMonthClick} variant="ghost" size="sm" />
+        <Box fontSize="xl">{formatMonthWithYearDate(selectedDate)}</Box>
+        <IconButton aria-label="Next month" icon={<FiChevronRight />} onClick={handleNextMonthClick} variant="ghost" size="sm" />
       </Flex>
       {weeks.map((week, index) => (
         <Flex gap={1} key={index} justifyContent="center">
@@ -61,19 +65,21 @@ export const renderCalendar = ({selectedDate, startDate, endDate, isRangePicker,
             const isSelected = !isRangePicker && selectedDate && date.getTime() === selectedDate.getTime();
             const isStartSelected = isRangePicker && startDate && date.getTime() === startDate.getTime();
             const isEndSelected = isRangePicker && endDate && date.getTime() === endDate.getTime();
+            const buttonVariant = isInRange || isSelected || isStartSelected || isEndSelected ? 'primary' : 'secondary';
 
             return (
               <Button
                 isDisabled={minDate && !isAfterMinDate}
                 key={date.toISOString()}
-                variant={isInRange || isSelected || isStartSelected || isEndSelected ? 'primary' : 'secondary'}
-                colorScheme={isInRange || isSelected || isStartSelected || isEndSelected ? 'blue' : undefined}
-                onClick={() => handleDateClick(date)}
+                variant={buttonVariant}
+                onClick={() => {
+                  handleDateClick(date);
+                }}
                 w="50px"
                 alignSelf="center"
                 mb="2px"
               >
-                {format(date, 'd')}
+                {formatDayDate(date)}
               </Button>
             );
           })}

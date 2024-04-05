@@ -14,7 +14,7 @@ export const PopoverSelect = ({options, onChange, icon: Icon = FaFilter}: Props)
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<number | null>(null);
 
-  const handleItemClick = (selectedValue: number) => {
+  const handleItemClick = (selectedValue: number): void => {
     setSelectedValue(selectedValue);
     onChange(selectedValue);
     setIsOpen(false);
