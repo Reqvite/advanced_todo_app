@@ -13,11 +13,12 @@ interface DatePickerProps {
   isRequired?: boolean;
   label?: string;
   error?: string;
+  customRequired?: boolean;
 }
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
   (
-    {isRangePicker = false, onChange, showInput = true, minDate, isRequired, label, error, ...otherProps}: DatePickerProps,
+    {isRangePicker = false, onChange, showInput = true, minDate, isRequired, customRequired, label, error, ...otherProps}: DatePickerProps,
     ref: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -74,6 +75,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
             {showInput && (
               <InputGroup onClick={() => setShowCalendar((prev) => !prev)} ref={ref}>
                 <Input
+                  customRequired={customRequired}
                   leftIcon={<FaCalendarAlt color="gray.300" />}
                   isRequired={isRequired}
                   variant="primary"
