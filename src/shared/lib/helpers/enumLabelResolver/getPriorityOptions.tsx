@@ -22,18 +22,16 @@ export const getPriorityOptions = (option?: GetPriorityOptionsEnum): LabelOption
           value: Number(value)
         }));
     case GetPriorityOptionsEnum.withIconsAndLabel:
-      return Object.entries(enumLabelResolver.priority)
-        .filter(([value]) => value !== '0')
-        .map(([value, {label, icon}]) => ({
-          label: icon ? (
-            <Flex gap={2} alignItems="center">
-              {icon} {label}
-            </Flex>
-          ) : (
-            label
-          ),
-          value: Number(value)
-        }));
+      return Object.entries(enumLabelResolver.priority).map(([value, {label, icon}]) => ({
+        label: icon ? (
+          <Flex gap={2} alignItems="center">
+            {icon} {label}
+          </Flex>
+        ) : (
+          label
+        ),
+        value: Number(value)
+      }));
     default:
       return Object.entries(enumLabelResolver.priority)
         .filter(([value]) => value !== '0')
