@@ -22,6 +22,7 @@ export const useTable = <T extends {_id: string}>({items, defaultPageSizeOptions
 
   const onChangeSearch = (value: string) => {
     dispatch({type: 'SET_SEARCH', payload: value});
+    dispatch({type: 'SET_PAGE_INDEX', payload: 0});
   };
 
   const onResetFilter = (): void => {

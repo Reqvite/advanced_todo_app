@@ -1,4 +1,4 @@
-import {Box, Flex, Heading, Table as ChakraTable, TableContainer, Tbody, Td, Th, Thead, Tr} from '@chakra-ui/react';
+import {Box, Flex, Heading, Table as ChakraTable, TableContainer, Tbody, Td, Text, Th, Thead, Tr} from '@chakra-ui/react';
 import {isBefore} from 'date-fns';
 import {ReactElement, ReactNode} from 'react';
 import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/io';
@@ -44,7 +44,9 @@ export const Table = <T extends {_id: string; expDate: string}>({
                 <Th key={accessor}>
                   <Flex gap={1}>
                     <Flex cursor="pointer" gap={1} alignItems="center">
-                      <Box onClick={() => onChangeSort(accessor)}>{header}</Box>
+                      <Text textTransform="none" onClick={() => onChangeSort(accessor)}>
+                        {header}
+                      </Text>
                       <Box w="12px">
                         {sortField === accessor ? sortDirection === SortDirectionEnum.Ascending ? <IoIosArrowUp /> : <IoIosArrowDown /> : ''}
                       </Box>
