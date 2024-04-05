@@ -33,6 +33,8 @@ export const Table = <T extends {_id: string; expDate: string}>({
   const {pageIndex, pageSize} = state;
   const isEmptyTable = filteredRows.length < 1;
 
+  console.log(items);
+
   return (
     <BlurBox minH="670px" mb={50}>
       <TableHeader heading={heading} onResetFilter={onResetFilter} onChangeSearch={onChangeSearch} />
@@ -44,7 +46,7 @@ export const Table = <T extends {_id: string; expDate: string}>({
                 <Th key={accessor}>
                   <Flex gap={1}>
                     <Flex cursor="pointer" gap={1} alignItems="center">
-                      <Text textTransform="none" onClick={() => onChangeSort(accessor)}>
+                      <Text as="button" textTransform="none" onClick={() => onChangeSort(accessor)}>
                         {header}
                       </Text>
                       <Box w="12px">
