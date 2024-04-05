@@ -1,14 +1,16 @@
 import {FcHighPriority} from 'react-icons/fc';
-import {MdCircle} from 'react-icons/md';
+import {FcLowPriority, FcMediumPriority} from 'react-icons/fc';
+import {FcLeave} from 'react-icons/fc';
+import {FcViewDetails} from 'react-icons/fc';
 import {PriorityEnum, StatusEnum, TagEnum} from '@/shared/types/task';
 
 export const enumLabelResolver = {
   priority: {
-    [PriorityEnum.ALL]: {label: 'All', icon: null},
-    [PriorityEnum.LOW]: {label: 'Low', icon: <MdCircle color="green" />},
-    [PriorityEnum.MEDIUM]: {label: 'Medium', icon: <MdCircle color="yellow" />},
-    [PriorityEnum.HIGH]: {label: 'High', icon: <MdCircle color="orange" />},
-    [PriorityEnum.CRITICAL]: {label: 'Critical', icon: <FcHighPriority />}
+    [PriorityEnum.ALL]: {label: 'All', icon: <FcViewDetails size={18} />},
+    [PriorityEnum.LOW]: {label: 'Low', icon: <FcLowPriority size={18} />},
+    [PriorityEnum.MEDIUM]: {label: 'Medium', icon: <FcMediumPriority size={18} />},
+    [PriorityEnum.HIGH]: {label: 'High', icon: <FcLeave size={18} />},
+    [PriorityEnum.CRITICAL]: {label: 'Critical', icon: <FcHighPriority size={18} />}
   },
   tag: {
     [TagEnum.PERSONAL]: 'Personal',
