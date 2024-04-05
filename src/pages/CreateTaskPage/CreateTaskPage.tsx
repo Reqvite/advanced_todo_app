@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import {getRouteMain} from '@/app/providers/AppRouter/routeConfig';
 import {Form, FormInputVariantsEnum, FormOption} from '@/components/form';
 import {TODAYS_DATE} from '@/shared/const';
-import {getPriorityOptions} from '@/shared/lib/helpers';
+import {getPriorityOptions, tagOptions} from '@/shared/lib/helpers';
 import {taskSchema} from '@/shared/lib/yup/task.schema';
 import {TaskFormModel} from '@/shared/models';
 import {useCreateTaskMutation} from '@/slices/task/task.rtk';
