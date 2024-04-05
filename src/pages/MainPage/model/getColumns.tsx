@@ -8,9 +8,12 @@ import {DeleteButton, EditButton} from '@/shared/ui';
 interface Props {
   updateTaskStatus: ({id, status}: {id: string; status: StatusEnum}) => void;
   updateTaskStatusIsLoading: boolean;
+  deleteTask: ({id}: {id: string}) => void;
+  taskDeleteIsLoading: boolean;
 }
 
-type RenderSwitchCellProps = Props;
+type RenderSwitchCellProps = Pick<Props, 'updateTaskStatus' | 'updateTaskStatusIsLoading'>;
+type RenderActionsCellProps = Pick<Props, 'deleteTask' | 'taskDeleteIsLoading'>;
 
 const renderSwitchCell =
   ({updateTaskStatus, updateTaskStatusIsLoading}: RenderSwitchCellProps) =>
@@ -36,16 +39,20 @@ const renderTagsCell = (tags: number[]) => (
 
 const renderExpirationDateCell = (expDate: Date) => formatDate(expDate);
 
-const renderActionsCell = (_: string, task: TaskI) => (
-  <Flex justifyContent="flex-end">
-    <Flex gap={2}>
-      <EditButton id={task._id} />
-      <DeleteButton />
-    </Flex>
-  </Flex>
-);
+const renderActionsCell =
+  ({deleteTask, taskDeleteIsLoading}: RenderActionsCellProps) =>
+  (_: string, task: TaskI) => {
+    return (
+      <Flex justifyContent="flex-end">
+        <Flex gap={2}>
+          <EditButton id={task._id} />
+          <DeleteButton onClick={() => deleteTask({id: task._id})} isDisabled={taskDeleteIsLoading} />
+        </Flex>
+      </Flex>
+    );
+  };
 
-export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading}: Props): Column<TaskI>[] => [
+export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading, deleteTask, taskDeleteIsLoading}: Props): Column<TaskI>[] => [
   {
     header: 'Status',
     accessor: 'status',
@@ -87,6 +94,6 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading}: Props)
   {
     header: 'Actions',
     accessor: 'actions',
-    cell: renderActionsCell
+    cell: renderActionsCell({deleteTask, taskDeleteIsLoading})
   }
 ];

@@ -9,14 +9,16 @@ import {ErrorI} from '@/shared/types/error';
 import {RtkApiTagsEnum} from '@/shared/types/rtkApiTags';
 import {StatusEnum, TaskI} from '@/shared/types/task';
 
-const onQueryStartedToast = async ({navigate}: {navigate: NavigateFunction}, {queryFulfilled}: {queryFulfilled: any}, message = 'Success') => {
+const onQueryStartedToast = async ({navigate}: {navigate?: NavigateFunction}, {queryFulfilled}: {queryFulfilled: any}, message = 'Success') => {
   try {
     await queryFulfilled;
     notificationApi.success(message);
-    navigate(getRouteMain());
+    if (navigate) {
+      navigate(getRouteMain());
+    }
   } catch (error: unknown) {
-    const {error: newError} = error as ErrorI;
-    notificationApi.error(newError.data.error);
+    const {error: customError} = error as ErrorI;
+    notificationApi.error(customError.data.error);
   }
 };
 
@@ -58,8 +60,23 @@ export const tasksApi = createApi({
         body: {status}
       }),
       invalidatesTags: [RtkApiTagsEnum.Tasks]
+    }),
+    deleteTaskById: builder.mutation<{data: TaskI}, {id: string}>({
+      query: ({id}) => ({
+        url: `/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: [RtkApiTagsEnum.Tasks],
+      onQueryStarted: (_, {queryFulfilled}) => onQueryStartedToast({}, {queryFulfilled}, NotificationMessage.SUCCESS('Task deleted'))
     })
   })
 });
 
-export const {useGetTasksQuery, useGetTaskByIdQuery, useUpdateTaskByIdMutation, useCreateTaskMutation, useUpdateTaskStatusByIdMutation} = tasksApi;
+export const {
+  useGetTasksQuery,
+  useGetTaskByIdQuery,
+  useUpdateTaskByIdMutation,
+  useCreateTaskMutation,
+  useUpdateTaskStatusByIdMutation,
+  useDeleteTaskByIdMutation
+} = tasksApi;
