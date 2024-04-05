@@ -10,7 +10,6 @@ export const useTable = <T extends {_id: string}>({items, defaultPageSizeOptions
 
   const onChangeSort = (key: string): void => {
     const {data: sortedRows, direction} = sortData(key, rows);
-    console.log(direction);
     dispatch({type: 'SET_SORT_FIELD', payload: key});
     dispatch({type: 'SET_SORT_DIRECTION', payload: direction});
     dispatch({type: 'SET_ROWS', payload: sortedRows});
