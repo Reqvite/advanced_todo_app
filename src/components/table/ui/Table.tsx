@@ -69,14 +69,9 @@ export const Table = <T extends {_id: string; expDate: string}>({
               filteredRows.slice(pageSize * pageIndex, pageSize * (pageIndex + 1)).map((row: T) => {
                 const dateIsExpired = isBefore(row?.expDate, TODAYS_DATE);
                 return (
-                  <Tr
-                    key={row._id}
-                    opacity={dateIsExpired ? 0.25 : 1}
-                    pointerEvents={dateIsExpired ? 'none' : 'auto'}
-                    borderBottom="1px #2D3748 solid"
-                  >
+                  <Tr key={row._id} borderBottom="1px #2D3748 solid">
                     {columns.map((column) => (
-                      <Td padding="5px" key={column.accessor}>
+                      <Td padding="5px" key={`${row._id}-${column.accessor}`} opacity={column.accessor !== 'actions' && dateIsExpired ? 0.3 : 1}>
                         {(column.cell ? column.cell(row[column.accessor as keyof T], row) : row[column.accessor as keyof T]) as ReactNode}
                       </Td>
                     ))}

@@ -79,6 +79,18 @@ export const buttonTheme = {
       _focusVisible: {
         boxShadow: mainShadow
       }
+    },
+    errorFilled: {
+      border: `2px solid ${errorColorLight}`,
+      color: 'white',
+      background: errorColorDark,
+      _hover: {
+        background: 'transparent',
+        color: 'white'
+      },
+      _focusVisible: {
+        boxShadow: mainShadow
+      }
     }
   }
 };

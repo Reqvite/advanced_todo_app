@@ -1,5 +1,7 @@
 import {Flex, Switch, Tag} from '@chakra-ui/react';
+import {isBefore} from 'date-fns';
 import {Column, FilterTypeEnum, SearchTypeEnum} from '@/components/table';
+import {TODAYS_DATE} from '@/shared/const';
 import {formatDate, getPriorityOptions, GetPriorityOptionsEnum, tagOptions} from '@/shared/lib/helpers';
 import {statusOptionsWithALL} from '@/shared/lib/helpers/enumLabelResolver/enumLabelResolver';
 import {StatusEnum, TaskI} from '@/shared/types/task';
@@ -19,8 +21,14 @@ const renderSwitchCell =
   ({updateTaskStatus, updateTaskStatusIsLoading}: RenderSwitchCellProps) =>
   (_: string, task: TaskI) => {
     const isCompleted = task.status === StatusEnum.COMPLETED ? true : false;
+    const dateIsExpired = isBefore(task.expDate, TODAYS_DATE);
+
     return (
-      <Switch isDisabled={updateTaskStatusIsLoading} isChecked={isCompleted} onChange={() => updateTaskStatus({id: task._id, status: task.status})} />
+      <Switch
+        isDisabled={updateTaskStatusIsLoading || dateIsExpired}
+        isChecked={isCompleted}
+        onChange={() => updateTaskStatus({id: task._id, status: task.status})}
+      />
     );
   };
 
@@ -42,11 +50,17 @@ const renderExpirationDateCell = (expDate: Date) => formatDate(expDate);
 const renderActionsCell =
   ({deleteTask, taskDeleteIsLoading}: RenderActionsCellProps) =>
   (_: string, task: TaskI) => {
+    const dateIsExpired = isBefore(task.expDate, TODAYS_DATE);
+
     return (
       <Flex justifyContent="flex-end">
         <Flex gap={2}>
-          <EditButton id={task._id} />
-          <DeleteButton onClick={() => deleteTask({id: task._id})} isDisabled={taskDeleteIsLoading} />
+          <EditButton id={task._id} isDisabled={dateIsExpired} />
+          <DeleteButton
+            variant={dateIsExpired ? 'errorFilled' : 'error'}
+            onClick={() => deleteTask({id: task._id})}
+            isDisabled={taskDeleteIsLoading}
+          />
         </Flex>
       </Flex>
     );
