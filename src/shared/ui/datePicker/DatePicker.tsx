@@ -1,7 +1,7 @@
 import {IconButton, InputGroup, Popover, PopoverArrow, PopoverContent, PopoverTrigger, Portal} from '@chakra-ui/react';
 import {ForwardedRef, forwardRef, ReactElement, useState} from 'react';
 import {FaCalendarAlt} from 'react-icons/fa';
-import {formatDate} from '@/shared/lib/helpers';
+import {FORMAT_DATES} from '@/shared/const';
 import {Input} from '..';
 import {RenderCalendar} from './model/renderCalendar';
 
@@ -25,13 +25,13 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const [endDate, setEndDate] = useState<Date | null>(null);
     const [showCalendar, setShowCalendar] = useState<boolean>(false);
 
-    const handleSingleDateClick = (date: Date) => {
+    const handleSingleDateClick = (date: Date): void => {
       setSelectedDate(date);
-      onChange(formatDate(date));
+      onChange(FORMAT_DATES.MONTH_DATE_YEAR(date));
       setShowCalendar(false);
     };
 
-    const handleRangeDateClick = (date: Date) => {
+    const handleRangeDateClick = (date: Date): void => {
       switch (true) {
         case !startDate || endDate:
           setStartDate(date);
@@ -49,7 +49,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       }
     };
 
-    const handleDateClick = (date: Date) => {
+    const handleDateClick = (date: Date): void => {
       if (!isRangePicker) {
         handleSingleDateClick(date);
       } else {
@@ -57,11 +57,11 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       }
     };
 
-    const getDateRangeString = () => {
+    const getDateRangeString = (): string => {
       if (isRangePicker && startDate && endDate) {
-        return `${formatDate(startDate)} - ${formatDate(endDate)}`;
+        return `${FORMAT_DATES.MONTH_DATE_YEAR(startDate)} - ${FORMAT_DATES.MONTH_DATE_YEAR(endDate)}`;
       } else if (selectedDate) {
-        return formatDate(selectedDate);
+        return FORMAT_DATES.MONTH_DATE_YEAR(selectedDate);
       } else {
         return '';
       }
