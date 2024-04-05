@@ -54,7 +54,7 @@ export const RenderCalendar = ({selectedDate, startDate, endDate, isRangePicker,
     <Flex flexDirection="column">
       <Flex justifyContent="space-between" alignItems="center" mb={2}>
         <IconButton aria-label="Previous month" icon={<FiChevronLeft />} onClick={handlePrevMonthClick} variant="ghost" size="sm" />
-        <Box fontSize="xl">{formatMonthWithYearDate(selectedDate)}</Box>
+        <Box fontSize="xl">{formatMonthWithYearDate(monthStart)}</Box>
         <IconButton aria-label="Next month" icon={<FiChevronRight />} onClick={handleNextMonthClick} variant="ghost" size="sm" />
       </Flex>
       {weeks.map((week, index) => (
