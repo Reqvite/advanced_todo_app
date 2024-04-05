@@ -1,6 +1,6 @@
 import {Box, Button, Flex, IconButton} from '@chakra-ui/react';
 import {addDays, addMonths, endOfMonth, isAfter, isWithinInterval, startOfMonth, subMonths} from 'date-fns';
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {FiChevronLeft, FiChevronRight} from 'react-icons/fi';
 import {formatDayDate, formatMonthWithYearDate} from '@/shared/lib/helpers';
 
