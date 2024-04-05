@@ -13,12 +13,10 @@ export const tasksApi = createApi({
       query: () => ``,
       providesTags: [RtkApiTagsEnum.Tasks]
     }),
-
     getTaskById: builder.query<{data: TaskI}, string | undefined>({
       query: (id) => `${id}`,
       providesTags: [RtkApiTagsEnum.Task]
     }),
-
     createTask: builder.mutation<{data: TaskI}, {task: TaskFormModel}>({
       query: ({task}) => ({
         url: `/`,
@@ -27,8 +25,7 @@ export const tasksApi = createApi({
       }),
       invalidatesTags: [RtkApiTagsEnum.Tasks]
     }),
-
-    updateTaskById: builder.mutation<{data: TaskI}, {id: string | undefined; task: Partial<TaskFormModel>}>({
+    updateTaskById: builder.mutation<{data: TaskI}, {id: string; task: Partial<TaskFormModel>}>({
       query: ({id, task}) => ({
         url: `/${id}`,
         method: 'PUT',
@@ -36,8 +33,7 @@ export const tasksApi = createApi({
       }),
       invalidatesTags: [RtkApiTagsEnum.Tasks, RtkApiTagsEnum.Task]
     }),
-
-    updateTaskStatusById: builder.mutation<{data: TaskI}, {id: string | undefined; status: StatusEnum}>({
+    updateTaskStatusById: builder.mutation<{data: TaskI}, {id: string; status: StatusEnum}>({
       query: ({id, status}) => ({
         url: `/${id}`,
         method: 'PATCH',

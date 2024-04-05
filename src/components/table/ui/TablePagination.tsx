@@ -32,7 +32,7 @@ export const TablePagination = ({pageSize, pageIndex, dispatch, totalItemsCount,
         </Select>
       </Flex>
       <Flex alignItems="center" gap={2}>
-        <Paginator currentPage={pageIndex} totalPages={totalPages} onPageChange={dispatch} />
+        <Paginator currentPage={pageIndex} totalPages={totalPages} dispatch={dispatch} />
       </Flex>
     </Flex>
   );

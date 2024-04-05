@@ -14,9 +14,9 @@ export const renderFilterBlock = (
     case FilterTypeEnum.SELECT:
       return filter?.options && <PopoverSelect options={filter.options} onChange={(value) => onChangeFilter(accessor, value)} />;
     case FilterTypeEnum.DATEPICKER:
-      return <DatePicker showInput={false} onDateSelect={(value) => onChangeFilter(accessor, value)} />;
+      return <DatePicker showInput={false} onChange={(value) => onChangeFilter(accessor, value)} />;
     case FilterTypeEnum.RANGE_DATEPICKER:
-      return <DatePicker isRangePicker showInput={false} onDateSelect={(value) => onChangeFilter(accessor, value)} />;
+      return <DatePicker isRangePicker showInput={false} onChange={(value) => onChangeFilter(accessor, value)} />;
     default:
       return null;
   }

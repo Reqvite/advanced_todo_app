@@ -5,23 +5,23 @@ import {ActionI} from '@/shared/types/reducerAction';
 type Props = {
   currentPage: number;
   totalPages: number;
-  onPageChange: ({type}: ActionI<any>) => void;
+  dispatch: ({type}: ActionI<number>) => void;
 };
 
-export const Paginator = ({currentPage, totalPages, onPageChange}: Props): ReactElement => {
+export const Paginator = ({currentPage, totalPages, dispatch}: Props): ReactElement => {
   const isFirstPage = currentPage === 0;
   const isLastPage = currentPage === totalPages - 1;
   const displayedPage = currentPage + 1;
 
   const handlePreviousClick = (): void => {
     if (!isFirstPage) {
-      onPageChange({type: 'DECREMENT_PAGE_INDEX'});
+      dispatch({type: 'DECREMENT_PAGE_INDEX'});
     }
   };
 
   const handleNextClick = (): void => {
     if (!isLastPage) {
-      onPageChange({type: 'INCREMENT_PAGE_INDEX'});
+      dispatch({type: 'INCREMENT_PAGE_INDEX'});
     }
   };
 

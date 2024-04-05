@@ -14,4 +14,4 @@ const createTask = yup.object().shape({
   )
 });
 
-export const createTaskSchema = yupResolver(createTask);
+export const taskSchema = yupResolver(createTask);
