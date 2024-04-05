@@ -25,13 +25,13 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const [endDate, setEndDate] = useState<Date | null>(null);
     const [showCalendar, setShowCalendar] = useState<boolean>(false);
 
-    const handleSingleDateClick = (date: Date) => {
+    const handleSingleDateClick = (date: Date): void => {
       setSelectedDate(date);
       onChange(formatDate(date));
       setShowCalendar(false);
     };
 
-    const handleRangeDateClick = (date: Date) => {
+    const handleRangeDateClick = (date: Date): void => {
       switch (true) {
         case !startDate || endDate:
           setStartDate(date);
@@ -49,7 +49,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       }
     };
 
-    const handleDateClick = (date: Date) => {
+    const handleDateClick = (date: Date): void => {
       if (!isRangePicker) {
         handleSingleDateClick(date);
       } else {
@@ -57,7 +57,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       }
     };
 
-    const getDateRangeString = () => {
+    const getDateRangeString = (): string => {
       if (isRangePicker && startDate && endDate) {
         return `${formatDate(startDate)} - ${formatDate(endDate)}`;
       } else if (selectedDate) {

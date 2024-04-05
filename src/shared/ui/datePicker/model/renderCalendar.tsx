@@ -40,12 +40,12 @@ export const RenderCalendar = ({selectedDate, startDate, endDate, isRangePicker,
     return newWeeks;
   }
 
-  const handlePrevMonthClick = () => {
+  const handlePrevMonthClick = (): void => {
     setMonthStart(subMonths(monthStart, 1));
     setWeeks(generateWeeks(subMonths(monthStart, 1)));
   };
 
-  const handleNextMonthClick = () => {
+  const handleNextMonthClick = (): void => {
     setMonthStart(addMonths(monthStart, 1));
     setWeeks(generateWeeks(addMonths(monthStart, 1)));
   };
