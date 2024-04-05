@@ -27,6 +27,7 @@ const CreateTaskPage = (): ReactElement => {
   const onSubmit = async (task: TaskFormModel): Promise<void> => {
     const tags = task.tags.map(({value}) => value);
     task.tags = tags;
+    task.expDate = new Date(task.expDate);
     await createTask({task, navigate});
   };
 

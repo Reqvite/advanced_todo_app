@@ -35,6 +35,7 @@ const UpdateTaskPage = (): ReactElement | null => {
   const onSubmit = (task: TaskFormModel): void => {
     const tags = task.tags.map(({value}) => value);
     task.tags = tags;
+    task.expDate = new Date(task.expDate);
     updateTask({id, task, navigate});
   };
 
