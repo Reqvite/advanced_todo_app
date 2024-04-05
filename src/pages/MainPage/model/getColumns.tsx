@@ -1,6 +1,7 @@
 import {Flex, Switch, Tag} from '@chakra-ui/react';
 import {Column, FilterTypeEnum, SearchTypeEnum} from '@/components/table';
-import {formatDate, getPriorityOptions, GetPriorityOptionsEnum, tagOptions} from '@/shared/lib/helpers';
+import {FORMAT_DATES} from '@/shared/const';
+import {getPriorityOptions, GetPriorityOptionsEnum, tagOptions} from '@/shared/lib/helpers';
 import {statusOptionsWithALL} from '@/shared/lib/helpers/enumLabelResolver/enumLabelResolver';
 import {StatusEnum, TaskI} from '@/shared/types/task';
 import {DeleteButton, EditButton} from '@/shared/ui';
@@ -34,7 +35,7 @@ const renderTagsCell = (tags: number[]) => (
   </Flex>
 );
 
-const renderExpirationDateCell = (expDate: Date) => formatDate(expDate);
+const renderExpirationDateCell = (expDate: Date) => FORMAT_DATES.MONTH_DATE_YEAR(expDate);
 
 const renderActionsCell = (_: string, task: TaskI) => (
   <Flex justifyContent="flex-end">

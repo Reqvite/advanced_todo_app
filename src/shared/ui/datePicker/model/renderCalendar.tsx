@@ -2,7 +2,7 @@ import {Box, Button, Flex, IconButton} from '@chakra-ui/react';
 import {addDays, addMonths, endOfMonth, isAfter, isWithinInterval, startOfMonth, subMonths} from 'date-fns';
 import {useState} from 'react';
 import {FiChevronLeft, FiChevronRight} from 'react-icons/fi';
-import {formatDayDate, formatMonthWithYearDate} from '@/shared/lib/helpers';
+import {FORMAT_DATES} from '@/shared/const';
 
 interface RenderCalendarProps {
   selectedDate: Date | null;
@@ -54,7 +54,7 @@ export const RenderCalendar = ({selectedDate, startDate, endDate, isRangePicker,
     <Flex flexDirection="column">
       <Flex justifyContent="space-between" alignItems="center" mb={2}>
         <IconButton aria-label="Previous month" icon={<FiChevronLeft />} onClick={handlePrevMonthClick} variant="ghost" size="sm" />
-        <Box fontSize="xl">{formatMonthWithYearDate(selectedDate)}</Box>
+        <Box fontSize="xl">{FORMAT_DATES.MONTH_YEAR(selectedDate)}</Box>
         <IconButton aria-label="Next month" icon={<FiChevronRight />} onClick={handleNextMonthClick} variant="ghost" size="sm" />
       </Flex>
       {weeks.map((week, index) => (
@@ -79,7 +79,7 @@ export const RenderCalendar = ({selectedDate, startDate, endDate, isRangePicker,
                 alignSelf="center"
                 mb="2px"
               >
-                {formatDayDate(date)}
+                {FORMAT_DATES.DAY(date)}
               </Button>
             );
           })}
