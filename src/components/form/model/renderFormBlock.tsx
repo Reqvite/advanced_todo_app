@@ -1,17 +1,17 @@
 import {ReactElement} from 'react';
 import {Control, Controller, FieldErrors, FieldValues, Path} from 'react-hook-form';
 import {Input, MultiSelect, Select} from '@/shared/ui';
-import {FormInputVariants, FormOption} from './types';
+import {FormInputVariantsEnum, FormOption} from './types';
 
 type Props<T extends FieldValues> = {
-  option: FormOption<FormInputVariants>;
+  option: FormOption<FormInputVariantsEnum>;
   errors: FieldErrors<T>;
   control: Control<T>;
 };
 
 export const renderFormBlock = <T extends FieldValues>({option, errors, control}: Props<T>): ReactElement => {
   switch (option.variant) {
-    case FormInputVariants.Input:
+    case FormInputVariantsEnum.Input:
       return (
         <Controller
           key={option.id}
@@ -30,7 +30,7 @@ export const renderFormBlock = <T extends FieldValues>({option, errors, control}
           )}
         />
       );
-    case FormInputVariants.Datepicker:
+    case FormInputVariantsEnum.Datepicker:
       return (
         <Controller
           key={option.id}
@@ -52,7 +52,7 @@ export const renderFormBlock = <T extends FieldValues>({option, errors, control}
           )}
         />
       );
-    case FormInputVariants.Select:
+    case FormInputVariantsEnum.Select:
       return (
         <Controller
           key={option.id}
@@ -73,7 +73,7 @@ export const renderFormBlock = <T extends FieldValues>({option, errors, control}
           }}
         />
       );
-    case FormInputVariants.MultiSelect:
+    case FormInputVariantsEnum.MultiSelect:
       return (
         <Controller
           key={option.id}

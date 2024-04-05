@@ -1,2 +1,2 @@
 export {priorityOptions, tagOptions} from './enumLabelResolver/enumLabelResolver';
-export {formatDate} from './formatDate/formatDate';
+export {formatDate, formatDayDate, formatMonthWithYearDate} from './formatDate/formatDate';

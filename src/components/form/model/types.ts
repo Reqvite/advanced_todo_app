@@ -1,6 +1,6 @@
 import {LabelOptionsI} from '@/shared/types/options';
 
-export enum FormInputVariants {
+export enum FormInputVariantsEnum {
   Input = 'input',
   Select = 'select',
   MultiSelect = 'multi-select',
@@ -13,23 +13,23 @@ interface BaseFormOption {
   isRequired?: boolean;
 }
 
-type FormOptionVariantMap = {
-  [FormInputVariants.Input]: {
-    variant: FormInputVariants.Input;
+interface FormOptionVariantMapI {
+  [FormInputVariantsEnum.Input]: {
+    variant: FormInputVariantsEnum.Input;
   };
-  [FormInputVariants.Select]: {
-    variant: FormInputVariants.Select;
+  [FormInputVariantsEnum.Select]: {
+    variant: FormInputVariantsEnum.Select;
     labelOptions: LabelOptionsI[];
   };
-  [FormInputVariants.Datepicker]: {
-    variant: FormInputVariants.Datepicker;
+  [FormInputVariantsEnum.Datepicker]: {
+    variant: FormInputVariantsEnum.Datepicker;
     minDate?: string;
     maxDate?: string;
   };
-  [FormInputVariants.MultiSelect]: {
-    variant: FormInputVariants.MultiSelect;
+  [FormInputVariantsEnum.MultiSelect]: {
+    variant: FormInputVariantsEnum.MultiSelect;
     labelOptions: LabelOptionsI[];
   };
-};
+}
 
-export type FormOption<T extends FormInputVariants> = BaseFormOption & FormOptionVariantMap[T];
+export type FormOption<T extends FormInputVariantsEnum> = BaseFormOption & FormOptionVariantMapI[T];

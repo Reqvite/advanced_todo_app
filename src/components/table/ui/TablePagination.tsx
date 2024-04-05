@@ -1,24 +1,24 @@
 import {Flex, Text} from '@chakra-ui/layout';
 import {Select} from '@chakra-ui/select';
-import {ChangeEvent, ReactElement} from 'react';
+import {ChangeEvent, Dispatch, ReactElement} from 'react';
 import {ActionI} from '@/shared/types/reducerAction';
 import {Paginator} from '@/shared/ui';
 
 type Props = {
   pageSize: number;
-  setPageSize: ({type}: ActionI<number>) => void;
+  dispatch: Dispatch<ActionI<number>>;
   pageIndex: number;
-  setPageIndex: ({type}: ActionI<number>) => void;
   totalItemsCount: number;
   pageSizeOptions: number[];
 };
 
-export const TablePagination = ({pageSize, setPageSize, pageIndex, setPageIndex, totalItemsCount, pageSizeOptions}: Props): ReactElement => {
+export const TablePagination = ({pageSize, pageIndex, dispatch, totalItemsCount, pageSizeOptions}: Props): ReactElement => {
   const totalPages = Math.ceil(totalItemsCount / pageSize);
-  const onChangePageSize = (event: ChangeEvent<HTMLSelectElement>) => {
-    const newSize = parseInt(event.target.value);
-    setPageSize({type: 'SET_PAGE_SIZE', payload: newSize});
-    setPageIndex({type: 'SET_PAGE_INDEX', payload: 0});
+
+  const onChangePageSize = (e: ChangeEvent<HTMLSelectElement>) => {
+    const newSize = parseInt(e.target.value);
+    dispatch({type: 'SET_PAGE_SIZE', payload: newSize});
+    dispatch({type: 'SET_PAGE_INDEX', payload: 0});
   };
 
   return (
@@ -32,7 +32,7 @@ export const TablePagination = ({pageSize, setPageSize, pageIndex, setPageIndex,
         </Select>
       </Flex>
       <Flex alignItems="center" gap={2}>
-        <Paginator currentPage={pageIndex} totalPages={totalPages} onPageChange={setPageIndex} />
+        <Paginator currentPage={pageIndex} totalPages={totalPages} dispatch={dispatch} />
       </Flex>
     </Flex>
   );
