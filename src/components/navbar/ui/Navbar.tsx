@@ -3,7 +3,7 @@ import {ReactElement} from 'react';
 import {IoIosCreate} from 'react-icons/io';
 import {NavLink} from 'react-router-dom';
 import {getRouteCreateTask} from '@/app/providers/AppRouter/routeConfig';
-import {BlurBox} from '@/shared/ui';
+import {BlurBox, ThemeButton} from '@/shared/ui';
 import logo from '../../../../public/logoFull.jpg';
 
 export const Navbar = (): ReactElement => {
@@ -13,9 +13,12 @@ export const Navbar = (): ReactElement => {
         <NavLink to={'/'}>
           <Image src={logo} w="100px" h="45px" />
         </NavLink>
-        <Button as={NavLink} to={getRouteCreateTask()} variant={'primary'}>
-          <Icon boxSize={5} as={IoIosCreate} /> Add new task
-        </Button>
+        <Flex gap={2}>
+          <Button as={NavLink} to={getRouteCreateTask()} variant={'primary'}>
+            <Icon boxSize={5} as={IoIosCreate} /> Add new task
+          </Button>
+          <ThemeButton />
+        </Flex>
       </Flex>
     </BlurBox>
   );

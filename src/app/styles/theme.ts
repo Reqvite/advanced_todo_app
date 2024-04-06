@@ -18,14 +18,14 @@ export const getTheme = (colorMode: ColorModeType): ThemeConfig => {
         body: {
           fontFamily: 'body',
           color: mode('#3D4D54', '#ffffff')(props),
-          bgGradient: mode('#ffffff', 'linear(to-br, #202023, #202023, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8), rgba(0, 0, 0))')(props),
+          bg: mode('#f0e7db', 'linear(to-br, #202023, #202023, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8), rgba(0, 0, 0))')(props),
           minHeight: '100vh'
         }
       })
     },
     colors: {
       mainBgColorLight: '#ffffff',
-      secondaryBgColorLight: '#f5f5f5',
+      secondaryBgColorLight: '#f2f2df',
       secondaryBgColorLightTransparent: '#f5f5f560',
       mainBgColorDark: '#202023',
       secondaryBgColorDark: '#282828',
