@@ -50,7 +50,8 @@ export const getTheme = (colorMode: ColorModeType): ThemeConfig => {
       mainShadow: `0 0 0 3px ${accentColorTransparentDarker}`
     },
     borders: {
-      borderMain: `2px solid ${accentColor}`
+      borderMain: `2px solid ${accentColor}`,
+      borderSecondary: '1px #2D3748 solid'
     },
     sizes: {
       headerHeight: '75px',
