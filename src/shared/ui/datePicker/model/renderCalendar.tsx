@@ -1,6 +1,6 @@
 import {Box, Button, Flex, IconButton} from '@chakra-ui/react';
 import {addDays, addMonths, endOfMonth, isAfter, isWithinInterval, startOfMonth, subMonths} from 'date-fns';
-import {useState} from 'react';
+import {ReactElement, useState} from 'react';
 import {FiChevronLeft, FiChevronRight} from 'react-icons/fi';
 import {FORMAT_DATES} from '@/shared/const';
 
@@ -16,7 +16,7 @@ interface RenderCalendarProps {
 const ADD_1_DAY = 1;
 const WEEK_LENGTH = 7;
 
-export const RenderCalendar = ({selectedDate, startDate, endDate, isRangePicker, handleDateClick, minDate}: RenderCalendarProps) => {
+export const RenderCalendar = ({selectedDate, startDate, endDate, isRangePicker, handleDateClick, minDate}: RenderCalendarProps): ReactElement => {
   const [monthStart, setMonthStart] = useState<Date>(startOfMonth(selectedDate || new Date()));
   const [weeks, setWeeks] = useState<Date[][]>(generateWeeks(monthStart));
 

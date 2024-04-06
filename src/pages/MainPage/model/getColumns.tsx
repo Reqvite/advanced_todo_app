@@ -1,4 +1,5 @@
 import {Flex, Switch, Tag} from '@chakra-ui/react';
+import {ReactNode} from 'react';
 import {Column, FilterTypeEnum, SearchTypeEnum} from '@/components/table';
 import {FORMAT_DATES} from '@/shared/const';
 import {getPriorityOptions, GetPriorityOptionsEnum, tagOptions} from '@/shared/lib/helpers';
@@ -15,14 +16,14 @@ type RenderSwitchCellProps = Props;
 
 const renderSwitchCell =
   ({updateTaskStatus, updateTaskStatusIsLoading}: RenderSwitchCellProps) =>
-  (_: string, task: TaskI) => {
+  (_: string, task: TaskI): ReactNode => {
     const isCompleted = task.status === StatusEnum.COMPLETED ? true : false;
     return (
       <Switch isDisabled={updateTaskStatusIsLoading} isChecked={isCompleted} onChange={() => updateTaskStatus({id: task._id, status: task.status})} />
     );
   };
 
-const renderPriorityCell = (priority: number) =>
+const renderPriorityCell = (priority: number): ReactNode =>
   getPriorityOptions(GetPriorityOptionsEnum.withIcons).find((option) => option.value === priority)?.label;
 
 const renderTagsCell = (tags: number[]) => (
@@ -35,9 +36,9 @@ const renderTagsCell = (tags: number[]) => (
   </Flex>
 );
 
-const renderExpirationDateCell = (expDate: Date) => FORMAT_DATES.MONTH_DATE_YEAR(expDate);
+const renderExpirationDateCell = (expDate: Date): ReactNode => FORMAT_DATES.MONTH_DATE_YEAR(expDate);
 
-const renderActionsCell = (_: string, task: TaskI) => (
+const renderActionsCell = (_: string, task: TaskI): ReactNode => (
   <Flex justifyContent="flex-end">
     <Flex gap={2}>
       <EditButton id={task._id} />
