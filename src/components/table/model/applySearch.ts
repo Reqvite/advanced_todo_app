@@ -8,6 +8,7 @@ interface ResolveEnumLabelParamsI {
 
 const resolveEnumLabel = ({key, options, value}: ResolveEnumLabelParamsI): boolean => {
   const labels = key.map((item) => options[item]);
+
   return labels.some((item) => item.toLowerCase().includes(value));
 };
 
@@ -21,6 +22,7 @@ export const applySearch = <T extends Record<string, any>>({data}: {data: T[]}, 
 
       if (key !== '_id') {
         const keyValue = String(item[key]).toLowerCase().replace(/\s/g, '');
+
         return key.toLowerCase().includes(value) || keyValue.includes(value.replace(/\s/g, ''));
       }
 

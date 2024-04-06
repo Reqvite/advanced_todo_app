@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const PopoverSelect = ({options, onChange, icon: Icon = FaFilter}: Props): ReactElement => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<number | null>(null);
 
   const handleItemClick = (selectedValue: number): void => {

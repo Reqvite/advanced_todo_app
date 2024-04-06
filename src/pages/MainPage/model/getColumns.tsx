@@ -1,5 +1,6 @@
 import {Flex, Switch, Tag} from '@chakra-ui/react';
 import {isBefore} from 'date-fns';
+import {ReactNode} from 'react';
 import {Column, FilterTypeEnum, SearchTypeEnum} from '@/components/table';
 import {FORMAT_DATES, TODAYS_DATE} from '@/shared/const';
 import {getPriorityOptions, GetPriorityOptionsEnum, tagOptions} from '@/shared/lib/helpers';
@@ -19,7 +20,7 @@ type RenderActionsCellProps = Pick<Props, 'deleteTask' | 'taskDeleteIsLoading'>;
 
 const renderSwitchCell =
   ({updateTaskStatus, updateTaskStatusIsLoading}: RenderSwitchCellProps) =>
-  (_: string, task: TaskI) => {
+  (_: string, task: TaskI): ReactNode => {
     const isCompleted = task.status === StatusEnum.COMPLETED ? true : false;
     const dateIsExpired = isBefore(task.expDate, TODAYS_DATE);
 
@@ -32,7 +33,7 @@ const renderSwitchCell =
     );
   };
 
-const renderPriorityCell = (priority: number) =>
+const renderPriorityCell = (priority: number): ReactNode =>
   getPriorityOptions(GetPriorityOptionsEnum.withIcons).find((option) => option.value === priority)?.label;
 
 const renderTagsCell = (tags: number[]) => (
@@ -45,7 +46,7 @@ const renderTagsCell = (tags: number[]) => (
   </Flex>
 );
 
-const renderExpirationDateCell = (expDate: Date) => FORMAT_DATES.MONTH_DATE_YEAR(expDate);
+const renderExpirationDateCell = (expDate: Date): ReactNode => FORMAT_DATES.MONTH_DATE_YEAR(expDate);
 
 const renderActionsCell =
   ({deleteTask, taskDeleteIsLoading}: RenderActionsCellProps) =>
