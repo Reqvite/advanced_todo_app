@@ -19,13 +19,18 @@ export const Form = <T extends FieldValues>({heading, options, formValidationSch
   const {
     handleSubmit,
     control,
+    getValues,
     formState: {errors}
   } = useForm<T>({resolver: formValidationSchema, defaultValues: defaultValues as DefaultValues<T>});
+
+  const handleFormSubmit = handleSubmit(() => {
+    onSubmit(getValues());
+  });
 
   return (
     <BlurBox>
       <FormHeader heading={heading} />
-      <Box w="full" as="form" maxW="800px" mt={10} mx="auto" onSubmit={handleSubmit(onSubmit)}>
+      <Box w="full" as="form" maxW="800px" mt={10} mx="auto" onSubmit={handleFormSubmit}>
         <Stack gap={4}>
           {options.map((option) => renderFormBlock<T>({option, errors, control}))}
           <Button isLoading={isLoading} isDisabled={isLoading} type="submit" variant="primary" fontFamily="heading" w="full" mt={4}>

@@ -21,7 +21,7 @@ export const tasksApi = createApi({
       query: ({task}) => ({
         url: `/`,
         method: 'POST',
-        body: {...task}
+        body: task
       }),
       invalidatesTags: [RtkApiTagsEnum.Tasks]
     }),
@@ -29,7 +29,7 @@ export const tasksApi = createApi({
       query: ({id, task}) => ({
         url: `/${id}`,
         method: 'PUT',
-        body: {...task}
+        body: task
       }),
       invalidatesTags: [RtkApiTagsEnum.Tasks, RtkApiTagsEnum.Task]
     }),
