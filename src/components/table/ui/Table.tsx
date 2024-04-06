@@ -1,4 +1,4 @@
-import {Box, Flex, Heading, Table as ChakraTable, TableContainer, Tbody, Td, Text, Th, Thead, Tr} from '@chakra-ui/react';
+import {Box, Center, Flex, Heading, Table as ChakraTable, TableContainer, Tbody, Td, Text, Th, Thead, Tr} from '@chakra-ui/react';
 import {isBefore} from 'date-fns';
 import {ReactElement, ReactNode} from 'react';
 import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/io';
@@ -35,6 +35,7 @@ export const Table = <T extends {_id: string; expDate: string}>({
   });
   const {pageIndex, pageSize} = state;
   const isEmptyTable = filteredRows.length < 1;
+  const tdFontSize = {base: '10px', sm: '10px', md: '10px', lg: '12px', xl: '14px'};
 
   const renderCell = (columns: Column<T>[], row: T, dateIsExpired: boolean) => {
     return columns.map((column) => {
@@ -44,7 +45,12 @@ export const Table = <T extends {_id: string; expDate: string}>({
         const truncatedValue = `${value.slice(0, maxRowLength)}...`;
 
         return (
-          <Td padding="5px" key={`${row._id}-${column.accessor}`} opacity={column.accessor !== 'actions' && dateIsExpired ? 0.3 : 1}>
+          <Td
+            fontSize={tdFontSize}
+            padding="5px"
+            key={`${row._id}-${column.accessor}`}
+            opacity={column.accessor !== 'actions' && dateIsExpired ? 0.3 : 1}
+          >
             <Tooltip label={value} aria-label="Full text">
               {truncatedValue}
             </Tooltip>
@@ -53,7 +59,12 @@ export const Table = <T extends {_id: string; expDate: string}>({
       }
 
       return (
-        <Td padding="5px" key={`${row._id}-${column.accessor}`} opacity={column.accessor !== 'actions' && dateIsExpired ? 0.3 : 1}>
+        <Td
+          fontSize={tdFontSize}
+          padding="5px"
+          key={`${row._id}-${column.accessor}`}
+          opacity={column.accessor !== 'actions' && dateIsExpired ? 0.3 : 1}
+        >
           {(column.cell ? column.cell(row[column.accessor as keyof T], row) : row[column.accessor as keyof T]) as ReactNode}
         </Td>
       );
@@ -61,14 +72,14 @@ export const Table = <T extends {_id: string; expDate: string}>({
   };
 
   return (
-    <BlurBox minH="670px" mb={50}>
+    <BlurBox minH="auto" mb={50}>
       <TableHeader heading={heading} onResetFilter={onResetFilter} onChangeSearch={onChangeSearch} />
       <TableContainer w="100%" height="100%">
         <ChakraTable size="sm" variant="unstyled">
           <Thead borderBottom="borderSecondary">
             <Tr>
               {columns.map(({header, accessor, filter}) => (
-                <Th key={accessor}>
+                <Th key={accessor} padding={1} fontSize={{base: '10px', sm: '10px', md: '10px', lg: '12px', xl: '12px'}}>
                   <Flex gap={1}>
                     <Flex cursor="pointer" gap={1} alignItems="center">
                       {accessor === 'actions' ? (
@@ -95,7 +106,9 @@ export const Table = <T extends {_id: string; expDate: string}>({
             {isEmptyTable || !rows ? (
               <Tr>
                 <Td h="450px" textAlign="center" colSpan={9}>
-                  <Heading>Table is empty</Heading>
+                  <Center>
+                    <Heading>Table is empty</Heading>
+                  </Center>
                 </Td>
               </Tr>
             ) : (

@@ -39,7 +39,13 @@ const renderPriorityCell = (priority: number): ReactNode =>
 const renderTagsCell = (tags: number[]) => (
   <Flex gap={2}>
     {tags.map((tag) => (
-      <Tag key={tag} variant="solid" colorScheme="teal">
+      <Tag
+        key={tag}
+        variant="solid"
+        colorScheme="teal"
+        padding={{base: '3px', sm: '3px', md: '3px', lg: '3px', xl: '5px'}}
+        fontSize={{base: '8px', sm: '8px', md: '8px', lg: '12px', xl: '14px'}}
+      >
         {tagOptions.find((option) => option.value === tag)?.label}
       </Tag>
     ))}
