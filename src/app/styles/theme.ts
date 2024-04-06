@@ -54,7 +54,7 @@ export const getTheme = (colorMode: ColorModeType): ThemeConfig => {
       borderSecondary: '1px #2D3748 solid'
     },
     sizes: {
-      headerHeight: '75px',
+      headerHeight: '85px',
       drawerFooterHeight: '113px',
       drawerWidth: '380px'
     },

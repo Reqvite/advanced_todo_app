@@ -11,7 +11,7 @@ export const Navbar = (): ReactElement => {
     <BlurBox as="header" position="fixed" w="100%" padding={3} zIndex="navbar">
       <Flex gap={5} justifyContent="space-between" alignItems="center">
         <NavLink to={'/'}>
-          <Image src={logo} w="100px" h="55px" />
+          <Image src={logo} w="100px" h="45px" />
         </NavLink>
         <Button as={NavLink} to={getRouteCreateTask()} variant={'primary'}>
           <Icon boxSize={5} as={IoIosCreate} /> Add new task
