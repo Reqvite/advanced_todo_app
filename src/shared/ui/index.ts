@@ -7,6 +7,7 @@ export {ThemeButton} from './buttons/ThemeButton.tsx';
 export {DatePicker} from './datePicker/DatePicker.tsx';
 export {Input} from './input/Input';
 export {Loader} from './loader/Loader.tsx';
+export {ConfirmModal} from './modal/ConfirmModal.tsx';
 export {MultiSelect} from './multiSelect/MultiSelect';
 export {Paginator} from './paginator/Paginator';
 export {PopoverSelect} from './popoverSelect/PopoverSelect.tsx';

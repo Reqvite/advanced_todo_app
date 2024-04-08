@@ -65,7 +65,7 @@ const renderActionsCell =
           <EditButton id={task._id} isDisabled={dateIsExpired} />
           <DeleteButton
             variant={dateIsExpired ? 'errorFilled' : 'error'}
-            onClick={() => deleteTask({id: task._id})}
+            onConfirm={() => deleteTask({id: task._id})}
             isDisabled={taskDeleteIsLoading}
           />
         </Flex>
