@@ -1,9 +1,9 @@
-import {Box, FormControl, FormErrorMessage, FormHelperText, FormLabel, SelectFieldProps} from '@chakra-ui/react';
-import {Select as ChakraReactSelect} from 'chakra-react-select';
-import React from 'react';
+import {Box, FormControl, FormErrorMessage, FormHelperText, FormLabel} from '@chakra-ui/react';
+import {GroupBase, Select as ChakraReactSelect, SelectInstance} from 'chakra-react-select';
+import React, {LegacyRef} from 'react';
 import {LabelOptionsI} from '@/shared/types/options';
 
-type MultiSelectProps = SelectFieldProps & {
+type MultiSelectProps = {
   label: string;
   helperText?: string;
   error?: string;
@@ -11,23 +11,27 @@ type MultiSelectProps = SelectFieldProps & {
   variant?: string;
   options: LabelOptionsI[];
   placeholder?: string;
-  customRequired?: boolean;
 };
 
 export const MultiSelect = React.forwardRef<HTMLSelectElement, MultiSelectProps>(
-  ({label, helperText, error, isRequired = false, customRequired, ...otherProps}, ref) => {
+  ({label, helperText, error, isRequired = false, ...otherProps}, ref) => {
     return (
       <FormControl isRequired={isRequired} isInvalid={Boolean(error)}>
         <FormLabel>
           {label}
-          {customRequired && (
+          {isRequired && (
             <Box as="span" color="errorColorLight" ml="3px">
               *
             </Box>
           )}
         </FormLabel>
-        {/* @ts-expect-error /// */}
-        <ChakraReactSelect selectedOptionColorScheme="gray.500" isMulti closeMenuOnSelect={false} {...otherProps} ref={ref} />
+        <ChakraReactSelect
+          selectedOptionColorScheme="gray.500"
+          isMulti
+          closeMenuOnSelect={false}
+          {...otherProps}
+          ref={ref as LegacyRef<SelectInstance<LabelOptionsI, true, GroupBase<LabelOptionsI>>>}
+        />
         {helperText && <FormHelperText>{helperText}</FormHelperText>}
         <Box height="5px" marginTop={2}>
           <FormErrorMessage margin={0}>{error}</FormErrorMessage>

@@ -1,5 +1,5 @@
 import {IconButton, List, ListItem, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger, useColorModeValue} from '@chakra-ui/react';
-import {ReactElement, useState} from 'react';
+import {ReactElement, useCallback, useState} from 'react';
 import {IconType} from 'react-icons';
 import {FaFilter} from 'react-icons/fa';
 import {LabelOptionsI} from '@/shared/types/options';
@@ -15,11 +15,14 @@ export const PopoverSelect = ({options, onChange, icon: Icon = FaFilter}: Props)
   const [selectedValue, setSelectedValue] = useState<number | null>(null);
   const textColor = useColorModeValue('black', 'white');
 
-  const handleItemClick = (selectedValue: number): void => {
-    setSelectedValue(selectedValue);
-    onChange(selectedValue);
-    setIsOpen(false);
-  };
+  const handleItemClick = useCallback(
+    (selectedValue: number): void => {
+      setSelectedValue(selectedValue);
+      onChange(selectedValue);
+      setIsOpen(false);
+    },
+    [onChange]
+  );
 
   return (
     <div>

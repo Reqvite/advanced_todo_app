@@ -2,7 +2,7 @@ import {ReactElement} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Form, FormInputVariantsEnum, FormOption} from '@/components/form';
 import {TODAYS_DATE} from '@/shared/const';
-import {getPriorityOptions, tagOptions} from '@/shared/lib/helpers';
+import {getPriorityOptions, tagOptions, transformTaskData} from '@/shared/lib/helpers';
 import {taskSchema} from '@/shared/lib/yup/task.schema';
 import {TaskFormModel} from '@/shared/models';
 import {useCreateTaskMutation} from '@/slices/task/task.rtk';
@@ -24,11 +24,8 @@ const CreateTaskPage = (): ReactElement => {
   const [createTask, {isLoading: isLoading}] = useCreateTaskMutation();
   const navigate = useNavigate();
 
-  const onSubmit = async (task: TaskFormModel): Promise<void> => {
-    const tags = task.tags.map(({value}) => value);
-    task.tags = tags;
-    task.expDate = new Date(task.expDate);
-    await createTask({task, navigate});
+  const onSubmit = (task: TaskFormModel): void => {
+    createTask({task, navigate});
   };
 
   return (
@@ -37,6 +34,7 @@ const CreateTaskPage = (): ReactElement => {
       options={options}
       formValidationSchema={taskSchema}
       defaultValues={new TaskFormModel()}
+      transformData={transformTaskData}
       onSubmit={onSubmit}
       isLoading={isLoading}
     />

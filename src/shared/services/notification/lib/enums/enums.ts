@@ -10,6 +10,6 @@ const NotificationMessage = {
   ERROR: (message?: string) => (message ? message : 'Error'),
   WARNING: 'Some warning message',
   SUCCESS: (message?: string) => (message ? message : 'Success')
-} as const;
+};
 
 export {NotificationEnum, NotificationMessage};
