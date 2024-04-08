@@ -9,7 +9,9 @@ export const useTable = <T extends {_id: string}>({items, defaultPageSizeOptions
   const {pageIndex, pageSize, rows = items, sortDirection, sortField, filters, search} = state;
 
   const onChangeSort = (key: string): void => {
-    const {data: sortedRows, direction} = sortData(key, rows, sortDirection);
+    const isSameSortKey = key === sortField && sortField !== '';
+    const {data: sortedRows, direction} = sortData(key, rows, isSameSortKey ? sortDirection : '');
+
     dispatch({type: 'SET_SORT_FIELD', payload: key});
     dispatch({type: 'SET_SORT_DIRECTION', payload: direction});
     dispatch({type: 'SET_ROWS', payload: sortedRows});
