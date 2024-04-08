@@ -49,6 +49,7 @@ export const useTable = <T extends {_id: string}>({items, defaultPageSizeOptions
     sortDirection,
     sortField,
     search,
+    filters,
     dispatch,
     onChangeSort,
     onChangeFilter,

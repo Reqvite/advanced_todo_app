@@ -1,7 +1,7 @@
 import {Flex, Switch, Tag} from '@chakra-ui/react';
 import {isBefore} from 'date-fns';
 import {ReactNode} from 'react';
-import {Column, FilterTypeEnum, SearchTypeEnum} from '@/components/table';
+import {Column, FilterTypeEnum} from '@/components/table';
 import {FORMAT_DATES, TODAYS_DATE} from '@/shared/const';
 import {getPriorityOptions, GetPriorityOptionsEnum, tagOptions} from '@/shared/lib/helpers';
 import {statusOptionsWithALL} from '@/shared/lib/helpers/enumLabelResolver/enumLabelResolver';
@@ -85,10 +85,7 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading, deleteT
   },
   {
     header: 'Note',
-    accessor: 'note',
-    search: {
-      type: SearchTypeEnum.POPOVER_INPUT
-    }
+    accessor: 'note'
   },
   {
     header: 'Priority',

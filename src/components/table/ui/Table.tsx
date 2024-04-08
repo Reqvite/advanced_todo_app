@@ -4,6 +4,7 @@ import {ReactElement, ReactNode} from 'react';
 import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/io';
 import {TODAYS_DATE} from '@/shared/const/date.ts';
 import {SortDirectionEnum} from '@/shared/types/sortDirection.ts';
+import {StatusEnum} from '@/shared/types/task.ts';
 import {BlurBox, Tooltip} from '@/shared/ui';
 import {renderFilterBlock} from '../model/renderFilterBlock.tsx';
 import {Column} from '../model/types.ts';
@@ -22,17 +23,18 @@ interface Props<T> {
 const DEFAULT_PAGINATION = [10, 20, 50];
 const MAX_ROW_LENGTH = 50;
 
-export const Table = <T extends {_id: string; expDate: string}>({
+export const Table = <T extends {_id: string; expDate: string; status: StatusEnum}>({
   items,
   heading,
   pageSizeOptions = DEFAULT_PAGINATION,
   columns,
   maxRowLength = MAX_ROW_LENGTH
 }: Props<T>): ReactElement => {
-  const {state, onChangeSort, onChangeSearch, onChangeFilter, onResetFilter, dispatch, filteredRows, rows, sortField, sortDirection} = useTable<T>({
-    items,
-    defaultPageSizeOptions: pageSizeOptions
-  });
+  const {state, onChangeSort, onChangeSearch, onChangeFilter, onResetFilter, dispatch, filteredRows, rows, sortField, sortDirection, filters} =
+    useTable<T>({
+      items,
+      defaultPageSizeOptions: pageSizeOptions
+    });
   const {pageIndex, pageSize} = state;
   const isEmptyTable = filteredRows.length < 1;
   const tdFontSize = {base: '10px', sm: '10px', md: '10px', lg: '12px', xl: '14px'};
@@ -73,7 +75,7 @@ export const Table = <T extends {_id: string; expDate: string}>({
 
   return (
     <BlurBox minH="721px" mb={50} display="flex" flexDirection="column" justifyContent="space-between">
-      <TableHeader heading={heading} onResetFilter={onResetFilter} onChangeSearch={onChangeSearch} />
+      <TableHeader<T> heading={heading} onResetFilter={onResetFilter} onChangeSearch={onChangeSearch} filters={filters} items={items} />
       <TableContainer w="100%" height="100%" minH="544px">
         <ChakraTable size="sm" variant="unstyled" fontWeight="bold">
           <Thead borderBottom="borderSecondary">
