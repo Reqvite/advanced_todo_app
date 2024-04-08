@@ -1,4 +1,5 @@
 import {Flex, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger, Stack, Tag, Text, useMediaQuery} from '@chakra-ui/react';
+import {MEDIA_QUERY} from '@/shared/const';
 import {tagOptions} from '@/shared/lib/helpers';
 
 interface Props {
@@ -7,7 +8,9 @@ interface Props {
 }
 
 export const TagList = ({items, maxItemsToShow = 4}: Props) => {
-  const [isLargerThan900] = useMediaQuery('(min-width: 900px)');
+  const [isLargerThan900] = useMediaQuery(MEDIA_QUERY.MIN_WIDTH_TABLET, {
+    ssr: false
+  });
   const displayedItemsCount = isLargerThan900 ? maxItemsToShow : 0;
   const truncatedItems = items.slice(0, displayedItemsCount);
   const hasMoreItems = items.length > displayedItemsCount;

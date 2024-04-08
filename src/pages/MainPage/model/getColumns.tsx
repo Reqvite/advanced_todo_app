@@ -72,7 +72,9 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading, deleteT
   },
   {
     header: 'Note',
-    accessor: 'note'
+    accessor: 'note',
+    isTruncated: true,
+    width: '25%'
   },
   {
     header: 'Priority',
@@ -86,7 +88,8 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading, deleteT
   {
     header: 'Tags',
     accessor: 'tags',
-    cell: renderTagsCell
+    cell: renderTagsCell,
+    width: '28%'
   },
   {
     header: 'Expiration date',

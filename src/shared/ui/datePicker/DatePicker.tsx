@@ -1,7 +1,7 @@
 import {IconButton, InputGroup, Popover, PopoverArrow, PopoverContent, PopoverTrigger, Portal, useMediaQuery} from '@chakra-ui/react';
 import {ForwardedRef, forwardRef, ReactElement, useState} from 'react';
 import {FaCalendarAlt} from 'react-icons/fa';
-import {FORMAT_DATES} from '@/shared/const';
+import {FORMAT_DATES, MEDIA_QUERY} from '@/shared/const';
 import {Input} from '..';
 import {RenderCalendar} from './model/renderCalendar';
 
@@ -20,7 +20,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     {isRangePicker = false, onChange, showInput = true, minDate, isRequired, label, error, ...otherProps}: DatePickerProps,
     ref: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
-    const [isLargerThan900] = useMediaQuery('(min-width: 900px)');
+    const [isLargerThan900] = useMediaQuery(MEDIA_QUERY.MIN_WIDTH_TABLET);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);

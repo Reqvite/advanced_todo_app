@@ -24,6 +24,8 @@ export interface State<T> {
 export interface Column<T> {
   header: string;
   accessor: string;
+  isTruncated?: boolean;
+  width?: string;
   cell?: (value: any, item: T) => ReactNode;
   filter?: {
     type: FilterTypeEnum;

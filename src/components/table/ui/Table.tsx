@@ -3,6 +3,7 @@ import {isBefore} from 'date-fns';
 import {ReactElement, ReactNode} from 'react';
 import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/io';
 import {TODAYS_DATE} from '@/shared/const/date.ts';
+import {MEDIA_QUERY} from '@/shared/const/media.ts';
 import {SortDirectionEnum} from '@/shared/types/sortDirection.ts';
 import {StatusEnum} from '@/shared/types/task.ts';
 import {BlurBox, Tooltip} from '@/shared/ui';
@@ -21,7 +22,7 @@ interface Props<T> {
 }
 
 const DEFAULT_PAGINATION = [10, 20, 50];
-const MAX_ROW_LENGTH = 50;
+const MAX_ROW_LENGTH = 40;
 
 export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}>({
   items,
@@ -30,7 +31,9 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
   columns,
   maxRowLength = MAX_ROW_LENGTH
 }: Props<T>): ReactElement => {
-  const [isLargerThan900] = useMediaQuery('(min-width: 900px)');
+  const [isLargerThan900] = useMediaQuery(MEDIA_QUERY.MIN_WIDTH_TABLET, {
+    ssr: false
+  });
   const {state, onChangeSort, onChangeSearch, onChangeFilter, onResetFilter, dispatch, filteredRows, rows, sortField, sortDirection, filters} =
     useTable<T>({
       items,
@@ -38,20 +41,19 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
     });
   const {pageIndex, pageSize} = state;
   const isEmptyTable = filteredRows.length < 1;
-  const displayedItemsCount = isLargerThan900 ? maxRowLength : 28;
+  const displayedItemsCount = isLargerThan900 ? maxRowLength : 15;
   const tdPadding = isLargerThan900 ? '5px' : '2px';
-
   const tdFontSize = {base: '10px', sm: '10px', md: '10px', lg: '12px', xl: '14px'};
 
   const renderCell = (columns: Column<T>[], row: T, dateIsExpired: boolean) => {
     return columns.map((column) => {
       const value = row[column.accessor as keyof T];
-      const length = JSON.stringify(value)?.length;
-      if (length > displayedItemsCount && typeof value === 'string') {
+      if (column.isTruncated && typeof value === 'string' && value.length > displayedItemsCount) {
         const truncatedValue = `${value.slice(0, displayedItemsCount)}...`;
 
         return (
           <Td
+            w={column.width}
             fontSize={tdFontSize}
             padding={tdPadding}
             key={`${row._id}-${column.accessor}`}
@@ -66,6 +68,7 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
 
       return (
         <Td
+          w={column.width}
           fontSize={tdFontSize}
           padding={tdPadding}
           key={`${row._id}-${column.accessor}`}
@@ -86,8 +89,8 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
             <Tr>
               {columns.map(({header, accessor, filter}) => (
                 <Th key={accessor} padding={1} fontSize={{base: '10px', sm: '10px', md: '10px', lg: '12px', xl: '12px'}}>
-                  <Flex>
-                    <Flex cursor="pointer" alignItems="center">
+                  <Flex gap={1}>
+                    <Flex gap={1} cursor="pointer" alignItems="center">
                       {accessor === 'actions' ? (
                         <Text as="button" textTransform="none">
                           {header}

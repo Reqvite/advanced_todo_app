@@ -13,6 +13,7 @@ import {
 import {ReactElement, useCallback, useState} from 'react';
 import {IconType} from 'react-icons';
 import {FaFilter} from 'react-icons/fa';
+import {MEDIA_QUERY} from '@/shared/const';
 import {LabelOptionsI} from '@/shared/types/options';
 
 interface Props {
@@ -22,7 +23,7 @@ interface Props {
 }
 
 export const PopoverSelect = ({options, onChange, icon: Icon = FaFilter}: Props): ReactElement => {
-  const [isLargerThan900] = useMediaQuery('(min-width: 900px)');
+  const [isLargerThan900] = useMediaQuery(MEDIA_QUERY.MIN_WIDTH_TABLET);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<number | null>(null);
   const textColor = useColorModeValue('black', 'white');
