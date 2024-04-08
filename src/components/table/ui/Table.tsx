@@ -4,7 +4,7 @@ import {ReactElement, ReactNode} from 'react';
 import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/io';
 import {TODAYS_DATE} from '@/shared/const/date.ts';
 import {SortDirectionEnum} from '@/shared/types/sortDirection.ts';
-import {BlurBox} from '@/shared/ui';
+import {BlurBox, Tooltip} from '@/shared/ui';
 import {renderFilterBlock} from '../model/renderFilterBlock.tsx';
 import {Column} from '../model/types.ts';
 import {useTable} from '../model/useTable.ts';
@@ -16,15 +16,18 @@ interface Props<T> {
   items: T[];
   pageSizeOptions?: number[];
   columns: Column<T>[];
+  maxRowLength?: number;
 }
 
 const DEFAULT_PAGINATION = [10, 20, 50];
+const MAX_ROW_LENGTH = 50;
 
 export const Table = <T extends {_id: string; expDate: string}>({
   items,
   heading,
   pageSizeOptions = DEFAULT_PAGINATION,
-  columns
+  columns,
+  maxRowLength = MAX_ROW_LENGTH
 }: Props<T>): ReactElement => {
   const {state, onChangeSort, onChangeSearch, onChangeFilter, onResetFilter, dispatch, filteredRows, rows, sortField, sortDirection} = useTable<T>({
     items,
@@ -32,70 +35,103 @@ export const Table = <T extends {_id: string; expDate: string}>({
   });
   const {pageIndex, pageSize} = state;
   const isEmptyTable = filteredRows.length < 1;
+  const tdFontSize = {base: '10px', sm: '10px', md: '10px', lg: '12px', xl: '14px'};
+
+  const renderCell = (columns: Column<T>[], row: T, dateIsExpired: boolean) => {
+    return columns.map((column) => {
+      const value = row[column.accessor as keyof T];
+      const length = JSON.stringify(value)?.length;
+      if (length > maxRowLength && typeof value === 'string') {
+        const truncatedValue = `${value.slice(0, maxRowLength)}...`;
+
+        return (
+          <Td
+            fontSize={tdFontSize}
+            padding="5px"
+            key={`${row._id}-${column.accessor}`}
+            opacity={column.accessor !== 'actions' && dateIsExpired ? 0.3 : 1}
+          >
+            <Tooltip label={value} aria-label="Full text">
+              {truncatedValue}
+            </Tooltip>
+          </Td>
+        );
+      }
+
+      return (
+        <Td
+          fontSize={tdFontSize}
+          padding="5px"
+          key={`${row._id}-${column.accessor}`}
+          opacity={column.accessor !== 'actions' && dateIsExpired ? 0.3 : 1}
+        >
+          {(column.cell ? column.cell(row[column.accessor as keyof T], row) : row[column.accessor as keyof T]) as ReactNode}
+        </Td>
+      );
+    });
+  };
 
   return (
-    <BlurBox minH="670px" mb={50}>
+    <BlurBox minH="721px" mb={50} display="flex" flexDirection="column" justifyContent="space-between">
       <TableHeader heading={heading} onResetFilter={onResetFilter} onChangeSearch={onChangeSearch} />
-      <TableContainer w="100%" height="100%">
-        <ChakraTable size="sm" variant="unstyled">
-          <Thead borderBottom="1px #2D3748 solid">
+      <TableContainer w="100%" height="100%" minH="544px">
+        <ChakraTable size="sm" variant="unstyled" fontWeight="bold">
+          <Thead borderBottom="borderSecondary">
             <Tr>
               {columns.map(({header, accessor, filter}) => (
-                <Th key={accessor}>
+                <Th key={accessor} padding={1} fontSize={{base: '10px', sm: '10px', md: '10px', lg: '12px', xl: '12px'}}>
                   <Flex gap={1}>
                     <Flex cursor="pointer" gap={1} alignItems="center">
-                      <Text textTransform="none" onClick={() => onChangeSort(accessor)}>
-                        {header}
-                      </Text>
+                      {accessor === 'actions' ? (
+                        <Text as="button" textTransform="none">
+                          {header}
+                        </Text>
+                      ) : (
+                        <Text as="button" textTransform="none" onClick={() => onChangeSort(accessor)}>
+                          {header}
+                        </Text>
+                      )}
                       <Box w="12px">
-                        {sortField === accessor ? sortDirection === SortDirectionEnum.Ascending ? <IoIosArrowUp /> : <IoIosArrowDown /> : ''}
+                        {sortField === accessor ? sortDirection === SortDirectionEnum.Ascending ? <IoIosArrowDown /> : <IoIosArrowUp /> : ''}
                       </Box>
                     </Flex>
                     {filter && renderFilterBlock(filter, accessor, onChangeFilter)}
                   </Flex>
                 </Th>
               ))}
-              <Th />
             </Tr>
           </Thead>
-          <Tbody>
+          <Tbody position="relative">
             {isEmptyTable || !rows ? (
               <Tr>
-                <Td h="580px" textAlign="center" colSpan={9}>
-                  <Heading>Table is empty</Heading>
+                <Td colSpan={columns.length}>
+                  <Flex minH="600px" justifyContent="center" alignItems="center">
+                    <Heading textAlign="center">Table is empty</Heading>
+                  </Flex>
                 </Td>
               </Tr>
             ) : (
               filteredRows.slice(pageSize * pageIndex, pageSize * (pageIndex + 1)).map((row: T) => {
                 const dateIsExpired = isBefore(row?.expDate, TODAYS_DATE);
                 return (
-                  <Tr
-                    key={row._id}
-                    opacity={dateIsExpired ? 0.25 : 1}
-                    pointerEvents={dateIsExpired ? 'none' : 'auto'}
-                    borderBottom="1px #2D3748 solid"
-                  >
-                    {columns.map((column) => (
-                      <Td padding="5px" key={column.accessor}>
-                        {(column.cell ? column.cell(row[column.accessor as keyof T], row) : row[column.accessor as keyof T]) as ReactNode}
-                      </Td>
-                    ))}
+                  <Tr key={row._id} borderBottom="borderSecondary">
+                    {renderCell(columns, row, dateIsExpired)}
                   </Tr>
                 );
               })
             )}
           </Tbody>
         </ChakraTable>
-        {!isEmptyTable && (
-          <TablePagination
-            pageSize={pageSize}
-            dispatch={dispatch}
-            pageIndex={pageIndex}
-            totalItemsCount={filteredRows.length}
-            pageSizeOptions={pageSizeOptions}
-          />
-        )}
       </TableContainer>
+      {!isEmptyTable && (
+        <TablePagination
+          pageSize={pageSize}
+          dispatch={dispatch}
+          pageIndex={pageIndex}
+          totalItemsCount={filteredRows.length}
+          pageSizeOptions={pageSizeOptions}
+        />
+      )}
     </BlurBox>
   );
 };

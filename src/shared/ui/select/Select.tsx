@@ -15,8 +15,15 @@ type SelectProps = SelectFieldProps & {
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({label, helperText, error, onChange, isRequired = false, value, options, ...otherProps}, ref) => {
     return (
-      <FormControl isRequired={isRequired} isInvalid={Boolean(error)}>
-        <FormLabel>{label}</FormLabel>
+      <FormControl isInvalid={Boolean(error)}>
+        <FormLabel>
+          {label}
+          {isRequired && (
+            <Box as="span" color="errorColorLight" ml="3px">
+              *
+            </Box>
+          )}
+        </FormLabel>
         <ChakraReactSelect {...otherProps} ref={ref} value={value} onChange={onChange}>
           {options.map((option) => (
             <option key={option.value} value={option.value}>

@@ -3,7 +3,7 @@ import {useNavigate, useParams} from 'react-router';
 import {getRouteMain} from '@/app/providers/AppRouter/routeConfig';
 import {Form, FormInputVariantsEnum, FormOption} from '@/components/form';
 import {TODAYS_DATE} from '@/shared/const';
-import {getPriorityOptions} from '@/shared/lib/helpers';
+import {getPriorityOptions, transformTaskData} from '@/shared/lib/helpers';
 import {tagOptions} from '@/shared/lib/helpers';
 import {taskSchema} from '@/shared/lib/yup/task.schema';
 import {TaskFormModel} from '@/shared/models';
@@ -33,10 +33,7 @@ const UpdateTaskPage = (): ReactElement | null => {
   }
 
   const onSubmit = (task: TaskFormModel): void => {
-    const tags = task.tags.map(({value}) => value);
-    task.tags = tags;
-    updateTask({id, task});
-    navigate(getRouteMain());
+    updateTask({id, task, navigate});
   };
 
   return (
@@ -46,6 +43,7 @@ const UpdateTaskPage = (): ReactElement | null => {
       formValidationSchema={taskSchema}
       defaultValues={new TaskFormModel(data)}
       onSubmit={onSubmit}
+      transformData={transformTaskData}
       isLoading={updateTaskIsLoading}
     />
   );

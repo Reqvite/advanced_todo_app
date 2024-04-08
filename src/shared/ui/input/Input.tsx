@@ -33,8 +33,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       : onChange;
 
     return (
-      <FormControl isRequired={isRequired} isInvalid={Boolean(error)}>
-        <FormLabel>{label}</FormLabel>
+      <FormControl isInvalid={Boolean(error)}>
+        <FormLabel>
+          {label}
+          {isRequired && (
+            <Box as="span" color="errorColorLight" ml="3px">
+              *
+            </Box>
+          )}
+        </FormLabel>
         <InputGroup>
           {leftIcon && <InputLeftElement pointerEvents="none" children={leftIcon} />}
           <ChakraInput readOnly={readOnly} autoComplete="off" onChange={onChangeValue} {...otherProps} ref={ref} />

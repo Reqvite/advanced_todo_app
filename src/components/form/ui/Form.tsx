@@ -12,10 +12,19 @@ type Props<T> = {
   formValidationSchema?: Resolver<any>;
   defaultValues: T;
   onSubmit: (data: T) => void;
+  transformData?: (data: T) => void;
   isLoading: boolean;
 };
 
-export const Form = <T extends FieldValues>({heading, options, formValidationSchema, onSubmit, defaultValues, isLoading}: Props<T>): ReactElement => {
+export const Form = <T extends FieldValues>({
+  heading,
+  options,
+  formValidationSchema,
+  onSubmit,
+  transformData,
+  defaultValues,
+  isLoading
+}: Props<T>): ReactElement => {
   const {
     handleSubmit,
     control,
@@ -24,9 +33,10 @@ export const Form = <T extends FieldValues>({heading, options, formValidationSch
   } = useForm<T>({resolver: formValidationSchema, defaultValues: defaultValues as DefaultValues<T>});
 
   const handleFormSubmit = handleSubmit(() => {
-    onSubmit(getValues());
+    const formData = getValues();
+    const transformedData = transformData ? transformData(formData) : formData;
+    onSubmit(transformedData!);
   });
-
   return (
     <BlurBox>
       <FormHeader heading={heading} />

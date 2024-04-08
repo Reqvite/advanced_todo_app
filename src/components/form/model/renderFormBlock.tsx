@@ -19,6 +19,7 @@ export const renderFormBlock = <T extends FieldValues>({option, errors, control}
           name={option.id as Path<T>}
           render={({field}) => (
             <Input
+              isRequired={option.isRequired}
               error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
               key={option.id}
               label={option.name}
@@ -37,6 +38,7 @@ export const renderFormBlock = <T extends FieldValues>({option, errors, control}
           name={option.id as Path<T>}
           render={({field}) => (
             <DatePicker
+              isRequired={option.isRequired}
               error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
               label={option.name}
               minDate={option.minDate && option.minDate}
@@ -55,6 +57,7 @@ export const renderFormBlock = <T extends FieldValues>({option, errors, control}
           render={({field}) => {
             return (
               <Select
+                isRequired={option.isRequired}
                 error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
                 label={option.name}
                 key={option.id}
@@ -74,6 +77,7 @@ export const renderFormBlock = <T extends FieldValues>({option, errors, control}
           name={option.id as Path<T>}
           render={({field}) => (
             <MultiSelect
+              isRequired={option.isRequired}
               variant="primary"
               error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
               label={option.name}

@@ -1,4 +1,4 @@
-import {Flex, Text} from '@chakra-ui/layout';
+import {Box, Flex, Text} from '@chakra-ui/layout';
 import {Select} from '@chakra-ui/select';
 import {ChangeEvent, Dispatch, ReactElement} from 'react';
 import {ActionI} from '@/shared/types/reducerAction';
@@ -22,18 +22,20 @@ export const TablePagination = ({pageSize, pageIndex, dispatch, totalItemsCount,
   };
 
   return (
-    <Flex justifyContent="space-between">
-      <Flex alignItems="center" gap={2}>
-        <Text>Items per page:</Text>
-        <Select variant="clear" value={pageSize} onChange={onChangePageSize} width="47px">
-          {pageSizeOptions.map((size) => (
-            <option key={size}>{size}</option>
-          ))}
-        </Select>
+    <Box>
+      <Flex justifyContent="space-between" h="100%">
+        <Flex alignItems="center" gap={2}>
+          <Text>Items per page:</Text>
+          <Select variant="clear" value={pageSize} onChange={onChangePageSize} width="47px">
+            {pageSizeOptions.map((size) => (
+              <option key={size}>{size}</option>
+            ))}
+          </Select>
+        </Flex>
+        <Flex alignItems="center" gap={2}>
+          <Paginator currentPage={pageIndex} totalPages={totalPages} dispatch={dispatch} />
+        </Flex>
       </Flex>
-      <Flex alignItems="center" gap={2}>
-        <Paginator currentPage={pageIndex} totalPages={totalPages} dispatch={dispatch} />
-      </Flex>
-    </Flex>
+    </Box>
   );
 };
