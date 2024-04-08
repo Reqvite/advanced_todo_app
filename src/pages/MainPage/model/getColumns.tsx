@@ -1,7 +1,9 @@
 import {Flex, Switch, Tag} from '@chakra-ui/react';
-import {Column, FilterTypeEnum} from '@/components/table';
-import {formatDate, priorityOptions, tagOptions} from '@/shared/lib/helpers';
-import {priorityOptionsWithAll, statusOptionsWithALL} from '@/shared/lib/helpers/enumLabelResolver/enumLabelResolver';
+import {ReactNode} from 'react';
+import {Column, FilterTypeEnum, SearchTypeEnum} from '@/components/table';
+import {FORMAT_DATES} from '@/shared/const';
+import {getPriorityOptions, GetPriorityOptionsEnum, tagOptions} from '@/shared/lib/helpers';
+import {statusOptionsWithALL} from '@/shared/lib/helpers/enumLabelResolver/enumLabelResolver';
 import {StatusEnum, TaskI} from '@/shared/types/task';
 import {DeleteButton, EditButton} from '@/shared/ui';
 
@@ -14,14 +16,15 @@ type RenderSwitchCellProps = Props;
 
 const renderSwitchCell =
   ({updateTaskStatus, updateTaskStatusIsLoading}: RenderSwitchCellProps) =>
-  (_: string, task: TaskI) => {
+  (_: string, task: TaskI): ReactNode => {
     const isCompleted = task.status === StatusEnum.COMPLETED ? true : false;
     return (
       <Switch isDisabled={updateTaskStatusIsLoading} isChecked={isCompleted} onChange={() => updateTaskStatus({id: task._id, status: task.status})} />
     );
   };
 
-const renderPriorityCell = (priority: number) => priorityOptions.find((option) => option.value === priority)?.label;
+const renderPriorityCell = (priority: number): ReactNode =>
+  getPriorityOptions(GetPriorityOptionsEnum.withIcons).find((option) => option.value === priority)?.label;
 
 const renderTagsCell = (tags: number[]) => (
   <Flex gap={2}>
@@ -33,13 +36,13 @@ const renderTagsCell = (tags: number[]) => (
   </Flex>
 );
 
-const renderExpirationDateCell = (expDate: string) => formatDate(new Date(expDate));
+const renderExpirationDateCell = (expDate: Date): ReactNode => FORMAT_DATES.MONTH_DATE_YEAR(expDate);
 
-const renderActionsCell = (_: string, task: TaskI) => (
+const renderActionsCell = (_: string, task: TaskI): ReactNode => (
   <Flex justifyContent="flex-end">
     <Flex gap={2}>
-      <DeleteButton />
       <EditButton id={task._id} />
+      <DeleteButton />
     </Flex>
   </Flex>
 );
@@ -56,7 +59,10 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading}: Props)
   },
   {
     header: 'Note',
-    accessor: 'note'
+    accessor: 'note',
+    search: {
+      type: SearchTypeEnum.POPOVER_INPUT
+    }
   },
   {
     header: 'Priority',
@@ -64,7 +70,7 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading}: Props)
     cell: renderPriorityCell,
     filter: {
       type: FilterTypeEnum.SELECT,
-      options: priorityOptionsWithAll
+      options: getPriorityOptions(GetPriorityOptionsEnum.withIconsAndLabel)
     }
   },
   {
@@ -81,7 +87,7 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading}: Props)
     }
   },
   {
-    header: '',
+    header: 'Actions',
     accessor: 'actions',
     cell: renderActionsCell
   }

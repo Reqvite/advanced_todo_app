@@ -1,8 +1,7 @@
-import {Box, Flex, Heading, Table as ChakraTable, TableContainer, Tbody, Td, Th, Thead, Tr} from '@chakra-ui/react';
+import {Box, Flex, Heading, Table as ChakraTable, TableContainer, Tbody, Td, Text, Th, Thead, Tr} from '@chakra-ui/react';
 import {isBefore} from 'date-fns';
 import {ReactElement, ReactNode} from 'react';
-import {FaLongArrowAltDown} from 'react-icons/fa';
-import {FaArrowUpLong} from 'react-icons/fa6';
+import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/io';
 import {TODAYS_DATE} from '@/shared/const/date.ts';
 import {SortDirectionEnum} from '@/shared/types/sortDirection.ts';
 import {BlurBox} from '@/shared/ui';
@@ -27,7 +26,7 @@ export const Table = <T extends {_id: string; expDate: string}>({
   pageSizeOptions = DEFAULT_PAGINATION,
   columns
 }: Props<T>): ReactElement => {
-  const {state, onChangeSort, onChangeFilter, onResetFilter, dispatch, filteredRows, rows, sortField, sortDirection} = useTable<T>({
+  const {state, onChangeSort, onChangeSearch, onChangeFilter, onResetFilter, dispatch, filteredRows, rows, sortField, sortDirection} = useTable<T>({
     items,
     defaultPageSizeOptions: pageSizeOptions
   });
@@ -35,19 +34,21 @@ export const Table = <T extends {_id: string; expDate: string}>({
   const isEmptyTable = filteredRows.length < 1;
 
   return (
-    <BlurBox minH="760px">
-      <TableHeader heading={heading} onResetFilter={onResetFilter} />
+    <BlurBox minH="670px" mb={50}>
+      <TableHeader heading={heading} onResetFilter={onResetFilter} onChangeSearch={onChangeSearch} />
       <TableContainer w="100%" height="100%">
-        <ChakraTable size="sm">
-          <Thead>
+        <ChakraTable size="sm" variant="unstyled">
+          <Thead borderBottom="1px #2D3748 solid">
             <Tr>
               {columns.map(({header, accessor, filter}) => (
                 <Th key={accessor}>
-                  <Flex>
+                  <Flex gap={1}>
                     <Flex cursor="pointer" gap={1} alignItems="center">
-                      <Box onClick={() => onChangeSort(accessor)}>{header}</Box>
+                      <Text textTransform="none" onClick={() => onChangeSort(accessor)}>
+                        {header}
+                      </Text>
                       <Box w="12px">
-                        {sortField === accessor ? sortDirection === SortDirectionEnum.Ascending ? <FaArrowUpLong /> : <FaLongArrowAltDown /> : ''}
+                        {sortField === accessor ? sortDirection === SortDirectionEnum.Ascending ? <IoIosArrowUp /> : <IoIosArrowDown /> : ''}
                       </Box>
                     </Flex>
                     {filter && renderFilterBlock(filter, accessor, onChangeFilter)}
@@ -60,7 +61,7 @@ export const Table = <T extends {_id: string; expDate: string}>({
           <Tbody>
             {isEmptyTable || !rows ? (
               <Tr>
-                <Td textAlign="center" colSpan={9}>
+                <Td h="580px" textAlign="center" colSpan={9}>
                   <Heading>Table is empty</Heading>
                 </Td>
               </Tr>
@@ -68,9 +69,14 @@ export const Table = <T extends {_id: string; expDate: string}>({
               filteredRows.slice(pageSize * pageIndex, pageSize * (pageIndex + 1)).map((row: T) => {
                 const dateIsExpired = isBefore(row?.expDate, TODAYS_DATE);
                 return (
-                  <Tr key={row._id} opacity={dateIsExpired ? 0.25 : 1} pointerEvents={dateIsExpired ? 'none' : 'auto'}>
+                  <Tr
+                    key={row._id}
+                    opacity={dateIsExpired ? 0.25 : 1}
+                    pointerEvents={dateIsExpired ? 'none' : 'auto'}
+                    borderBottom="1px #2D3748 solid"
+                  >
                     {columns.map((column) => (
-                      <Td key={column.accessor}>
+                      <Td padding="5px" key={column.accessor}>
                         {(column.cell ? column.cell(row[column.accessor as keyof T], row) : row[column.accessor as keyof T]) as ReactNode}
                       </Td>
                     ))}

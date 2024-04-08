@@ -1,6 +1,6 @@
 import {ReactElement} from 'react';
 import {Control, Controller, FieldErrors, FieldValues, Path} from 'react-hook-form';
-import {Input, MultiSelect, Select} from '@/shared/ui';
+import {DatePicker, Input, MultiSelect, Select} from '@/shared/ui';
 import {FormInputVariantsEnum, FormOption} from './types';
 
 type Props<T extends FieldValues> = {
@@ -20,7 +20,6 @@ export const renderFormBlock = <T extends FieldValues>({option, errors, control}
           render={({field}) => (
             <Input
               error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
-              isRequired={option.isRequired}
               key={option.id}
               label={option.name}
               placeholder={option.name}
@@ -37,16 +36,11 @@ export const renderFormBlock = <T extends FieldValues>({option, errors, control}
           control={control}
           name={option.id as Path<T>}
           render={({field}) => (
-            <Input
-              variant="primary"
+            <DatePicker
               error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
-              isRequired={option.isRequired}
-              key={option.id}
               label={option.name}
-              placeholder={option.name}
-              type="date"
-              min={option.minDate}
-              max={option.maxDate}
+              minDate={option.minDate && option.minDate}
+              key={option.id}
               {...field}
             />
           )}
@@ -62,7 +56,6 @@ export const renderFormBlock = <T extends FieldValues>({option, errors, control}
             return (
               <Select
                 error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
-                isRequired={option.isRequired}
                 label={option.name}
                 key={option.id}
                 variant="primary"
@@ -83,7 +76,6 @@ export const renderFormBlock = <T extends FieldValues>({option, errors, control}
             <MultiSelect
               variant="primary"
               error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
-              isRequired={option.isRequired}
               label={option.name}
               options={option.labelOptions}
               placeholder={option.name}

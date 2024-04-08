@@ -1,4 +1,6 @@
+import {ReactNode} from 'react';
+
 export interface LabelOptionsI {
-  label: string;
+  label: ReactNode;
   value: number;
 }
