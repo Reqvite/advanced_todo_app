@@ -1,4 +1,4 @@
-import {Flex, Stack, Tag, Text, Tooltip, useMediaQuery} from '@chakra-ui/react';
+import {Flex, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger, Stack, Tag, Text, useMediaQuery} from '@chakra-ui/react';
 import {tagOptions} from '@/shared/lib/helpers';
 
 interface Props {
@@ -26,31 +26,31 @@ export const TagList = ({items, maxItemsToShow = 4}: Props) => {
         </Tag>
       ))}
       {hasMoreItems && (
-        <Tooltip
-          padding={2}
-          label={
-            <Stack gap={1}>
-              {items.map((tag) => (
-                <Tag
-                  key={tag}
-                  variant="solid"
-                  colorScheme="teal"
-                  padding={{base: '3px', sm: '3px', md: '3px', lg: '3px', xl: '5px'}}
-                  fontSize={{base: '8px', sm: '8px', md: '8px', lg: '12px', xl: '14px'}}
-                >
-                  {tagOptions.find((option) => option.value === tag)?.label}
-                </Tag>
-              ))}
-            </Stack>
-          }
-          placement="top"
-        >
-          <Flex alignItems="center">
-            <Text cursor="pointer" textStyle="underline">
-              Show all
-            </Text>
-          </Flex>
-        </Tooltip>
+        <Popover placement="top">
+          <PopoverTrigger>
+            <Flex alignItems="center" cursor="pointer">
+              <Text textStyle="underline">Show</Text>
+            </Flex>
+          </PopoverTrigger>
+          <PopoverContent maxW={70}>
+            <PopoverArrow />
+            <PopoverBody>
+              <Stack gap={1}>
+                {items.map((tag) => (
+                  <Tag
+                    key={tag}
+                    variant="solid"
+                    colorScheme="teal"
+                    padding={{base: '3px', sm: '3px', md: '3px', lg: '3px', xl: '5px'}}
+                    fontSize={{base: '8px', sm: '8px', md: '8px', lg: '12px', xl: '14px'}}
+                  >
+                    {tagOptions.find((option) => option.value === tag)?.label}
+                  </Tag>
+                ))}
+              </Stack>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
       )}
     </Flex>
   );

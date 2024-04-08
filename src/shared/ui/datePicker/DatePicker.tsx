@@ -1,4 +1,4 @@
-import {IconButton, InputGroup, Popover, PopoverArrow, PopoverContent, PopoverTrigger, Portal} from '@chakra-ui/react';
+import {IconButton, InputGroup, Popover, PopoverArrow, PopoverContent, PopoverTrigger, Portal, useMediaQuery} from '@chakra-ui/react';
 import {ForwardedRef, forwardRef, ReactElement, useState} from 'react';
 import {FaCalendarAlt} from 'react-icons/fa';
 import {FORMAT_DATES} from '@/shared/const';
@@ -20,10 +20,13 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     {isRangePicker = false, onChange, showInput = true, minDate, isRequired, label, error, ...otherProps}: DatePickerProps,
     ref: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
+    const [isLargerThan900] = useMediaQuery('(min-width: 900px)');
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
     const [showCalendar, setShowCalendar] = useState<boolean>(false);
+    const buttonSize = isLargerThan900 ? '25px' : '18px';
+    const iconSize = isLargerThan900 ? 13 : 10;
 
     const handleSingleDateClick = (date: Date): void => {
       setSelectedDate(date);
@@ -92,10 +95,10 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
             <IconButton
               aria-label="Calendar"
               variant="primary"
-              w="25px"
-              h="25px"
-              minW="25px"
-              icon={<FaCalendarAlt color="gray.300" />}
+              w={buttonSize}
+              h={buttonSize}
+              minW={buttonSize}
+              icon={<FaCalendarAlt size={iconSize} color="gray.300" />}
               onClick={() => setShowCalendar((prev) => !prev)}
             />
           </PopoverTrigger>

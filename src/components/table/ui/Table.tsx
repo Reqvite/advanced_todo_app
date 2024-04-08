@@ -39,6 +39,7 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
   const {pageIndex, pageSize} = state;
   const isEmptyTable = filteredRows.length < 1;
   const displayedItemsCount = isLargerThan900 ? maxRowLength : 28;
+  const tdPadding = isLargerThan900 ? '5px' : '2px';
 
   const tdFontSize = {base: '10px', sm: '10px', md: '10px', lg: '12px', xl: '14px'};
 
@@ -52,7 +53,7 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
         return (
           <Td
             fontSize={tdFontSize}
-            padding="5px"
+            padding={tdPadding}
             key={`${row._id}-${column.accessor}`}
             opacity={column.accessor !== 'actions' && dateIsExpired ? 0.3 : 1}
           >
@@ -66,7 +67,7 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
       return (
         <Td
           fontSize={tdFontSize}
-          padding="5px"
+          padding={tdPadding}
           key={`${row._id}-${column.accessor}`}
           opacity={column.accessor !== 'actions' && dateIsExpired ? 0.3 : 1}
         >
@@ -85,8 +86,8 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
             <Tr>
               {columns.map(({header, accessor, filter}) => (
                 <Th key={accessor} padding={1} fontSize={{base: '10px', sm: '10px', md: '10px', lg: '12px', xl: '12px'}}>
-                  <Flex gap={1}>
-                    <Flex cursor="pointer" gap={1} alignItems="center">
+                  <Flex>
+                    <Flex cursor="pointer" alignItems="center">
                       {accessor === 'actions' ? (
                         <Text as="button" textTransform="none">
                           {header}

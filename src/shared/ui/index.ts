@@ -15,6 +15,5 @@ export {ConfirmModal} from './modal/ConfirmModal.tsx';
 export {MultiSelect} from './multiSelect/MultiSelect';
 export {Paginator} from './paginator/Paginator';
 export {PopoverSelect} from './popoverSelect/PopoverSelect.tsx';
-export {SearchPopover} from './searchPopover/SearchPopover.tsx';
 export {Select} from './select/Select';
 export {Tooltip} from './tooltip/Tooltip.tsx';
