@@ -1,9 +1,9 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {NavigateFunction} from 'react-router';
 import {getRouteMain} from '@/app/providers/AppRouter/routeConfig';
+import {NotificationMessage} from '@/shared/const';
 import {TaskFormModel} from '@/shared/models';
 import {notificationApi} from '@/shared/services/notification';
-import {NotificationMessage} from '@/shared/services/notification/lib/enums/enums';
 import {ApiPathEnum} from '@/shared/types/apiPath';
 import {ErrorI} from '@/shared/types/error';
 import {RtkApiTagsEnum} from '@/shared/types/rtkApiTags';
