@@ -1,4 +1,4 @@
-import {Box, Flex, Heading, Table as ChakraTable, TableContainer, Tbody, Td, Text, Th, Thead, Tr} from '@chakra-ui/react';
+import {Box, Flex, Heading, Table as ChakraTable, TableContainer, Tbody, Td, Text, Th, Thead, Tr, useMediaQuery} from '@chakra-ui/react';
 import {isBefore} from 'date-fns';
 import {ReactElement, ReactNode} from 'react';
 import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/io';
@@ -30,6 +30,7 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
   columns,
   maxRowLength = MAX_ROW_LENGTH
 }: Props<T>): ReactElement => {
+  const [isLargerThan900] = useMediaQuery('(min-width: 900px)');
   const {state, onChangeSort, onChangeSearch, onChangeFilter, onResetFilter, dispatch, filteredRows, rows, sortField, sortDirection, filters} =
     useTable<T>({
       items,
@@ -37,14 +38,16 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
     });
   const {pageIndex, pageSize} = state;
   const isEmptyTable = filteredRows.length < 1;
+  const displayedItemsCount = isLargerThan900 ? maxRowLength : 28;
+
   const tdFontSize = {base: '10px', sm: '10px', md: '10px', lg: '12px', xl: '14px'};
 
   const renderCell = (columns: Column<T>[], row: T, dateIsExpired: boolean) => {
     return columns.map((column) => {
       const value = row[column.accessor as keyof T];
       const length = JSON.stringify(value)?.length;
-      if (length > maxRowLength && typeof value === 'string') {
-        const truncatedValue = `${value.slice(0, maxRowLength)}...`;
+      if (length > displayedItemsCount && typeof value === 'string') {
+        const truncatedValue = `${value.slice(0, displayedItemsCount)}...`;
 
         return (
           <Td

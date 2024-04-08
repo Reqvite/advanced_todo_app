@@ -1,12 +1,12 @@
-import {Flex, Tag} from '@chakra-ui/react';
+import {Flex} from '@chakra-ui/react';
 import {isBefore} from 'date-fns';
 import {ReactNode} from 'react';
 import {Column, FilterTypeEnum} from '@/components/table';
 import {FORMAT_DATES, TODAYS_DATE} from '@/shared/const';
-import {getPriorityOptions, GetPriorityOptionsEnum, tagOptions} from '@/shared/lib/helpers';
+import {getPriorityOptions, GetPriorityOptionsEnum} from '@/shared/lib/helpers';
 import {statusOptionsWithALL} from '@/shared/lib/helpers/enumLabelResolver/enumLabelResolver';
 import {StatusEnum, TaskI} from '@/shared/types/task';
-import {DeleteButton, EditButton} from '@/shared/ui';
+import {DeleteButton, EditButton, TagList} from '@/shared/ui';
 import {SwitchButton} from '@/shared/ui/buttons/SwitchButton';
 
 interface Props {
@@ -35,7 +35,7 @@ const renderPriorityCell = (priority: number): ReactNode =>
 
 const renderTagsCell = (tags: number[]) => (
   <Flex gap={2}>
-    {tags.map((tag) => (
+    {/* {tags.map((tag) => (
       <Tag
         key={tag}
         variant="solid"
@@ -45,7 +45,8 @@ const renderTagsCell = (tags: number[]) => (
       >
         {tagOptions.find((option) => option.value === tag)?.label}
       </Tag>
-    ))}
+    ))} */}
+    <TagList items={tags} />
   </Flex>
 );
 

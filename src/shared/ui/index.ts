@@ -8,6 +8,7 @@ export {ThemeButton} from './buttons/ThemeButton.tsx';
 export {Counter} from './counter/Counter.tsx';
 export {DatePicker} from './datePicker/DatePicker.tsx';
 export {Input} from './input/Input';
+export {TagList} from './list/TagList.tsx';
 export {Loader} from './loader/Loader.tsx';
 export {Logo} from './logo/Logo.tsx';
 export {ConfirmModal} from './modal/ConfirmModal.tsx';
