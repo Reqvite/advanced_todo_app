@@ -14,7 +14,13 @@ type Props<T> = {
   items: T[];
 };
 
-export const TableHeader = <T extends {status: StatusEnum}>({heading, filters, items, onResetFilter, onChangeSearch}: Props<T>): ReactElement => {
+export const TableHeader = <T extends {status: StatusEnum; expDate: Date}>({
+  heading,
+  filters,
+  items,
+  onResetFilter,
+  onChangeSearch
+}: Props<T>): ReactElement => {
   const filtersEnabled = filters ? Object.keys(filters).length : 0;
 
   const onChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -35,7 +41,20 @@ export const TableHeader = <T extends {status: StatusEnum}>({heading, filters, i
           <Tooltip label="Reset filters">
             <Box position="relative">
               {filtersEnabled > 0 && (
-                <Badge borderRadius="full" px={2} bg="successColorDark" position="absolute" right={-2} top={-3} zIndex={100}>
+                <Badge
+                  borderRadius="full"
+                  h={5}
+                  w={5}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  bg="successColorDark"
+                  position="absolute"
+                  right={-2}
+                  top={-3}
+                  zIndex={100}
+                  color="white"
+                >
                   {filtersEnabled}
                 </Badge>
               )}

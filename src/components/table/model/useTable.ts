@@ -39,6 +39,12 @@ export const useTable = <T extends {_id: string}>({items, defaultPageSizeOptions
     dispatch({type: 'SET_ROWS', payload: items});
   }, [items, dispatch]);
 
+  const allFiltersKeys = {
+    ...filters,
+    ...(search ? {search} : {}),
+    ...(sortDirection ? {sortDirection} : {})
+  };
+
   return {
     rows,
     state,
@@ -49,7 +55,7 @@ export const useTable = <T extends {_id: string}>({items, defaultPageSizeOptions
     sortDirection,
     sortField,
     search,
-    filters,
+    filters: allFiltersKeys,
     dispatch,
     onChangeSort,
     onChangeFilter,

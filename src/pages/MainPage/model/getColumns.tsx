@@ -1,4 +1,4 @@
-import {Flex, Switch, Tag} from '@chakra-ui/react';
+import {Flex, Tag} from '@chakra-ui/react';
 import {isBefore} from 'date-fns';
 import {ReactNode} from 'react';
 import {Column, FilterTypeEnum} from '@/components/table';
@@ -7,6 +7,7 @@ import {getPriorityOptions, GetPriorityOptionsEnum, tagOptions} from '@/shared/l
 import {statusOptionsWithALL} from '@/shared/lib/helpers/enumLabelResolver/enumLabelResolver';
 import {StatusEnum, TaskI} from '@/shared/types/task';
 import {DeleteButton, EditButton} from '@/shared/ui';
+import {SwitchButton} from '@/shared/ui/buttons/SwitchButton';
 
 interface Props {
   updateTaskStatus: ({id, status}: {id: string; status: StatusEnum}) => void;
@@ -19,17 +20,13 @@ type RenderSwitchCellProps = Pick<Props, 'updateTaskStatus' | 'updateTaskStatusI
 type RenderActionsCellProps = Pick<Props, 'deleteTask' | 'taskDeleteIsLoading'>;
 
 const renderSwitchCell =
-  ({updateTaskStatus, updateTaskStatusIsLoading}: RenderSwitchCellProps) =>
+  ({updateTaskStatus}: RenderSwitchCellProps) =>
   (_: string, task: TaskI): ReactNode => {
     const isCompleted = task.status === StatusEnum.COMPLETED ? true : false;
     const dateIsExpired = isBefore(task.expDate, TODAYS_DATE);
 
     return (
-      <Switch
-        isDisabled={updateTaskStatusIsLoading || dateIsExpired}
-        isChecked={isCompleted}
-        onChange={() => updateTaskStatus({id: task._id, status: task.status})}
-      />
+      <SwitchButton isDisabled={dateIsExpired} isChecked={isCompleted} onConfirm={() => updateTaskStatus({id: task._id, status: task.status})} />
     );
   };
 

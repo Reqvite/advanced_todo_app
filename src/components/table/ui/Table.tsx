@@ -23,7 +23,7 @@ interface Props<T> {
 const DEFAULT_PAGINATION = [10, 20, 50];
 const MAX_ROW_LENGTH = 50;
 
-export const Table = <T extends {_id: string; expDate: string; status: StatusEnum}>({
+export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}>({
   items,
   heading,
   pageSizeOptions = DEFAULT_PAGINATION,

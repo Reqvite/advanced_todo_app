@@ -24,7 +24,7 @@ interface BaseTaskI {
   _id: string;
   note: string;
   priority: PriorityEnum;
-  expDate: string;
+  expDate: Date;
   status: StatusEnum;
 }
 

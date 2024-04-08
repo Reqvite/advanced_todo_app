@@ -1,6 +1,6 @@
 import {Button} from '@chakra-ui/button';
 import {Modal as ChakraModal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay} from '@chakra-ui/modal';
-import {ReactElement, ReactNode} from 'react';
+import {ReactElement, ReactNode, useState} from 'react';
 
 interface Props {
   isDisabled?: boolean;
@@ -14,28 +14,34 @@ interface Props {
 }
 
 export const ConfirmModal = ({children, isDisabled, isOpen, title, onClose, onConfirm}: Props): ReactElement => {
-  const onConfirmAction = () => {
-    onConfirm();
-    onClose();
+  const [isLoading, setLoading] = useState(false);
+
+  const handleConfirmAction = async () => {
+    try {
+      setLoading(true);
+      await onConfirm();
+    } finally {
+      setLoading(false);
+      onClose();
+    }
   };
+
   return (
     <ChakraModal isOpen={isOpen} onClose={onClose} isCentered>
-      <ModalBody>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>{title ? title : 'Confirm your action'}</ModalHeader>
-          <ModalCloseButton />
-          {children && <ModalBody>{children}</ModalBody>}
-          <ModalFooter>
-            <Button variant="secondary" mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button isDisabled={isDisabled} variant="primary" onClick={onConfirmAction}>
-              Confirm
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </ModalBody>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>{title || 'Confirm your action'}</ModalHeader>
+        <ModalCloseButton disabled={isLoading} />
+        <ModalBody>{children}</ModalBody>
+        <ModalFooter>
+          <Button variant="secondary" mr={3} onClick={onClose} disabled={isLoading}>
+            Cancel
+          </Button>
+          <Button isDisabled={isDisabled || isLoading} variant="primary" onClick={handleConfirmAction} isLoading={isLoading}>
+            Confirm
+          </Button>
+        </ModalFooter>
+      </ModalContent>
     </ChakraModal>
   );
 };

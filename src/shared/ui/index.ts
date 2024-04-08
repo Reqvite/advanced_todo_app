@@ -3,6 +3,7 @@ export {BlurBox} from './blurBox/BlurBox';
 export {BackButton} from './buttons/BackButton.tsx';
 export {DeleteButton} from './buttons/DeleteButton';
 export {EditButton} from './buttons/EditButton';
+export {SwitchButton} from './buttons/SwitchButton.tsx';
 export {ThemeButton} from './buttons/ThemeButton.tsx';
 export {Counter} from './counter/Counter.tsx';
 export {DatePicker} from './datePicker/DatePicker.tsx';
