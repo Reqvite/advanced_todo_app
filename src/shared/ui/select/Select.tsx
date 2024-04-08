@@ -10,16 +10,15 @@ type SelectProps = SelectFieldProps & {
   variant?: string;
   options: LabelOptionsI[];
   placeholder?: string;
-  customRequired?: boolean;
 };
 
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-  ({label, helperText, error, onChange, isRequired = false, value, options, customRequired, ...otherProps}, ref) => {
+  ({label, helperText, error, onChange, isRequired = false, value, options, ...otherProps}, ref) => {
     return (
-      <FormControl isRequired={isRequired} isInvalid={Boolean(error)}>
+      <FormControl isInvalid={Boolean(error)}>
         <FormLabel>
           {label}
-          {customRequired && (
+          {isRequired && (
             <Box as="span" color="errorColorLight" ml="3px">
               *
             </Box>
