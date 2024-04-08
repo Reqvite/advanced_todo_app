@@ -92,7 +92,7 @@ export const Table = <T extends {_id: string; expDate: string}>({
                         </Text>
                       )}
                       <Box w="12px">
-                        {sortField === accessor ? sortDirection === SortDirectionEnum.Ascending ? <IoIosArrowUp /> : <IoIosArrowDown /> : ''}
+                        {sortField === accessor ? sortDirection === SortDirectionEnum.Ascending ? <IoIosArrowDown /> : <IoIosArrowUp /> : ''}
                       </Box>
                     </Flex>
                     {filter && renderFilterBlock(filter, accessor, onChangeFilter)}
