@@ -1,5 +1,4 @@
 import {Box, Flex, Text} from '@chakra-ui/layout';
-import {useMediaQuery} from '@chakra-ui/react';
 import {Select} from '@chakra-ui/select';
 import {ChangeEvent, Dispatch, ReactElement} from 'react';
 import {ActionI} from '@/shared/types/reducerAction';
@@ -14,9 +13,8 @@ type Props = {
 };
 
 export const TablePagination = ({pageSize, pageIndex, dispatch, totalItemsCount, pageSizeOptions}: Props): ReactElement => {
-  const [isLargerThan470] = useMediaQuery('(min-width: 470px)');
-
   const totalPages = Math.ceil(totalItemsCount / pageSize);
+  const tdFontSize = {base: '9px', sm: '9px', md: '9px', lg: '12px', xl: '14px'};
 
   const onChangePageSize = (event: ChangeEvent<HTMLSelectElement>) => {
     const newSize = parseInt(event.target.value);
@@ -26,9 +24,9 @@ export const TablePagination = ({pageSize, pageIndex, dispatch, totalItemsCount,
 
   return (
     <Box>
-      <Flex flexDirection={isLargerThan470 ? 'row' : 'column'} justifyContent="space-between" h="100%">
+      <Flex justifyContent="space-between" h="100%">
         <Flex alignItems="center" gap={2}>
-          <Text>Items per page:</Text>
+          <Text fontSize={tdFontSize}>Items per page:</Text>
           <Select variant="clear" value={pageSize} onChange={onChangePageSize} width="47px">
             {pageSizeOptions.map((size) => (
               <option key={size}>{size}</option>

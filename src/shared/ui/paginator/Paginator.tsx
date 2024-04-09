@@ -1,5 +1,6 @@
-import {Button, Flex, Text} from '@chakra-ui/react';
+import {Flex, IconButton, Text} from '@chakra-ui/react';
 import {ReactElement} from 'react';
+import {FaArrowAltCircleLeft, FaArrowAltCircleRight} from 'react-icons/fa';
 import {ActionI} from '@/shared/types/reducerAction';
 
 type Props = {
@@ -27,15 +28,11 @@ export const Paginator = ({currentPage, totalPages, dispatch}: Props): ReactElem
 
   return (
     <Flex alignItems="center" gap={4} mt={4}>
-      <Button variant="primary" onClick={handlePreviousClick} isDisabled={isFirstPage}>
-        Previous
-      </Button>
+      <IconButton aria-label="back" icon={<FaArrowAltCircleLeft />} variant="primary" onClick={handlePreviousClick} isDisabled={isFirstPage} />
       <Text>
         {displayedPage}/{totalPages}
       </Text>
-      <Button variant="primary" onClick={handleNextClick} isDisabled={isLastPage}>
-        Next
-      </Button>
+      <IconButton aria-label="next" icon={<FaArrowAltCircleRight />} variant="primary" onClick={handleNextClick} isDisabled={isLastPage} />
     </Flex>
   );
 };

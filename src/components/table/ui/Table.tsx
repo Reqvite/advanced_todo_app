@@ -55,7 +55,7 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
   const isEmptyTable = filteredRows.length < 1;
   const displayedItemsCount = isLargerThan900 ? maxRowLength : 15;
   const tdPadding = isLargerThan900 ? '5px' : '2px';
-  const tdFontSize = {base: '10px', sm: '10px', md: '10px', lg: '12px', xl: '14px'};
+  const tdFontSize = {base: '9px', sm: '9px', md: '9px', lg: '12px', xl: '14px'};
 
   const renderCell = (columns: Column<T>[], row: T, dateIsExpired: boolean) => {
     return columns.map((column) => {
