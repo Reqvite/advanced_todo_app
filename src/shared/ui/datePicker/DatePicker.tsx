@@ -1,7 +1,7 @@
-import {IconButton, InputGroup, Popover, PopoverArrow, PopoverContent, PopoverTrigger, Portal, useMediaQuery} from '@chakra-ui/react';
+import {IconButton, InputGroup, Popover, PopoverArrow, PopoverContent, PopoverTrigger, Portal} from '@chakra-ui/react';
 import {ForwardedRef, forwardRef, ReactElement, useState} from 'react';
 import {FaCalendarAlt, FaTimes} from 'react-icons/fa';
-import {FORMAT_DATES, MEDIA_QUERY} from '@/shared/const';
+import {FORMAT_DATES} from '@/shared/const';
 import {Input} from '..';
 import {RenderCalendar} from './model/renderCalendar';
 
@@ -21,13 +21,10 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     {isRangePicker = false, onChange, showInput = true, minDate, isRequired, label, error, withError = true, ...otherProps}: DatePickerProps,
     ref: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
-    const [isLargerThan900] = useMediaQuery(MEDIA_QUERY.MIN_WIDTH_TABLET);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
     const [showCalendar, setShowCalendar] = useState<boolean>(false);
-    const buttonSize = isLargerThan900 ? '40px' : '18px';
-    const iconSize = isLargerThan900 ? 20 : 10;
 
     const handleSingleDateClick = (date: Date): void => {
       setSelectedDate(date);
@@ -109,10 +106,10 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
             <IconButton
               aria-label="Calendar"
               variant="primary"
-              w={buttonSize}
-              h={buttonSize}
-              minW={buttonSize}
-              icon={<FaCalendarAlt size={iconSize} color="gray.300" />}
+              w={'40px'}
+              h={'40px'}
+              minW={'40px'}
+              icon={<FaCalendarAlt size={20} color="gray.300" />}
               onClick={() => setShowCalendar((prev) => !prev)}
             />
           </PopoverTrigger>
