@@ -56,6 +56,8 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
   const displayedItemsCount = isLargerThan900 ? maxRowLength : 15;
   const tdPadding = isLargerThan900 ? '5px' : '2px';
   const tdFontSize = {base: '9px', sm: '9px', md: '9px', lg: '12px', xl: '14px'};
+  const boxHeight = isLargerThan900 ? '721px' : '500px';
+  const tableHeight = isLargerThan900 ? '544px' : '300px';
 
   const renderCell = (columns: Column<T>[], row: T, dateIsExpired: boolean) => {
     return columns.map((column) => {
@@ -95,9 +97,9 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
   return (
     <Stack gap={5}>
       <Filters<T> onChangeFilter={onChangeFilter} values={values} columns={columns} />
-      <BlurBox minH="721px" mb={50} display="flex" flexDirection="column" justifyContent="space-between">
+      <BlurBox minH={boxHeight} mb={50} display="flex" flexDirection="column" justifyContent="space-between">
         <TableHeader<T> heading={heading} onResetFilter={onResetFilter} onChangeSearch={onChangeSearch} filters={filters} items={items} />
-        <TableContainer w="100%" height="100%" minH="544px">
+        <TableContainer w="100%" height="100%" minH={tableHeight}>
           <ChakraTable size="sm" variant="unstyled" fontWeight="bold">
             <Thead borderBottom="borderSecondary">
               <Tr>
