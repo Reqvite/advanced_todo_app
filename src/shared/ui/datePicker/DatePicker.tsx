@@ -14,6 +14,7 @@ interface DatePickerProps {
   label?: string;
   error?: string;
   withError?: boolean;
+  value?: string | number | readonly string[] | undefined;
 }
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
