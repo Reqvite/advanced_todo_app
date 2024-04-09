@@ -24,7 +24,7 @@ export const TablePagination = ({pageSize, pageIndex, dispatch, totalItemsCount,
 
   return (
     <Box>
-      <Flex justifyContent="space-between" h="100%">
+      <Flex alignItems="baseline" justifyContent="space-between" h="100%">
         <Flex alignItems="center" gap={2}>
           <Text fontSize={tdFontSize}>Items per page:</Text>
           <Select variant="clear" value={pageSize} onChange={onChangePageSize} width="47px">
