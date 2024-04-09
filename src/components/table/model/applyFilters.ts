@@ -42,6 +42,10 @@ export const applyFilters = <T extends Record<string, any>>({data}: {data: T[]},
         return applySingleDateFilter(item, key, filterKey as string);
       }
 
+      if (Array.isArray(filterKey)) {
+        return filterKey.includes(item[key]);
+      }
+
       return item[key] === filterKey;
     });
   });

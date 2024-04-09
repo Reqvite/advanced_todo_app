@@ -33,11 +33,9 @@ export const getPriorityOptions = (option?: GetPriorityOptionsEnum): LabelOption
         value: Number(value)
       }));
     default:
-      return Object.entries(enumLabelResolver.priority)
-        .filter(([value]) => value !== '0')
-        .map(([value, {label}]) => ({
-          label,
-          value: Number(value)
-        }));
+      return Object.entries(enumLabelResolver.priority).map(([value, {label}]) => ({
+        label,
+        value: Number(value)
+      }));
   }
 };

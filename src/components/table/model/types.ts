@@ -4,7 +4,8 @@ import {LabelOptionsI} from '@/shared/types/options';
 export enum FilterTypeEnum {
   SELECT = 'Select',
   DATEPICKER = 'DatePicker',
-  RANGE_DATEPICKER = 'RangeDatePicker'
+  RANGE_DATEPICKER = 'RangeDatePicker',
+  MULTI_SELECT = 'MultiSelect'
 }
 
 export enum SearchTypeEnum {
@@ -19,6 +20,7 @@ export interface State<T> {
   sortDirection: string;
   sortField: string;
   filters: {[key: string]: string};
+  values: {[key: string]: string};
   search: {[key: string]: string};
 }
 export interface Column<T> {
@@ -28,6 +30,7 @@ export interface Column<T> {
   width?: string;
   cell?: (value: any, item: T) => ReactNode;
   filter?: {
+    placeholder?: string;
     type: FilterTypeEnum;
     options?: LabelOptionsI[];
   };

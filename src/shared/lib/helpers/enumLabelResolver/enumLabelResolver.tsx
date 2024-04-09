@@ -1,12 +1,10 @@
 import {FcHighPriority} from 'react-icons/fc';
 import {FcLowPriority, FcMediumPriority} from 'react-icons/fc';
 import {FcLeave} from 'react-icons/fc';
-import {FcViewDetails} from 'react-icons/fc';
 import {PriorityEnum, StatusEnum, TagEnum} from '@/shared/types/task';
 
 export const enumLabelResolver = {
   priority: {
-    [PriorityEnum.ALL]: {label: 'All', icon: <FcViewDetails size={18} />},
     [PriorityEnum.LOW]: {label: 'Low', icon: <FcLowPriority size={18} />},
     [PriorityEnum.MEDIUM]: {label: 'Medium', icon: <FcMediumPriority size={18} />},
     [PriorityEnum.HIGH]: {label: 'High', icon: <FcLeave size={18} />},
@@ -19,7 +17,6 @@ export const enumLabelResolver = {
     [TagEnum.WORK]: 'Work'
   },
   status: {
-    [StatusEnum.ALL]: 'All',
     [StatusEnum.COMPLETED]: 'Completed',
     [StatusEnum.NOT_COMPLETED]: 'Not completed'
   }

@@ -1,4 +1,4 @@
-import {Box, Flex, Heading, Table as ChakraTable, TableContainer, Tbody, Td, Text, Th, Thead, Tr, useMediaQuery} from '@chakra-ui/react';
+import {Box, Flex, Heading, Stack, Table as ChakraTable, TableContainer, Tbody, Td, Text, Th, Thead, Tr, useMediaQuery} from '@chakra-ui/react';
 import {isBefore} from 'date-fns';
 import {ReactElement, ReactNode} from 'react';
 import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/io';
@@ -7,9 +7,9 @@ import {MEDIA_QUERY} from '@/shared/const/media.ts';
 import {SortDirectionEnum} from '@/shared/types/sortDirection.ts';
 import {StatusEnum} from '@/shared/types/task.ts';
 import {BlurBox, Tooltip} from '@/shared/ui';
-import {renderFilterBlock} from '../model/renderFilterBlock.tsx';
 import {Column} from '../model/types.ts';
 import {useTable} from '../model/useTable.ts';
+import {Filters} from './Filters.tsx';
 import {TableHeader} from './TableHeader.tsx';
 import {TablePagination} from './TablePagination.tsx';
 
@@ -34,16 +34,30 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
   const [isLargerThan900] = useMediaQuery(MEDIA_QUERY.MIN_WIDTH_TABLET, {
     ssr: false
   });
-  const {state, onChangeSort, onChangeSearch, onChangeFilter, onResetFilter, dispatch, filteredRows, rows, sortField, sortDirection, filters} =
-    useTable<T>({
-      items,
-      defaultPageSizeOptions: pageSizeOptions
-    });
+  const {
+    state,
+    onChangeSort,
+    onChangeSearch,
+    onChangeFilter,
+    onResetFilter,
+    dispatch,
+    filteredRows,
+    rows,
+    sortField,
+    sortDirection,
+    filters,
+    values
+  } = useTable<T>({
+    items,
+    defaultPageSizeOptions: pageSizeOptions
+  });
   const {pageIndex, pageSize} = state;
   const isEmptyTable = filteredRows.length < 1;
   const displayedItemsCount = isLargerThan900 ? maxRowLength : 15;
   const tdPadding = isLargerThan900 ? '5px' : '2px';
-  const tdFontSize = {base: '10px', sm: '10px', md: '10px', lg: '12px', xl: '14px'};
+  const tdFontSize = {base: '9px', sm: '9px', md: '9px', lg: '12px', xl: '14px'};
+  const boxHeight = isLargerThan900 ? '721px' : '500px';
+  const tableHeight = isLargerThan900 ? '544px' : '300px';
 
   const renderCell = (columns: Column<T>[], row: T, dateIsExpired: boolean) => {
     return columns.map((column) => {
@@ -81,66 +95,68 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
   };
 
   return (
-    <BlurBox minH="721px" mb={50} display="flex" flexDirection="column" justifyContent="space-between">
-      <TableHeader<T> heading={heading} onResetFilter={onResetFilter} onChangeSearch={onChangeSearch} filters={filters} items={items} />
-      <TableContainer w="100%" height="100%" minH="544px">
-        <ChakraTable size="sm" variant="unstyled" fontWeight="bold">
-          <Thead borderBottom="borderSecondary">
-            <Tr>
-              {columns.map(({header, accessor, filter}) => (
-                <Th key={accessor} padding={1} fontSize={{base: '10px', sm: '10px', md: '10px', lg: '12px', xl: '12px'}}>
-                  <Flex gap={1}>
-                    <Flex gap={1} cursor="pointer" alignItems="center">
-                      {accessor === 'actions' ? (
-                        <Text as="button" textTransform="none">
-                          {header}
-                        </Text>
-                      ) : (
-                        <Text as="button" textTransform="none" onClick={() => onChangeSort(accessor)}>
-                          {header}
-                        </Text>
-                      )}
-                      <Box w="12px">
-                        {sortField === accessor ? sortDirection === SortDirectionEnum.Ascending ? <IoIosArrowDown /> : <IoIosArrowUp /> : ''}
-                      </Box>
-                    </Flex>
-                    {filter && renderFilterBlock(filter, accessor, onChangeFilter)}
-                  </Flex>
-                </Th>
-              ))}
-            </Tr>
-          </Thead>
-          <Tbody position="relative">
-            {isEmptyTable || !rows ? (
+    <Stack gap={5}>
+      <Filters<T> onChangeFilter={onChangeFilter} values={values} columns={columns} />
+      <BlurBox minH={boxHeight} mb={50} display="flex" flexDirection="column" justifyContent="space-between">
+        <TableHeader<T> heading={heading} onResetFilter={onResetFilter} onChangeSearch={onChangeSearch} filters={filters} items={items} />
+        <TableContainer w="100%" height="100%" minH={tableHeight}>
+          <ChakraTable size="sm" variant="unstyled" fontWeight="bold">
+            <Thead borderBottom="borderSecondary">
               <Tr>
-                <Td colSpan={columns.length}>
-                  <Flex minH="600px" justifyContent="center" alignItems="center">
-                    <Heading textAlign="center">Table is empty</Heading>
-                  </Flex>
-                </Td>
+                {columns.map(({header, accessor}) => (
+                  <Th key={accessor} padding={1} fontSize={{base: '10px', sm: '10px', md: '10px', lg: '12px', xl: '12px'}}>
+                    <Flex gap={1}>
+                      <Flex gap={1} cursor="pointer" alignItems="center">
+                        {accessor === 'actions' ? (
+                          <Text as="button" textTransform="none">
+                            {header}
+                          </Text>
+                        ) : (
+                          <Text as="button" textTransform="none" onClick={() => onChangeSort(accessor)}>
+                            {header}
+                          </Text>
+                        )}
+                        <Box w="12px">
+                          {sortField === accessor ? sortDirection === SortDirectionEnum.Ascending ? <IoIosArrowDown /> : <IoIosArrowUp /> : ''}
+                        </Box>
+                      </Flex>
+                    </Flex>
+                  </Th>
+                ))}
               </Tr>
-            ) : (
-              filteredRows.slice(pageSize * pageIndex, pageSize * (pageIndex + 1)).map((row: T) => {
-                const dateIsExpired = isBefore(row?.expDate, TODAYS_DATE);
-                return (
-                  <Tr key={row._id} borderBottom="borderSecondary">
-                    {renderCell(columns, row, dateIsExpired)}
-                  </Tr>
-                );
-              })
-            )}
-          </Tbody>
-        </ChakraTable>
-      </TableContainer>
-      {!isEmptyTable && (
-        <TablePagination
-          pageSize={pageSize}
-          dispatch={dispatch}
-          pageIndex={pageIndex}
-          totalItemsCount={filteredRows.length}
-          pageSizeOptions={pageSizeOptions}
-        />
-      )}
-    </BlurBox>
+            </Thead>
+            <Tbody position="relative">
+              {isEmptyTable || !rows ? (
+                <Tr>
+                  <Td colSpan={columns.length}>
+                    <Flex minH="600px" justifyContent="center" alignItems="center">
+                      <Heading textAlign="center">Table is empty</Heading>
+                    </Flex>
+                  </Td>
+                </Tr>
+              ) : (
+                filteredRows.slice(pageSize * pageIndex, pageSize * (pageIndex + 1)).map((row: T) => {
+                  const dateIsExpired = isBefore(row?.expDate, TODAYS_DATE);
+                  return (
+                    <Tr key={row._id} borderBottom="borderSecondary">
+                      {renderCell(columns, row, dateIsExpired)}
+                    </Tr>
+                  );
+                })
+              )}
+            </Tbody>
+          </ChakraTable>
+        </TableContainer>
+        {!isEmptyTable && (
+          <TablePagination
+            pageSize={pageSize}
+            dispatch={dispatch}
+            pageIndex={pageIndex}
+            totalItemsCount={filteredRows.length}
+            pageSizeOptions={pageSizeOptions}
+          />
+        )}
+      </BlurBox>
+    </Stack>
   );
 };

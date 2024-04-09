@@ -13,8 +13,8 @@ interface Props {
   onOpen?: () => void;
 }
 
-export const ConfirmModal = ({children, isDisabled, isOpen, title, onClose, onConfirm}: Props): ReactElement => {
-  const [isLoading, setLoading] = useState(false);
+export const ConfirmModal = ({children, isDisabled, isOpen, title = 'Confirm your action', onClose, onConfirm}: Props): ReactElement => {
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const handleConfirmAction = async () => {
     try {
@@ -30,7 +30,7 @@ export const ConfirmModal = ({children, isDisabled, isOpen, title, onClose, onCo
     <ChakraModal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>{title || 'Confirm your action'}</ModalHeader>
+        <ModalHeader>{title}</ModalHeader>
         <ModalCloseButton disabled={isLoading} />
         <ModalBody>{children}</ModalBody>
         <ModalFooter>

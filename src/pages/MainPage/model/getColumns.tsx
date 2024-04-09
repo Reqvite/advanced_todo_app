@@ -30,8 +30,9 @@ const renderSwitchCell =
     );
   };
 
-const renderPriorityCell = (priority: number): ReactNode =>
-  getPriorityOptions(GetPriorityOptionsEnum.withIcons).find((option) => option.value === priority)?.label;
+const renderPriorityCell = (priority: number): ReactNode => (
+  <Flex justifyContent="center">{getPriorityOptions(GetPriorityOptionsEnum.withIcons).find((option) => option.value === priority)?.label}</Flex>
+);
 
 const renderTagsCell = (tags: number[]) => (
   <Flex gap={2}>
@@ -47,7 +48,7 @@ const renderActionsCell =
     const dateIsExpired = isBefore(task.expDate, TODAYS_DATE);
 
     return (
-      <Flex justifyContent="flex-end">
+      <Flex justifyContent="center">
         <Flex gap={2}>
           <EditButton id={task._id} isDisabled={dateIsExpired} />
           <DeleteButton
@@ -66,7 +67,8 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading, deleteT
     accessor: 'status',
     cell: renderSwitchCell({updateTaskStatus, updateTaskStatusIsLoading}),
     filter: {
-      type: FilterTypeEnum.SELECT,
+      placeholder: 'Status',
+      type: FilterTypeEnum.MULTI_SELECT,
       options: statusOptionsWithALL
     }
   },
@@ -81,7 +83,8 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading, deleteT
     accessor: 'priority',
     cell: renderPriorityCell,
     filter: {
-      type: FilterTypeEnum.SELECT,
+      placeholder: 'Priority',
+      type: FilterTypeEnum.MULTI_SELECT,
       options: getPriorityOptions(GetPriorityOptionsEnum.withIconsAndLabel)
     }
   },
