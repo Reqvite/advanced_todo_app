@@ -1,4 +1,5 @@
 import {Flex, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger, Stack, Tag, Text, useMediaQuery} from '@chakra-ui/react';
+import {ReactElement} from 'react';
 import {MEDIA_QUERY} from '@/shared/const';
 import {tagOptions} from '@/shared/lib/helpers';
 
@@ -7,7 +8,7 @@ interface Props {
   maxItemsToShow?: number;
 }
 
-export const TagList = ({items, maxItemsToShow = 4}: Props) => {
+export const TagList = ({items, maxItemsToShow = 4}: Props): ReactElement => {
   const [isLargerThan900] = useMediaQuery(MEDIA_QUERY.MIN_WIDTH_TABLET, {
     ssr: false
   });

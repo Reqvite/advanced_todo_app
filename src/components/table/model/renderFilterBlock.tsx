@@ -1,7 +1,7 @@
 import {Box} from '@chakra-ui/react';
 import {Select} from 'chakra-react-select';
 import {LabelOptionsI} from '@/shared/types/options';
-import {DatePicker, PopoverSelect} from '@/shared/ui';
+import {DatePicker} from '@/shared/ui';
 import {FilterTypeEnum} from './types';
 
 export const renderFilterBlock = (
@@ -30,8 +30,6 @@ export const renderFilterBlock = (
           </Box>
         )
       );
-    case FilterTypeEnum.SELECT:
-      return filter?.options && <PopoverSelect options={filter.options} onChange={(value) => onChangeFilter(accessor, value, filter.type)} />;
     case FilterTypeEnum.DATEPICKER:
       return <DatePicker showInput={false} onChange={(value) => onChangeFilter(accessor, value, filter.type)} />;
     case FilterTypeEnum.RANGE_DATEPICKER:

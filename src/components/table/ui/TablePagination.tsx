@@ -18,8 +18,8 @@ export const TablePagination = ({pageSize, pageIndex, dispatch, totalItemsCount,
 
   const totalPages = Math.ceil(totalItemsCount / pageSize);
 
-  const onChangePageSize = (e: ChangeEvent<HTMLSelectElement>) => {
-    const newSize = parseInt(e.target.value);
+  const onChangePageSize = (event: ChangeEvent<HTMLSelectElement>) => {
+    const newSize = parseInt(event.target.value);
     dispatch({type: 'SET_PAGE_SIZE', payload: newSize});
     dispatch({type: 'SET_PAGE_INDEX', payload: 0});
   };
