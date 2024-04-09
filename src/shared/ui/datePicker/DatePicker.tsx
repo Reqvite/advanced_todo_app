@@ -1,6 +1,6 @@
 import {IconButton, InputGroup, Popover, PopoverArrow, PopoverContent, PopoverTrigger, Portal} from '@chakra-ui/react';
 import {ForwardedRef, forwardRef, ReactElement, useState} from 'react';
-import {FaCalendarAlt, FaTimes} from 'react-icons/fa';
+import {FaCalendarAlt} from 'react-icons/fa';
 import {FORMAT_DATES} from '@/shared/const';
 import {Input} from '..';
 import {RenderCalendar} from './model/renderCalendar';
@@ -58,17 +58,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       }
     };
 
-    const handleClear = (): void => {
-      if (isRangePicker) {
-        setStartDate(null);
-        setEndDate(null);
-        onChange(null);
-      } else {
-        setSelectedDate(null);
-        onChange(null);
-      }
-    };
-
     const getDateRangeString = (): string => {
       if (isRangePicker && startDate && endDate) {
         return `${FORMAT_DATES.MONTH_DATE_YEAR(startDate)} - ${FORMAT_DATES.MONTH_DATE_YEAR(endDate)}`;
@@ -97,7 +86,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                   readOnly
                   {...otherProps}
                 />
-                {isRangePicker && startDate && <IconButton aria-label="Clear" variant="primary" icon={<FaTimes />} onClick={handleClear} />}
               </InputGroup>
             )}
           </PopoverTrigger>

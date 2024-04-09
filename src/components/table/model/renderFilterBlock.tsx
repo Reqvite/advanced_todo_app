@@ -1,5 +1,6 @@
 import {Box} from '@chakra-ui/react';
 import {Select} from 'chakra-react-select';
+import {FORMAT_DATES} from '@/shared/const';
 import {LabelOptionsI} from '@/shared/types/options';
 import {DatePicker} from '@/shared/ui';
 import {FilterTypeEnum} from './types';
@@ -33,7 +34,16 @@ export const renderFilterBlock = (
     case FilterTypeEnum.DATEPICKER:
       return <DatePicker showInput={false} onChange={(value) => onChangeFilter(accessor, value, filter.type)} />;
     case FilterTypeEnum.RANGE_DATEPICKER:
-      return <DatePicker isRangePicker showInput={false} withError={false} onChange={(value) => onChangeFilter(accessor, value, filter.type)} />;
+      return (
+        <Box maxW="250px" width="full">
+          <DatePicker
+            value={Array.isArray(value) ? value?.map((date) => FORMAT_DATES.MONTH_DATE_YEAR(date)).join(' - ') : ''}
+            isRangePicker
+            withError={false}
+            onChange={(value) => onChangeFilter(accessor, value, filter.type)}
+          />
+        </Box>
+      );
     default:
       return null;
   }
