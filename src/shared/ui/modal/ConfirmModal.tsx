@@ -25,7 +25,6 @@ export const ConfirmModal = ({children, isDisabled, isOpen, title = 'Confirm you
       onClose();
     }
   };
-
   return (
     <ChakraModal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />

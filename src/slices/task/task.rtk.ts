@@ -45,15 +45,13 @@ export const tasksApi = createApi({
       onQueryStarted: ({navigate}, {queryFulfilled}) => onQueryStartedToast({navigate}, {queryFulfilled}, NotificationMessage.SUCCESS('Task created'))
     }),
     uploadTasks: builder.mutation<{data: TaskI}, {file: any}>({
-      query: ({file}) => {
-        return {
-          url: `/upload`,
-          method: 'POST',
-          body: file
-        };
-      },
-      invalidatesTags: [RtkApiTagsEnum.Tasks]
-      // onQueryStarted: ({navigate}, {queryFulfilled}) => onQueryStartedToast({navigate}, {queryFulfilled}, NotificationMessage.SUCCESS('Task created'))
+      query: ({file}) => ({
+        url: `/upload`,
+        method: 'POST',
+        body: file
+      }),
+      invalidatesTags: [RtkApiTagsEnum.Tasks],
+      onQueryStarted: (_, {queryFulfilled}) => onQueryStartedToast({}, {queryFulfilled}, NotificationMessage.SUCCESS('Tasks upload successfully'))
     }),
     updateTaskById: builder.mutation<{data: TaskI}, {id: string; task: Partial<TaskFormModel>; navigate: NavigateFunction}>({
       query: ({id, task}) => ({
