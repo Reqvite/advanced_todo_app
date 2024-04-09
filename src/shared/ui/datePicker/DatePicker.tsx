@@ -104,7 +104,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           </PopoverTrigger>
         )}
         <Portal>
-          <PopoverContent padding={2}>
+          <PopoverContent padding={2} zIndex={1000000}>
             <PopoverArrow />
             <RenderCalendar
               selectedDate={selectedDate}

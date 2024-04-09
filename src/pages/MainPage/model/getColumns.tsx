@@ -30,8 +30,9 @@ const renderSwitchCell =
     );
   };
 
-const renderPriorityCell = (priority: number): ReactNode =>
-  getPriorityOptions(GetPriorityOptionsEnum.withIcons).find((option) => option.value === priority)?.label;
+const renderPriorityCell = (priority: number): ReactNode => (
+  <Flex justifyContent="center">{getPriorityOptions(GetPriorityOptionsEnum.withIcons).find((option) => option.value === priority)?.label}</Flex>
+);
 
 const renderTagsCell = (tags: number[]) => (
   <Flex gap={2}>
@@ -47,7 +48,7 @@ const renderActionsCell =
     const dateIsExpired = isBefore(task.expDate, TODAYS_DATE);
 
     return (
-      <Flex justifyContent="flex-end">
+      <Flex justifyContent="center">
         <Flex gap={2}>
           <EditButton id={task._id} isDisabled={dateIsExpired} />
           <DeleteButton

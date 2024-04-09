@@ -7,6 +7,7 @@ export {SwitchButton} from './buttons/SwitchButton.tsx';
 export {ThemeButton} from './buttons/ThemeButton.tsx';
 export {Counter} from './counter/Counter.tsx';
 export {DatePicker} from './datePicker/DatePicker.tsx';
+export {Drawer} from './drawer/Drawer.tsx';
 export {Input} from './input/Input';
 export {TagList} from './list/TagList.tsx';
 export {Loader} from './loader/Loader.tsx';

@@ -19,10 +19,35 @@ export const renderFilterBlock = (
     case FilterTypeEnum.MULTI_SELECT:
       return (
         filter?.options && (
-          <Box maxW="350px" width="full">
+          <Box maxW="400px" width="full">
             <Select
-              isMulti
+              chakraStyles={{
+                control: (provided) => ({
+                  ...provided,
+                  height: '42px'
+                }),
+                container: (provided) => ({
+                  ...provided,
+                  height: '40px'
+                }),
+                valueContainer: (provided) => ({
+                  ...provided,
+
+                  height: '40px',
+                  overflow: 'auto'
+                }),
+                multiValue: (provided) => ({
+                  ...provided,
+                  padding: 1,
+                  fontSize: '12px'
+                }),
+                multiValueLabel: (provided) => ({
+                  ...provided,
+                  padding: 0
+                })
+              }}
               variant="primary"
+              isMulti
               placeholder={filter.placeholder}
               options={filter.options}
               value={value}
@@ -35,7 +60,7 @@ export const renderFilterBlock = (
       return <DatePicker showInput={false} onChange={(value) => onChangeFilter(accessor, value, filter.type)} />;
     case FilterTypeEnum.RANGE_DATEPICKER:
       return (
-        <Box maxW="250px" width="full">
+        <Box maxW="300px" width="full">
           <DatePicker
             value={Array.isArray(value) ? value?.map((date) => FORMAT_DATES.MONTH_DATE_YEAR(date)).join(' - ') : ''}
             isRangePicker

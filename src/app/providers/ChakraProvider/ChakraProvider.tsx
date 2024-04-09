@@ -9,5 +9,9 @@ type Props = {
 export const ChakraProvider = (props: Props): ReactElement => {
   const {children} = props;
   const theme = getTheme('dark');
-  return <Chakra theme={theme}>{children}</Chakra>;
+  return (
+    <Chakra portalZIndex={100000000} theme={theme}>
+      {children}
+    </Chakra>
+  );
 };

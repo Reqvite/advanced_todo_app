@@ -1,15 +1,15 @@
 import {Box, Flex, Heading, Stack, Table as ChakraTable, TableContainer, Tbody, Td, Text, Th, Thead, Tr, useMediaQuery} from '@chakra-ui/react';
 import {isBefore} from 'date-fns';
-import {Fragment, ReactElement, ReactNode} from 'react';
+import {ReactElement, ReactNode} from 'react';
 import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/io';
 import {TODAYS_DATE} from '@/shared/const/date.ts';
 import {MEDIA_QUERY} from '@/shared/const/media.ts';
 import {SortDirectionEnum} from '@/shared/types/sortDirection.ts';
 import {StatusEnum} from '@/shared/types/task.ts';
 import {BlurBox, Tooltip} from '@/shared/ui';
-import {renderFilterBlock} from '../model/renderFilterBlock.tsx';
 import {Column} from '../model/types.ts';
 import {useTable} from '../model/useTable.ts';
+import {Filters} from './Filters.tsx';
 import {TableHeader} from './TableHeader.tsx';
 import {TablePagination} from './TablePagination.tsx';
 
@@ -94,13 +94,7 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
 
   return (
     <Stack gap={5}>
-      <Box>
-        <Flex gap={5} justifyContent="flex-end" alignItems="center">
-          {columns.map(({accessor, filter}) => (
-            <Fragment key={accessor}>{filter && renderFilterBlock(filter, accessor, onChangeFilter, values[accessor])}</Fragment>
-          ))}
-        </Flex>
-      </Box>
+      <Filters<T> onChangeFilter={onChangeFilter} values={values} columns={columns} />
       <BlurBox minH="721px" mb={50} display="flex" flexDirection="column" justifyContent="space-between">
         <TableHeader<T> heading={heading} onResetFilter={onResetFilter} onChangeSearch={onChangeSearch} filters={filters} items={items} />
         <TableContainer w="100%" height="100%" minH="544px">
