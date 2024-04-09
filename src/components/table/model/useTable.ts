@@ -1,4 +1,6 @@
 import {useEffect, useReducer} from 'react';
+import {LabelOptionsI} from '@/shared/types/options';
+import {FilterTypeEnum} from '..';
 import {applyFilters} from './applyFilters';
 import {applySearch} from './applySearch';
 import {sortData} from './sortData';
@@ -6,7 +8,7 @@ import {initialState, tableReducer} from './tableReducer';
 
 export const useTable = <T extends {_id: string}>({items, defaultPageSizeOptions}: {items: T[]; defaultPageSizeOptions?: number[]}) => {
   const [state, dispatch] = useReducer(tableReducer, {...initialState, rows: items});
-  const {pageIndex, pageSize, rows = items, sortDirection, sortField, filters, search} = state;
+  const {pageIndex, pageSize, rows = items, sortDirection, sortField, filters, search, values} = state;
 
   const onChangeSort = (key: string): void => {
     const isSameSortKey = key === sortField && sortField !== '';
@@ -17,8 +19,13 @@ export const useTable = <T extends {_id: string}>({items, defaultPageSizeOptions
     dispatch({type: 'SET_ROWS', payload: sortedRows});
   };
 
-  const onChangeFilter = (key: string, value: string): void => {
-    dispatch({type: 'SET_FILTER', payload: {key, value}});
+  const onChangeFilter = (key: string, value: string | LabelOptionsI[], type: string): void => {
+    if (type === FilterTypeEnum.MULTI_SELECT && Array.isArray(value)) {
+      dispatch({type: 'SET_FILTER', payload: {key, value: value.map(({value}) => value)}});
+    } else {
+      dispatch({type: 'SET_FILTER', payload: {key, value}});
+    }
+    dispatch({type: 'SET_VALUES', payload: {key, value}});
     dispatch({type: 'SET_PAGE_INDEX', payload: 0});
   };
 
@@ -28,6 +35,7 @@ export const useTable = <T extends {_id: string}>({items, defaultPageSizeOptions
   };
 
   const onResetFilter = (): void => {
+    dispatch({type: 'SET_VALUES_DEFAULT'});
     dispatch({type: 'SET_FILTER_DEFAULT'});
     onChangeSearch('');
   };
@@ -56,6 +64,7 @@ export const useTable = <T extends {_id: string}>({items, defaultPageSizeOptions
     sortField,
     search,
     filters: allFiltersKeys,
+    values,
     dispatch,
     onChangeSort,
     onChangeFilter,

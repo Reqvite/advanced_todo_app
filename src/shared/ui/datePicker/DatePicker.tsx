@@ -1,6 +1,6 @@
 import {IconButton, InputGroup, Popover, PopoverArrow, PopoverContent, PopoverTrigger, Portal, useMediaQuery} from '@chakra-ui/react';
 import {ForwardedRef, forwardRef, ReactElement, useState} from 'react';
-import {FaCalendarAlt} from 'react-icons/fa';
+import {FaCalendarAlt, FaTimes} from 'react-icons/fa';
 import {FORMAT_DATES, MEDIA_QUERY} from '@/shared/const';
 import {Input} from '..';
 import {RenderCalendar} from './model/renderCalendar';
@@ -13,11 +13,12 @@ interface DatePickerProps {
   isRequired?: boolean;
   label?: string;
   error?: string;
+  withError?: boolean;
 }
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
   (
-    {isRangePicker = false, onChange, showInput = true, minDate, isRequired, label, error, ...otherProps}: DatePickerProps,
+    {isRangePicker = false, onChange, showInput = true, minDate, isRequired, label, error, withError = true, ...otherProps}: DatePickerProps,
     ref: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
     const [isLargerThan900] = useMediaQuery(MEDIA_QUERY.MIN_WIDTH_TABLET);
@@ -25,8 +26,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
     const [showCalendar, setShowCalendar] = useState<boolean>(false);
-    const buttonSize = isLargerThan900 ? '25px' : '18px';
-    const iconSize = isLargerThan900 ? 13 : 10;
+    const buttonSize = isLargerThan900 ? '40px' : '18px';
+    const iconSize = isLargerThan900 ? 20 : 10;
 
     const handleSingleDateClick = (date: Date): void => {
       setSelectedDate(date);
@@ -60,6 +61,17 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       }
     };
 
+    const handleClear = (): void => {
+      if (isRangePicker) {
+        setStartDate(null);
+        setEndDate(null);
+        onChange(null);
+      } else {
+        setSelectedDate(null);
+        onChange(null);
+      }
+    };
+
     const getDateRangeString = (): string => {
       if (isRangePicker && startDate && endDate) {
         return `${FORMAT_DATES.MONTH_DATE_YEAR(startDate)} - ${FORMAT_DATES.MONTH_DATE_YEAR(endDate)}`;
@@ -82,11 +94,13 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                   variant="primary"
                   label={label}
                   error={error}
+                  withError={withError}
                   placeholder="Select Date"
                   value={getDateRangeString()}
                   readOnly
                   {...otherProps}
                 />
+                {isRangePicker && startDate && <IconButton aria-label="Clear" variant="primary" icon={<FaTimes />} onClick={handleClear} />}
               </InputGroup>
             )}
           </PopoverTrigger>

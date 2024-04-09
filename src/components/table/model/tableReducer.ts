@@ -10,6 +10,7 @@ const initialState = {
   sortDirection: '',
   sortField: '',
   filters: {},
+  values: {},
   search: ''
 };
 
@@ -33,10 +34,26 @@ const tableReducer = <T>(state: State<T>, action: ActionI<any>) => {
       return {...state, sortField: action.payload};
     case 'SET_FILTER':
       return {...state, filters: {...state.filters, [action.payload.key]: action.payload.value}};
+    case 'SET_VALUES':
+      return {...state, values: {...state.values, [action.payload.key]: action.payload.value}};
     case 'SET_SEARCH':
       return {...state, search: action.payload};
+    case 'SET_VALUES_DEFAULT':
+      return {
+        ...state,
+        values: Object.fromEntries(Object.keys(state.values).map((key) => [key, ''])),
+        search: '',
+        sortField: '',
+        sortDirection: ''
+      };
     case 'SET_FILTER_DEFAULT':
-      return {...state, filters: {}, search: '', sortField: '', sortDirection: ''};
+      return {
+        ...state,
+        filters: {},
+        search: '',
+        sortField: '',
+        sortDirection: ''
+      };
     default:
       return state;
   }

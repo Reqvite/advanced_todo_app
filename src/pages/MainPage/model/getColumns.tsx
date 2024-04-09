@@ -66,7 +66,8 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading, deleteT
     accessor: 'status',
     cell: renderSwitchCell({updateTaskStatus, updateTaskStatusIsLoading}),
     filter: {
-      type: FilterTypeEnum.SELECT,
+      placeholder: 'Status',
+      type: FilterTypeEnum.MULTI_SELECT,
       options: statusOptionsWithALL
     }
   },
@@ -81,7 +82,8 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading, deleteT
     accessor: 'priority',
     cell: renderPriorityCell,
     filter: {
-      type: FilterTypeEnum.SELECT,
+      placeholder: 'Priority',
+      type: FilterTypeEnum.MULTI_SELECT,
       options: getPriorityOptions(GetPriorityOptionsEnum.withIconsAndLabel)
     }
   },
