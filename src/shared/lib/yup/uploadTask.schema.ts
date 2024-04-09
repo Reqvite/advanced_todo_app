@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import {ErrorMessages} from '@/shared/const';
 
 const MAX_FILE_SIZE = 100 * 1024;
 
@@ -14,7 +15,7 @@ function isFile(value: any): value is File {
 export const uploadTaskSchema = yup.object().shape({
   file: yup
     .mixed()
-    .required('Excel file is required')
+    .required(ErrorMessages.isRequired('Excel file'))
     .test('is-valid-type', 'Invalid file type. Only .xls and .xlsx are allowed', (value) => {
       if (!isFile(value)) {
         return false;
@@ -23,7 +24,7 @@ export const uploadTaskSchema = yup.object().shape({
 
       return allowedExcelMimeTypes.includes(value.type);
     })
-    .test('is-valid-size', 'Max allowed size is 100KB', (value) => {
+    .test('is-valid-size', ErrorMessages.maxAllowedSize('100KB'), (value) => {
       if (!isFile(value)) {
         return false;
       }
