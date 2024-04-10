@@ -37,14 +37,8 @@ export const UploadFileButton = (): ReactElement => {
     <>
       <IconButton variant="primary" aria-label="Upload" icon={<MdFileUpload />} onClick={onOpen} />
       {isOpen && (
-        <ConfirmModal
-          title="Upload tasks (.xls and .xlsx are allowed)"
-          isOpen={isOpen}
-          onConfirm={onConfirm}
-          onClose={onClose}
-          isDisabled={Boolean(error) || !file}
-        >
-          <Input error={error} variant="primary" type="file" onChange={handleFileChange} />
+        <ConfirmModal title="Upload tasks" isOpen={isOpen} onConfirm={onConfirm} onClose={onClose} isDisabled={Boolean(error) || !file}>
+          <Input h="50px" padding="10px" error={error} variant="primary" type="file" onChange={handleFileChange} />
         </ConfirmModal>
       )}
     </>
