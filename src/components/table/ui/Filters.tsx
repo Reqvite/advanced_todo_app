@@ -36,13 +36,9 @@ export const Filters = <T,>({onChangeFilter, columns, values}: Props<T>) => {
       <Drawer onClose={onClose} isOpen={isOpen} title="Filters">
         <Flex gap={5} justifyContent="flex-end" alignItems="center" flexDirection="column">
           {columns.map(({accessor, filter}) => (
-            <>
-              {filter && (
-                <Box w="100%" key={accessor}>
-                  {renderFilterBlock(filter, accessor, onChangeFilter, values[accessor])}
-                </Box>
-              )}
-            </>
+            <Fragment key={accessor}>
+              {filter && <Box w="100%">{renderFilterBlock(filter, accessor, onChangeFilter, values[accessor])}</Box>}
+            </Fragment>
           ))}
         </Flex>
       </Drawer>
