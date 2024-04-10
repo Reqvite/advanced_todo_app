@@ -44,6 +44,15 @@ export const tasksApi = createApi({
       invalidatesTags: [RtkApiTagsEnum.Tasks],
       onQueryStarted: ({navigate}, {queryFulfilled}) => onQueryStartedToast({navigate}, {queryFulfilled}, NotificationMessage.SUCCESS('Task created'))
     }),
+    uploadTasks: builder.mutation<{data: TaskI}, {file: any}>({
+      query: ({file}) => ({
+        url: `/upload`,
+        method: 'POST',
+        body: file
+      }),
+      invalidatesTags: [RtkApiTagsEnum.Tasks],
+      onQueryStarted: (_, {queryFulfilled}) => onQueryStartedToast({}, {queryFulfilled}, NotificationMessage.SUCCESS('Tasks upload successfully'))
+    }),
     updateTaskById: builder.mutation<{data: TaskI}, {id: string; task: Partial<TaskFormModel>; navigate: NavigateFunction}>({
       query: ({id, task}) => ({
         url: `/${id}`,
@@ -59,7 +68,8 @@ export const tasksApi = createApi({
         method: 'PATCH',
         body: {status}
       }),
-      invalidatesTags: [RtkApiTagsEnum.Tasks]
+      invalidatesTags: [RtkApiTagsEnum.Tasks],
+      onQueryStarted: (_, {queryFulfilled}) => onQueryStartedToast({}, {queryFulfilled}, NotificationMessage.SUCCESS('Status updated'))
     }),
     deleteTaskById: builder.mutation<{data: TaskI}, {id: string}>({
       query: ({id}) => ({
@@ -78,5 +88,6 @@ export const {
   useUpdateTaskByIdMutation,
   useCreateTaskMutation,
   useUpdateTaskStatusByIdMutation,
-  useDeleteTaskByIdMutation
+  useDeleteTaskByIdMutation,
+  useUploadTasksMutation
 } = tasksApi;

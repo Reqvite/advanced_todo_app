@@ -4,7 +4,7 @@ import {ReactNode} from 'react';
 import {Column, FilterTypeEnum} from '@/components/table';
 import {FORMAT_DATES, TODAYS_DATE} from '@/shared/const';
 import {getPriorityOptions, GetPriorityOptionsEnum} from '@/shared/lib/helpers';
-import {statusOptionsWithALL} from '@/shared/lib/helpers/enumLabelResolver/enumLabelResolver';
+import {statusOptionsWithALL, tagOptions} from '@/shared/lib/helpers/enumLabelResolver/enumLabelResolver';
 import {StatusEnum, TaskI} from '@/shared/types/task';
 import {DeleteButton, EditButton, TagList} from '@/shared/ui';
 import {SwitchButton} from '@/shared/ui/buttons/SwitchButton';
@@ -92,6 +92,11 @@ export const getColumns = ({updateTaskStatus, updateTaskStatusIsLoading, deleteT
     header: 'Tags',
     accessor: 'tags',
     cell: renderTagsCell,
+    filter: {
+      placeholder: 'Tags',
+      type: FilterTypeEnum.MULTI_SELECT,
+      options: tagOptions
+    },
     width: '28%'
   },
   {

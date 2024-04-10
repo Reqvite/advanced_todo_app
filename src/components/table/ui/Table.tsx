@@ -53,9 +53,9 @@ export const Table = <T extends {_id: string; expDate: Date; status: StatusEnum}
   });
   const {pageIndex, pageSize} = state;
   const isEmptyTable = filteredRows.length < 1;
-  const displayedItemsCount = isLargerThan900 ? maxRowLength : 15;
+  const displayedItemsCount = isLargerThan900 ? maxRowLength : 10;
   const tdPadding = isLargerThan900 ? '5px' : '2px';
-  const tdFontSize = {base: '9px', sm: '9px', md: '9px', lg: '12px', xl: '14px'};
+  const tdFontSize = {base: '8px', sm: '8px', md: '8px', lg: '12px', xl: '14px'};
   const boxHeight = isLargerThan900 ? '721px' : '500px';
   const tableHeight = isLargerThan900 ? '544px' : '300px';
 
