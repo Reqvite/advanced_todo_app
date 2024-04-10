@@ -1,4 +1,4 @@
-import {Box, Button, Flex, useDisclosure, useMediaQuery} from '@chakra-ui/react';
+import {Box, Button, Flex, SimpleGrid, useDisclosure, useMediaQuery} from '@chakra-ui/react';
 import {Fragment} from 'react/jsx-runtime';
 import {MEDIA_QUERY} from '@/shared/const';
 import {LabelOptionsI} from '@/shared/types/options';
@@ -20,13 +20,11 @@ export const Filters = <T,>({onChangeFilter, columns, values}: Props<T>) => {
 
   if (isLargerThan900) {
     return (
-      <Box>
-        <Flex gap={3} justifyContent="flex-end" alignItems="center">
-          {columns.map(({accessor, filter}) => (
-            <Fragment key={accessor}>{filter && renderFilterBlock(filter, accessor, onChangeFilter, values[accessor])}</Fragment>
-          ))}
-        </Flex>
-      </Box>
+      <SimpleGrid columns={2} spacing={3}>
+        {columns.map(({accessor, filter}) => (
+          <Fragment key={accessor}>{filter && renderFilterBlock(filter, accessor, onChangeFilter, values[accessor])}</Fragment>
+        ))}
+      </SimpleGrid>
     );
   }
 
@@ -36,13 +34,17 @@ export const Filters = <T,>({onChangeFilter, columns, values}: Props<T>) => {
         Filters
       </Button>
       <Drawer onClose={onClose} isOpen={isOpen} title="Filters">
-        <Box>
-          <Flex gap={5} justifyContent="flex-end" alignItems="center" flexDirection="column">
-            {columns.map(({accessor, filter}) => (
-              <Fragment key={accessor}>{filter && renderFilterBlock(filter, accessor, onChangeFilter, values[accessor])}</Fragment>
-            ))}
-          </Flex>
-        </Box>
+        <Flex gap={5} justifyContent="flex-end" alignItems="center" flexDirection="column">
+          {columns.map(({accessor, filter}) => (
+            <>
+              {filter && (
+                <Box w="100%" key={accessor}>
+                  {renderFilterBlock(filter, accessor, onChangeFilter, values[accessor])}
+                </Box>
+              )}
+            </>
+          ))}
+        </Flex>
       </Drawer>
     </>
   );

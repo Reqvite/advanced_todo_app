@@ -20,6 +20,14 @@ const applySingleDateFilter = (item: Record<string, any>, key: string, filterKey
   return isEqual(filterDate, keyDate);
 };
 
+const applyTwoArrayFilter = (item: Record<string, any>, key: string, filterKey: number[]): boolean => {
+  const itemArray = item[key] as number[];
+  const filterArray = filterKey;
+  const matchingValues = itemArray.filter((value) => filterArray.includes(value));
+
+  return matchingValues.length > 0;
+};
+
 export const applyFilters = <T extends Record<string, any>>({data}: {data: T[]}, filters: FiltersI) => {
   const filteredData = data.filter((item) => {
     return Object.keys(filters).every((key) => {
@@ -40,6 +48,10 @@ export const applyFilters = <T extends Record<string, any>>({data}: {data: T[]},
 
       if (keyToLowerCase.includes(DATE)) {
         return applySingleDateFilter(item, key, filterKey as string);
+      }
+
+      if (Array.isArray(filterKey) && Array.isArray(item[key])) {
+        return applyTwoArrayFilter(item, key, filterKey as any[]);
       }
 
       if (Array.isArray(filterKey)) {
