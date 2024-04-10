@@ -18,7 +18,7 @@ export const getTheme = (colorMode: ColorModeType): ThemeConfig => {
         body: {
           fontFamily: 'body',
           color: mode('#3D4D54', '#ffffff')(props),
-          bg: mode('#f0e7db', 'linear(to-br, #202023, #202023, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8), rgba(0, 0, 0))')(props),
+          bg: mode('#f0e7db', 'linear(to-br, #202038, #202038, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8), rgba(0, 0, 0))')(props),
           minHeight: '100vh'
         }
       })

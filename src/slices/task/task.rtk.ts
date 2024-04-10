@@ -68,7 +68,8 @@ export const tasksApi = createApi({
         method: 'PATCH',
         body: {status}
       }),
-      invalidatesTags: [RtkApiTagsEnum.Tasks]
+      invalidatesTags: [RtkApiTagsEnum.Tasks],
+      onQueryStarted: (_, {queryFulfilled}) => onQueryStartedToast({}, {queryFulfilled}, NotificationMessage.SUCCESS('Status updated'))
     }),
     deleteTaskById: builder.mutation<{data: TaskI}, {id: string}>({
       query: ({id}) => ({
