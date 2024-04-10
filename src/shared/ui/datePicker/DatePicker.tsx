@@ -13,11 +13,13 @@ interface DatePickerProps {
   isRequired?: boolean;
   label?: string;
   error?: string;
+  withError?: boolean;
+  value?: string | number | readonly string[] | undefined;
 }
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
   (
-    {isRangePicker = false, onChange, showInput = true, minDate, isRequired, label, error, ...otherProps}: DatePickerProps,
+    {isRangePicker = false, onChange, showInput = true, minDate, isRequired, label, error, withError = true, ...otherProps}: DatePickerProps,
     ref: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -79,6 +81,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                   variant="primary"
                   label={label}
                   error={error}
+                  withError={withError}
                   placeholder="Select Date"
                   value={getDateRangeString()}
                   readOnly
@@ -92,16 +95,16 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
             <IconButton
               aria-label="Calendar"
               variant="primary"
-              w="25px"
-              h="25px"
-              minW="25px"
-              icon={<FaCalendarAlt color="gray.300" />}
+              w={'40px'}
+              h={'40px'}
+              minW={'40px'}
+              icon={<FaCalendarAlt size={20} color="gray.300" />}
               onClick={() => setShowCalendar((prev) => !prev)}
             />
           </PopoverTrigger>
         )}
         <Portal>
-          <PopoverContent padding={2}>
+          <PopoverContent padding={2} zIndex={1000000}>
             <PopoverArrow />
             <RenderCalendar
               selectedDate={selectedDate}

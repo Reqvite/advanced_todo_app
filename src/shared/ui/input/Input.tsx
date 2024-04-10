@@ -20,10 +20,11 @@ type InputProps = ChakraInputProps & {
   leftIcon?: ReactNode;
   readOnly?: boolean;
   debounceTime?: number;
+  withError?: boolean;
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({label, readOnly, helperText, error, isRequired = false, leftIcon, debounceTime, onChange, ...otherProps}, ref) => {
+  ({label, readOnly, helperText, error, isRequired = false, withError = true, leftIcon, debounceTime, onChange, ...otherProps}, ref) => {
     const onChangeValue = debounceTime
       ? debounce((event: ChangeEvent<HTMLInputElement>) => {
           if (onChange) {
@@ -34,22 +35,26 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <FormControl isInvalid={Boolean(error)}>
-        <FormLabel>
-          {label}
-          {isRequired && (
-            <Box as="span" color="errorColorLight" ml="3px">
-              *
-            </Box>
-          )}
-        </FormLabel>
+        {label && (
+          <FormLabel>
+            {label}
+            {isRequired && (
+              <Box as="span" color="errorColorLight" ml="3px">
+                *
+              </Box>
+            )}
+          </FormLabel>
+        )}
         <InputGroup>
           {leftIcon && <InputLeftElement pointerEvents="none" children={leftIcon} />}
           <ChakraInput readOnly={readOnly} autoComplete="off" onChange={onChangeValue} {...otherProps} ref={ref} />
         </InputGroup>
         {helperText && <FormHelperText>{helperText}</FormHelperText>}
-        <Box height="5px" marginTop={2}>
-          <FormErrorMessage margin={0}>{error}</FormErrorMessage>
-        </Box>
+        {withError && (
+          <Box height="5px" marginTop={2}>
+            <FormErrorMessage margin={0}>{error}</FormErrorMessage>
+          </Box>
+        )}
       </FormControl>
     );
   }

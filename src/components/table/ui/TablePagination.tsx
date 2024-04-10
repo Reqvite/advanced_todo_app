@@ -14,18 +14,19 @@ type Props = {
 
 export const TablePagination = ({pageSize, pageIndex, dispatch, totalItemsCount, pageSizeOptions}: Props): ReactElement => {
   const totalPages = Math.ceil(totalItemsCount / pageSize);
+  const tdFontSize = {base: '9px', sm: '9px', md: '9px', lg: '12px', xl: '14px'};
 
-  const onChangePageSize = (e: ChangeEvent<HTMLSelectElement>) => {
-    const newSize = parseInt(e.target.value);
+  const onChangePageSize = (event: ChangeEvent<HTMLSelectElement>) => {
+    const newSize = parseInt(event.target.value);
     dispatch({type: 'SET_PAGE_SIZE', payload: newSize});
     dispatch({type: 'SET_PAGE_INDEX', payload: 0});
   };
 
   return (
     <Box>
-      <Flex justifyContent="space-between" h="100%">
+      <Flex alignItems="baseline" justifyContent="space-between" h="100%">
         <Flex alignItems="center" gap={2}>
-          <Text>Items per page:</Text>
+          <Text fontSize={tdFontSize}>Items per page:</Text>
           <Select variant="clear" value={pageSize} onChange={onChangePageSize} width="47px">
             {pageSizeOptions.map((size) => (
               <option key={size}>{size}</option>
