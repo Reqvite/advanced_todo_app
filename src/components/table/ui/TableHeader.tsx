@@ -2,7 +2,7 @@ import {Badge, Box, Flex, IconButton, Stack, Text} from '@chakra-ui/react';
 import {ChangeEvent, ReactElement} from 'react';
 import {TbFilterOff} from 'react-icons/tb';
 import {StatusEnum} from '@/shared/types/task';
-import {Counter, Input, Tooltip, UploadFileButton} from '@/shared/ui';
+import {Counter, Input, Tooltip, UploadButton} from '@/shared/ui';
 
 type Props<T> = {
   heading: string;
@@ -35,7 +35,7 @@ export const TableHeader = <T extends {status: StatusEnum; expDate: Date}>({
         {heading}
       </Text>
       <Flex alignItems="center" gap={2}>
-        <UploadFileButton />
+        <UploadButton />
         <Counter<T> items={items} />
         <Input withError={false} debounceTime={300} onChange={onChange} variant="primary" placeholder="Search" />
         {onResetFilter && (

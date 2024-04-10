@@ -5,7 +5,7 @@ import {uploadTaskSchema} from '@/shared/lib/yup/uploadTask.schema';
 import {useUploadTasksMutation} from '@/slices/task/task.rtk';
 import {ConfirmModal, Input} from '..';
 
-export const UploadFileButton = (): ReactElement => {
+export const UploadButton = (): ReactElement => {
   const {isOpen, onOpen, onClose} = useDisclosure();
   const [uploadTask] = useUploadTasksMutation();
   const [file, setFile] = useState<File | null>(null);

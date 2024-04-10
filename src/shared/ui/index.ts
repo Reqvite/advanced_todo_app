@@ -5,7 +5,7 @@ export {DeleteButton} from './buttons/DeleteButton';
 export {EditButton} from './buttons/EditButton';
 export {SwitchButton} from './buttons/SwitchButton.tsx';
 export {ThemeButton} from './buttons/ThemeButton.tsx';
-export {UploadFileButton} from './buttons/UploadFileButton.tsx';
+export {UploadButton} from './buttons/UploadButton.tsx';
 export {Counter} from './counter/Counter.tsx';
 export {DatePicker} from './datePicker/DatePicker.tsx';
 export {Drawer} from './drawer/Drawer.tsx';
