@@ -26,7 +26,7 @@ export const UploadFileButton = (): ReactElement => {
     }
   };
 
-  const onConfirm = async () => {
+  const onConfirm = async (): Promise<void> => {
     const formData = new FormData();
     formData.append('file', file as File);
     await uploadTask({file: formData});
