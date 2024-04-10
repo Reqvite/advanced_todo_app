@@ -30,7 +30,6 @@ export const renderFilterBlock = (
               }),
               valueContainer: (provided) => ({
                 ...provided,
-
                 height: '40px',
                 overflow: 'auto'
               }),

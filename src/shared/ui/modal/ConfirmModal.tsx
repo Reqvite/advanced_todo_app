@@ -1,5 +1,6 @@
 import {Button} from '@chakra-ui/button';
 import {Modal as ChakraModal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay} from '@chakra-ui/modal';
+import {useColorModeValue} from '@chakra-ui/react';
 import {ReactElement, ReactNode, useState} from 'react';
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
 
 export const ConfirmModal = ({children, isDisabled, isOpen, title = 'Confirm your action', onClose, onConfirm}: Props): ReactElement => {
   const [isLoading, setLoading] = useState<boolean>(false);
+  const bg = useColorModeValue('mainBgColorLight', 'mainBgColorDark');
 
   const handleConfirmAction = async () => {
     try {
@@ -28,7 +30,7 @@ export const ConfirmModal = ({children, isDisabled, isOpen, title = 'Confirm you
   return (
     <ChakraModal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent bg={bg}>
         <ModalHeader>{title}</ModalHeader>
         <ModalCloseButton disabled={isLoading} />
         <ModalBody>{children}</ModalBody>

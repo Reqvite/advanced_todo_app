@@ -1,4 +1,4 @@
-import {Box, Button, Flex, SimpleGrid, useDisclosure, useMediaQuery} from '@chakra-ui/react';
+import {Box, Button, Flex, SimpleGrid, useColorModeValue, useDisclosure, useMediaQuery} from '@chakra-ui/react';
 import {Fragment} from 'react/jsx-runtime';
 import {MEDIA_QUERY} from '@/shared/const';
 import {LabelOptionsI} from '@/shared/types/options';
@@ -17,14 +17,17 @@ export const Filters = <T,>({onChangeFilter, columns, values}: Props<T>) => {
   const [isLargerThan900] = useMediaQuery(MEDIA_QUERY.MIN_WIDTH_TABLET, {
     ssr: false
   });
+  const boxBg = useColorModeValue('secondaryBgColorLightTransparent', 'secondaryBgColorDarkTransparent');
 
   if (isLargerThan900) {
     return (
-      <SimpleGrid columns={2} spacing={3}>
-        {columns.map(({accessor, filter}) => (
-          <Fragment key={accessor}>{filter && renderFilterBlock(filter, accessor, onChangeFilter, values[accessor])}</Fragment>
-        ))}
-      </SimpleGrid>
+      <Box borderRadius="lg" bg={boxBg} p={5}>
+        <SimpleGrid columns={2} spacing={3}>
+          {columns.map(({accessor, filter}) => (
+            <Fragment key={accessor}>{filter && renderFilterBlock(filter, accessor, onChangeFilter, values[accessor])}</Fragment>
+          ))}
+        </SimpleGrid>
+      </Box>
     );
   }
 
