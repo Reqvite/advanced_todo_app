@@ -17,7 +17,7 @@ export const renderFormBlock = <T extends FieldValues>({option, errors, control}
           key={option.id}
           control={control}
           name={option.id as Path<T>}
-          render={({field}) => (
+          render={({field}) => (nf y
             <Input
               isRequired={option.isRequired}
               error={Object.keys(errors).includes(option.id) ? String(errors[option.id]?.message) : ''}
